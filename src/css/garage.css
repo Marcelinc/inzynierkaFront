@@ -1,0 +1,130 @@
+#garageMenu{
+    background-color: darksalmon;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+#options label{
+    padding: 10px;
+}
+#garageMenu > *{
+    padding-inline: 10px;
+}
+#addMachine{
+    color:green;
+}
+#addMachine:hover{
+    cursor:pointer;
+    color:rgb(11, 170, 11);
+}
+
+
+
+/*lista maszyn*/
+#machines{
+    background-color: rgb(192, 114, 87);
+    padding:5px;
+    min-height: 30%;
+    max-height: 80%;
+    overflow-y: auto;
+}
+#legend{
+    background-color: rgb(192, 114, 87);
+}
+#legend,.unit{
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 25% 15%;
+    grid-auto-flow: column;
+    margin-inline:5px;
+
+}
+#legend::after{
+    content: 'Opcje';
+}
+.unit{
+    background-color: gainsboro;
+    margin-bottom: 7px;
+}
+.unit::after{
+    grid-column: auto;
+}
+.unit:hover{
+    opacity: 0.7;
+    cursor: pointer;
+}
+.MachInfo{
+    background-color: greenyellow;
+}
+.MachEdit{
+    background-color: rgb(218, 218, 11);
+}
+.MachDelete{
+    background-color: crimson;
+}
+button:hover{
+    cursor:pointer;
+    opacity: 0.8;
+}
+
+
+/*ogolne*/
+h3{
+    padding:15px;
+}
+.data{
+    padding:20px;
+}
+
+/*Add Machine/Vehicle*/
+.popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup p{
+    padding:15px;
+}
+.popup-main,.popupGarageEdit{
+    background-color: darkkhaki;
+    height: 60%;
+    overflow: auto;
+}
+.popupGarageEdit{
+    height: auto;
+}
+.popupForm form{
+    overflow: auto;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    max-height: 75%;
+}
+.popupForm form label{
+    display: inherit;
+    padding:10px;
+}
+.popupButtons{
+    padding: 15px;
+}
+@media screen and (max-width:650px){
+    .popupForm form{
+        grid-template-columns: 1fr;
+    }
+    .popup-main,.popupGarageEdit{
+        width: 90%;
+    }
+}
+
+/*Delete Vehicle*/
+.popup-delete{
+    background-color: darkkhaki;
+}
+
+/*Edit vehicle*/

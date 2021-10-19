@@ -1,0 +1,19 @@
+.bounceball {
+    position: relative;
+    display: inline-block;
+    height: 37px;
+    width: 15px;
+  }
+
+.bounceball::before{
+    position: absolute;
+      content: '';
+      display: block;
+      top: 0;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #fbae17;
+      transform-origin: 50%;
+      animation: bounce 500ms alternate infinite ease;
+}

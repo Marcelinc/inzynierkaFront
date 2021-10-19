@@ -1,0 +1,307 @@
+/*Font*/
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: 'Varela Round', sans-serif;
+}
+
+body{
+    min-height: 100vh;
+    width:100vw;
+    color:#0b0a00;
+}
+
+a{
+    text-decoration: none;
+}
+
+nav{
+    width:100vw;
+    min-height: 320px;
+    min-width: 320px;
+    height: 10%;
+    min-height: 40px;
+    display:flex;
+    justify-content: space-around;
+    background-color: rgba(40, 162, 139, 0.78);
+    align-items: center;
+}
+
+.links{
+    display: flex;
+    width:35%;
+    justify-content: space-around;
+}
+.link{
+    color:#0b0a00;
+}
+.link:hover{
+    color: #235500;
+}
+
+.logo{
+    width:45vw;
+    text-align: center;
+}
+
+footer{
+    width:100vw;
+    background-color:rgba(12, 88, 50, 0.83);
+    text-align: center;
+    height: 10%;
+    min-height: 45px;
+    min-width: 320px;
+}
+.footerLinks{
+    display: flex;
+    justify-content: space-around;
+}
+.footerHeader{
+    padding:10px;
+}
+
+main{
+    background-color: #d2691e38;
+    width: 100vw;
+    text-align: center;
+    min-height: 80%;
+    min-width: 320px;
+    display:flex;
+    justify-content: center;
+}
+.welcome{
+    align-items: center;
+}
+
+#container,.content{
+    min-height: 100%;
+    position: absolute;
+    height:100vh;
+}
+.content{
+    background-image: url('../backgroundImage.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+#glowna{
+    height:50%;
+    text-align: center;
+}
+
+#wreg{
+    padding:3vh 4vw;
+    background-color: rgba(7, 75, 16, 0.795);
+    border:none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor:pointer;
+}
+#wreg:hover{
+    background-color: rgb(76, 112, 21);
+}
+
+.menu div{
+    width:25px;
+    height:4px;
+    background-color:rgb(14, 6, 133);
+    margin:5px;
+    transition: all 0.3s ease;
+}
+.dashmenu div{
+    width:4px;
+    height:25px;
+    background-color: rgb(14, 156, 14);
+    margin:2px;
+    transition: all 0.3s ease;
+}
+
+.menu,.dashmenu{
+    display:none;
+}
+
+.dash-active{
+    transform:translateX(0%);
+}
+
+@media screen and (min-width:581px){
+    .dash{
+        width:25%;
+        min-width: 200px;
+    }
+}
+@media screen and (max-width:580px){
+    body{
+        overflow-x: hidden;
+    }
+    .links{
+        position:absolute;
+        right:0px;
+        height:90%;
+        width: 100vw;
+        background-color:darksalmon;
+        top:10%;
+        display: flex;
+        opacity: 0;
+        flex-direction: column;
+        align-items: center;
+        transform: translateX(100%);
+        transition: transform 1s ease-in;
+        transition: opacity 0.3s ease-in;
+    }
+    .link{
+        opacity:0;
+    }
+    .link:hover{
+        background-color: rgb(216, 56, 56);
+    }
+    .menu{
+        display: block;
+        cursor:pointer;
+    }
+    .dashmenu{
+        display: flex;
+        cursor: pointer;
+    }
+    .dash{
+        position:absolute;
+        width:100vw;
+        height: 90%;
+        /*transform: translateX(-100%);*/
+        transition: transform 0.5s ease-in;
+        left:-100%;
+        overflow-y: scroll;
+    }
+    .dashLink{
+        opacity:0;
+    }
+    .dash-active{
+        transform:translateX(100%);
+    }
+}
+
+.nav-active{
+    transform:translateX(0%);
+    opacity:1;
+}
+
+
+
+@keyframes linksFade{
+    from{
+        opacity:0;
+        transform: translateX(50px);
+    }
+    to{
+        opacity:1;
+        transform: translateX(0px);
+    }
+}
+@keyframes dashLinksFade{
+    from{
+        opacity:0;
+        transform: translateX(-50px);
+    }
+    to{
+        opacity:1;
+        transform: translateX(0px);
+    }
+}
+
+.active .line1{
+    transform: rotate(-45deg) translate(-5px,6px);
+}
+.active .line2{
+    opacity:0;
+}
+.active .line3{
+    transform: rotate(45deg) translate(-5px,-6px);
+}
+
+.dashmenu-active .row1{
+    transform: rotate(45deg) translate(3px,-6px);
+}
+.dashmenu-active .row2{
+    opacity:0;
+}
+.dashmenu-active .row3{
+    transform: rotate(-45deg) translate(-4px,-7px);
+}
+
+/* login site*/
+.loginSection{
+    padding:25px;
+    background-color: #7fff00a3;
+    width:50%;
+    min-width:200px;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 15px;
+}
+.loginSection h3, .loginSection p{
+    padding:12px;
+    margin-top:5px;
+    color: #0d0d0b;
+}
+.loginSection form{
+    display: flex;
+    flex-direction: column;
+}
+.loginSection p:hover{
+    cursor:pointer;
+    color: #660a0a;
+}
+.loginSection form label{
+    padding: 10px 0px;
+}
+.loginInput,.registerInput{
+    border-radius: 5px;
+    padding: 4px;
+    border:3px solid #5bac91;
+    transition: 0.5s;
+    outline: none;
+    width: 100%;
+}
+.loginInput:focus,.registerInput:focus{
+    border: 3px solid blueviolet;
+}
+#logRegButton{
+    border:none;
+    border-radius: 5px;
+    background-color: rgb(126, 31, 126);
+    cursor:pointer;
+    padding:15px 32px;
+    margin:auto;
+}
+#logRegButton:hover{
+    background-color: rgb(167, 27, 167);
+}
+.info{
+    color:rgb(104, 14, 14);
+    padding: 5px;
+}
+.registerLabel{
+    padding: 5px;
+}
+.registerForm label{
+    display: grid;
+}
+@media screen and (min-width: 640px) {
+    .registerForm label{
+        display: grid;
+        grid-template-columns: 50% auto;
+    }
+}
+
+@media screen and (min-width: 470px) {
+    .loginInput{
+        width: unset;
+    }
+}
+
+

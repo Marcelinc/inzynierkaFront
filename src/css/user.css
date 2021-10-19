@@ -1,0 +1,83 @@
+.user{
+    background-color: #d2691e38;
+    width: 100vw;
+    height: 90%;
+    display:flex;
+    flex-direction: row;
+}
+.dash{
+    background-color: rgba(110, 199, 22,0.76);
+    text-align: center;
+}
+.photo{
+    width:45%;
+    height: 45%;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5%;
+}
+.photo img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.profile{
+    border-bottom: darkred solid 1px;
+}
+.user-nav{
+    padding:5%;
+}
+.user-nav p {
+   padding:5%;
+   margin:5px;
+   border-bottom: darkred solid 1px;
+}
+.user-nav p:hover{
+    cursor:pointer;
+    color:gold;
+}
+.Username{
+    margin-bottom: 3%;
+}
+.data{
+    width:75%;
+}
+
+@media screen and (max-width:580px){
+    .data{
+        width:100%;
+    }
+}
+
+/* /user */
+.userInfo,.userContact{
+    padding: 15px 20px;
+    min-height: 40%;
+    background-color: #3bb4d0b3;
+}
+.userInfo h3,.userContact h3{
+    padding:5px 15px;
+    border-top: darkred 1px solid;
+    border-bottom: darkred 1px solid;
+}
+.uData{
+    padding:5px;
+}
+.userInfoButtons{
+    display: flex;
+    justify-content: center;
+    background-color: #3bb4d0b3;
+}
+.userInfoButtons button{
+    background-color: rgb(161, 17, 161);
+    border-radius: 5px;
+    height: 40px;
+    width: 55px;
+    border:0px;
+}
+
+.userInfoButtons button:hover{
+    background-color: rgb(196, 34, 196);
+    cursor:pointer;
+}
