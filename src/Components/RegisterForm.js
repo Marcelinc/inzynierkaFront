@@ -18,7 +18,7 @@ const RegisterForm = (props) => {
 
     useEffect(() => {
         //Get country list
-        fetch(process.env.MIX_CUSTOM_URL+'/api/lookup-table/country/getAll',{
+        fetch(process.env.REACT_APP_SERVER+'/api/lookup-table/country/getAll',{
             method:'POST',
             headers: {'Content-Type':'application/json'}
         })
@@ -32,7 +32,7 @@ const RegisterForm = (props) => {
         console.log(country_id);
         if(validation()){
             document.querySelector('#registerInfo').innerHTML='Przetwarzanie...';
-            fetch(process.env.MIX_CUSTOM_URL+"/api/register",{
+            fetch(process.env.REACT_APP_SERVER+"/api/register",{
                 method: 'POST',
                 headers: {'Content-Type':'application/json'},
                 body: JSON.stringify({email,password,name,surname,town,country_id})

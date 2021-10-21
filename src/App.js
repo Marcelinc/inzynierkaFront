@@ -15,18 +15,38 @@ function App(){
 
     const [logged,setLogged] = useState(false);
     const [user,setUser] = useState({farm_id:0});
+    const [csrfToken,setToken] = useState('');
 
     useEffect(() => {
-        fetch(process.env.MIX_CUSTOM_URL+"/api/get_user_data",{
+        setToken(getCookie('CSRF-TOKEN'));
+        console.log(csrfToken);
+        console.log(sessionStorage.getItem('jwt'))
+        fetch(process.env.REACT_APP_SERVER+"/api/get_user_data",{
             method: 'POST',
             headers: {'Content-Type':'application/json',
-            'X-Requested-With':'XMLHttpRequest'
-            },
+            'X-Requested-With':'XMLHttpRequest',
+            'X-CSRF-TOKEN':csrfToken},
             credentials: 'include'
         })
-        .then(response => response.json())
-        .then(res => {if(res.message !== 'Unauthenticated.') if(res.data.name) {setLogged(true); setUser(res.data);} })          
+        .then(response => {if(response.status === 200) response.json(); else return {message:'error'}})
+        .then(res => {if(res.message !== 'Unauthenticated.' && res.message !== 'error') 
+            if(res.data) {setLogged(true); setUser(res.data);} })          
     },[])
+
+    function getCookie(name) {
+        if (!document.cookie) {
+          return null;
+        }
+      
+        const xsrfCookies = document.cookie.split(';')
+          .map(c => c.trim())
+          .filter(c => c.startsWith(name + '='));
+      
+        if (xsrfCookies.length === 0) {
+          return null;
+        }
+        return decodeURIComponent(xsrfCookies[0].split('=')[1]);
+      }
 
     return(
         <Router>

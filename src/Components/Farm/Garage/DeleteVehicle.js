@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const DeleteVehicle = (props) => {
 
     const deleteHandler = () => {
-        fetch(process.env.MIX_CUSTOM_URL+'/api/vehicle/delete',{
+        fetch(process.env.REACT_APP_SERVER+'/api/vehicle/delete',{
             method:"POST",
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({'id':props.id})

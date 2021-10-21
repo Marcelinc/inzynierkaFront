@@ -12,7 +12,7 @@ const AddCrops = (props) => {
         console.log(quantity);
         //console.log(localization)
         console.log(actCrop)
-        /*fetch(process.env.MIX_CUSTOM_URL+'/api/vehicle',{
+        /*fetch(process.env.REACT_APP_SERVERL+'/api/vehicle',{
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({name,production_date,technical_examination_date,vehicle_number,vehicle_type_id})

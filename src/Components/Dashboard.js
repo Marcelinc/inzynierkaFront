@@ -9,7 +9,7 @@ const Dashboard = (props) => {
     const history = useHistory();
 
     const onClickHandle = () => {
-        fetch(process.env.MIX_CUSTOM_URL+"/api/logout",{
+        fetch(process.env.REACT_APP_SERVER+"/api/logout",{
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             credentials: 'include',

@@ -44,10 +44,10 @@ const LoginForm = (props) => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-
+        
         if(validation()){
             document.querySelector('#loginInfo').innerHTML='Logowanie...';
-            fetch(process.env.MIX_CUSTOM_URL+"/api/login",{
+            fetch(process.env.REACT_APP_SERVER+"/api/login",{
                 method: 'POST',
                 headers: {'Content-Type':'application/json'},
                 credentials: 'include',
@@ -59,7 +59,7 @@ const LoginForm = (props) => {
                     document.querySelector('#loginInfo').innerHTML='Niepoprawny email lub hasło!'}
                     setPassword('');
                 })
-            .catch(err => {document.querySelector('#loginInfo').innerHTML='Błąd podczas logowania. Spróbuj później'});
+            .catch(err => {document.querySelector('#loginInfo').innerHTML='Błąd podczas logowania. Spróbuj później'; console.log(err)});
         }
     }
 

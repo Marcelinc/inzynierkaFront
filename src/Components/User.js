@@ -36,7 +36,7 @@ const User = (props) => {
     const [content,setContent] = useState(props.content);
 
     useEffect(() => {
-        fetch(process.env.MIX_CUSTOM_URL+"/api/get_user_data",{
+        fetch(process.env.REACT_APP_SERVER+"/api/get_user_data",{
             method: 'POST',
             headers: {'Content-Type':'application/json',
             'X-Requested-With':'XMLHttpRequest'

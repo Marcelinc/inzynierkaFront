@@ -27,7 +27,7 @@ const Garage = (props) => {
 
     useEffect(() => {
         console.log(props.farmId)
-        fetch(process.env.MIX_CUSTOM_URL+'/api/garage',{
+        fetch(process.env.REACT_APP_SERVER+'/api/garage',{
             method:"POST",
             headers: {'Content-Type':'application/json'},
             credentials: 'include'

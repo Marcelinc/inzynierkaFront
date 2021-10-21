@@ -21,7 +21,7 @@ const AddMachine = (props) => {
         console.log(vehicle_type_id);
         console.log(farm_id);
 
-        fetch(process.env.MIX_CUSTOM_URL+'/api/machine/create',{
+        fetch(process.env.REACT_APP_SERVER+'/api/machine/create',{
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({name,production_date,number,vehicle_type_id,farm_id})

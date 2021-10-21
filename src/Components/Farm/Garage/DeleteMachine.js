@@ -4,7 +4,7 @@ const DeleteMachine = (props) => {
 
     const deleteHandler = () => {
         console.log(props.id);
-        fetch(process.env.MIX_CUSTOM_URL+'/api/machine/delete',{
+        fetch(process.env.REACT_APP_SERVER+'/api/machine/delete',{
             method:'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({'id':props.id})
