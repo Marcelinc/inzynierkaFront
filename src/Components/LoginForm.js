@@ -41,6 +41,21 @@ const LoginForm = (props) => {
 
         return validated;
     }
+    function getCookie(name) {
+        if (!document.cookie) {
+          return null;
+        }
+      
+        const xsrfCookies = document.cookie.split(';')
+          .map(c => c.trim())
+          .filter(c => c.startsWith(name + '='));
+      
+        if (xsrfCookies.length === 0) {
+          return null;
+        }
+        return decodeURIComponent(xsrfCookies[0].split('=')[1]);
+      }
+
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -49,7 +64,8 @@ const LoginForm = (props) => {
             document.querySelector('#loginInfo').innerHTML='Logowanie...';
             fetch(process.env.REACT_APP_SERVER+"/api/login",{
                 method: 'POST',
-                headers: {'Content-Type':'application/json'},
+                headers: {'Content-Type':'application/json',
+                'X-CSRF-TOKEN':props.cookie('XSRF-TOKEN')},
                 credentials: 'include',
                 body: JSON.stringify({email,password})
             })
