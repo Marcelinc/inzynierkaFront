@@ -39,12 +39,11 @@ const User = (props) => {
         fetch(process.env.REACT_APP_SERVER+"/api/get_user_data",{
             method: 'POST',
             headers: {'Content-Type':'application/json',
-            'X-Requested-With':'XMLHttpRequest'
-            },
+            'X-Requested-With':'XMLHttpRequest'},
             credentials: 'include'
         })
         .then(response => response.json())
-        .then(res =>  {if(res.message !== 'Unauthenticated.') {setName(res.data.name); setSurname(res.data.surname); setId(res.data.id); setUser(res.data)} setLoad(false);})
+        .then(res =>  {console.log(res);if(res.message !== 'Unauthenticated.' && res.message !== 'error') {setName(res.data.name); setSurname(res.data.surname); setId(res.data.id); setUser(res.data)} setLoad(false);})
         return(() => {setName('');setSurname('');setId(0);setUser({});setLoad();setContent('')})
     },[])
 

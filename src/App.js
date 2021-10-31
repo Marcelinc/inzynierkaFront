@@ -8,6 +8,7 @@ import Zlecenia from "./Components/Zlecenia";
 import NotExist from "./Components/NotExist";
 import ResetPswdReq from "./Components/ResetPswdReq";
 import Loader from "./Components/Loader";
+import './css/main.css'
 
 import './img/fontello-1c92c5fc/css/fontello.css'
 
@@ -15,45 +16,25 @@ function App(){
 
     const [logged,setLogged] = useState(false);
     const [user,setUser] = useState({farm_id:0});
-    const [csrfToken,setToken] = useState('');
 
     useEffect(() => {
-        setToken(getCookie('CSRF-TOKEN'));
-        console.log(csrfToken);
-        console.log(sessionStorage.getItem('jwt'))
         fetch(process.env.REACT_APP_SERVER+"/api/get_user_data",{
             method: 'POST',
             headers: {'Content-Type':'application/json',
-            'X-Requested-With':'XMLHttpRequest',
-            'X-CSRF-TOKEN':csrfToken},
+            'X-Requested-With':'XMLHttpRequest'},
             credentials: 'include'
         })
-        .then(response => {if(response.status === 200) response.json(); else return {message:'error'}})
+        .then(response => response.json())
         .then(res => {if(res.message !== 'Unauthenticated.' && res.message !== 'error') 
             if(res.data) {setLogged(true); setUser(res.data);} })          
     },[])
-
-    function getCookie(name) {
-        if (!document.cookie) {
-          return null;
-        }
-      
-        const xsrfCookies = document.cookie.split(';')
-          .map(c => c.trim())
-          .filter(c => c.startsWith(name + '='));
-      
-        if (xsrfCookies.length === 0) {
-          return null;
-        }
-        return decodeURIComponent(xsrfCookies[0].split('=')[1]);
-      }
 
     return(
         <Router>
             <Switch>
                 <Route path="/" exact component={() => <Welcome log={logged} setLog={setLogged}/>}/>
                 <Route path="/rejestracja" component={() => <RegisterForm log={logged} setLog={setLogged}/>}/>                    
-                <Route path="/logowanie" component={() => <LoginForm log={logged} setLog={setLogged} cookie={getCookie}/>}/>
+                <Route path="/logowanie" component={() => <LoginForm log={logged} setLog={setLogged}/>}/>
                 <Route path='/resetPassword' component={() => <ResetPswdReq log={logged} setLog={setLogged}/>}/>
                 <Route path="/user" exact component={() => <User log={logged} setLog={setLogged} content=''/>}/>
                 <Route path="/user/zlecenia" component={() => <User log={logged} setLog={setLogged} content='zlecenia'/>}/>

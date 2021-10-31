@@ -32,15 +32,15 @@ const Garage = (props) => {
             headers: {'Content-Type':'application/json'},
             credentials: 'include'
         })
-        .then(response => response.json())
+        .then(response => {console.log(response);response.json()})
         .then(res => {
             setMachines(res.data.machines);
             setVehicles(res.data.vehicles);
             //renderMachines(res.data.vehicles,'vehicle');
             //renderMachines(res.data.machines,'machine');
-            console.log(res.data)
+            console.log('res'+res.json())
             setloading(false);
-        });
+        }).catch(err => document.querySelector('.getDataStatus').innerHTML='Błąd podczas pobierania');
     },[]);
 
     const renderMachines = (machine,type) => {
@@ -141,7 +141,8 @@ const Garage = (props) => {
                     <span>Nazwa</span>
                     <span>Numer</span>
                 </div>
-                {loading ? <p className='getDataStatus'>Ładowanie danych...</p>: machines.map(m => (
+                <p className='getDataStatus'> {loading && 'Ładowanie danych...'}</p>
+                {machines.map(m => (
                     <div key={m.id} className='unit machine' onClick={() => onInfoClick(m.id,'m')}>
                         <span>{m.name}</span>
                         <span>{m.number}</span>
