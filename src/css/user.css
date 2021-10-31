@@ -51,10 +51,14 @@
 }
 
 /* /user */
+.userInfo{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
 .userInfo,.userContact{
     padding: 15px 20px;
     min-height: 40%;
-    background-color: #3bb4d0b3;
+    background-color: #90e384ab;
 }
 .userInfo h3,.userContact h3{
     padding:5px 15px;
@@ -67,7 +71,10 @@
 .userInfoButtons{
     display: flex;
     justify-content: center;
-    background-color: #3bb4d0b3;
+    background-color: #90e384ab;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 15px;
 }
 .userInfoButtons button{
     background-color: rgb(161, 17, 161);

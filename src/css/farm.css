@@ -55,10 +55,55 @@
     padding-right: 10%;
 }
 
-/*Garage*/
-.getDataStatus{
+/*Farm content data status*/
+.getDataStatus,.filterInfo{
     color:red;
     padding:15px;
+}
+
+/*Farm content*/
+.equipment-content{
+    background-color: #35988475;
+    border-radius: 15px;
+    padding: 15px;
+    color: #fbfdff;
+}
+.searchButton{
+    padding: 3px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+}
+.searchButton:focus{
+    outline: 2px solid #1b910a;
+}
+.legend{
+    padding:10px;
+    background-color: #711e0ebd;
+    display: grid;
+    grid-auto-flow: column;
+}
+#options{
+    width:55%;
+    margin: 10px 0px;
+}
+#options p{
+    padding-bottom: 2px;
+}
+#options label{
+    padding: 10px;
+    display: inline-table;
+}
+#options label:hover{
+    color:#04d004;
+    cursor:pointer;
+}
+.addButtons{
+    display: contents;
+}
+
+.filterInfo{
+    display: none;
 }
 
 
@@ -129,7 +174,74 @@
     background-color: rgba(127, 255, 212, 0.664);
     margin-top: 20px;
 }
-
-.equipment-content{
-    background-color: #b8860bd9;
+.vehicle-actions{
+    padding:15px;
 }
+.vehicle-actions button{
+    padding: 7px;
+    border-radius: 5px;
+    border: none;
+    margin: 5px;
+    background-color: #151c08;
+    color: antiquewhite;
+}
+
+/*Plots info*/
+.plot-info{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.plotOverall{
+    text-align: left;
+    padding: 5px;
+}
+
+.plotLocalization{
+    padding: 5px;
+}
+
+.plotHistory{
+    background-color: antiquewhite;
+    height: 150px;
+    overflow-y: auto;
+}
+
+@media screen and (max-width:730px) {
+    .plot-info{
+        display: flex;
+        flex-direction:column;
+    }
+}
+
+
+/*Worker info*/
+.userInfoContent{
+    display:flex;
+    justify-content: space-around;
+    margin-top: 25px;
+}
+.userPhoto{
+    height: 150px;
+    width: 150px;
+}
+
+/*Worker list*/
+.worker-list{height: 100%;}
+
+/*Crops info*/
+
+
+/*Chemicals*/
+#chemicalsLegend, #chemicals .unit{
+    grid-template-columns: 30% 15% 15%;
+}
+
+@media screen and (max-width: 660px) {
+    
+}
+
+
+/*.equipment-content{
+    background-color: #b8860bd9;
+}*/

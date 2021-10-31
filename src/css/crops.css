@@ -1,16 +1,12 @@
 /*Menu*/
 #farmResMenu{
-    background-color: darksalmon;
+    background-color: #0f0a0994;
     min-height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-around;
-}
-#options{
-    width:65%;
-}
-#options p{
-    padding-bottom: 2px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
 }
 #farmResMenu > *{
     padding-inline: 10px;
@@ -26,17 +22,21 @@
 
 /*Resources list*/
 #crops,#chemicals,#workers,#plots{
-    background-color: rgb(192, 114, 87);
+    background-color: rgba(34, 25, 22, 0.64);
     padding:5px;
     min-height: 30%;
     max-height: 80%;
     overflow-y: auto;
+    color:black;
 }
 #cropsLegend,.unit{
     grid-template-columns: 25% 15% 20%;
 }
-#chemicals #legend,#chemicals .unit{
-    grid-template-columns: 25% 15% 12% 10%;
+#cropsLegend{
+    padding: 10px;
+    display: grid;
+    background-color: #711e0ebd;
+    grid-auto-flow: column;
 }
 #workers #legend,#workers .unit{
     grid-template-columns: 25% 25% auto;
