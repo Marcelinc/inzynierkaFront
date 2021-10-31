@@ -16,7 +16,7 @@ ServerAlias www.inzynierkafront.com
 </Directory>
 </VirtualHost>
 ```
-3. Przypisać IP do Domeny w pliku C:\Windows\System32\drivers\etc
+3. Przypisać IP do Domeny w pliku C:\Windows\System32\drivers\etc\hosts
 ```
 127.0.0.1 inzynierka.com
 ```
