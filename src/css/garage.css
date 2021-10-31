@@ -1,18 +1,29 @@
 #garageMenu{
-    background-color: darksalmon;
+    background-color: #0f0a0994;
     min-height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-around;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
-#options label{
-    padding: 10px;
+@media  screen and (max-width: 420px) {
+    #garageMenu{
+        flex-direction: column-reverse;
+    }
+    #options{
+        width:100%;
+    }
+    .addButtons{
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        margin-top: 10px;
+    }
 }
+
 #garageMenu > *{
     padding-inline: 10px;
-}
-#addMachine{
-    color:green;
 }
 #addMachine:hover{
     cursor:pointer;
@@ -23,29 +34,29 @@
 
 /*lista maszyn*/
 #machines{
-    background-color: rgb(192, 114, 87);
+    background-color: rgba(34, 25, 22, 0.64);
     padding:5px;
     min-height: 30%;
     max-height: 80%;
     overflow-y: auto;
+    color: black;
 }
-#legend{
-    background-color: rgb(192, 114, 87);
+#garageLegend{
+    background-color: #711e0ebd;
 }
-#legend,.unit{
-    padding: 10px;
-    display: grid;
-    grid-template-columns: 25% 15%;
-    grid-auto-flow: column;
-    margin-inline:5px;
-
+#garageLegend, #machines .unit{
+    grid-template-columns: 25% 15% 20%; 
 }
-#legend::after{
-    content: 'Opcje';
+#garageLegend::after{
+    content: 'Informacje';
 }
 .unit{
     background-color: gainsboro;
     margin-bottom: 7px;
+    border-radius: 3px;
+    padding: 10px;
+    display: grid;
+    grid-auto-flow: column;
 }
 .unit::after{
     grid-column: auto;
@@ -67,6 +78,16 @@ button:hover{
     cursor:pointer;
     opacity: 0.8;
 }
+@media screen and (max-width:830px) {
+    #garageLegend::after{
+        display: none;
+    }
+    #machines .unit, #garageLegend{
+        grid-template-columns: 30% 15%;
+    }
+}
+
+
 
 
 /*ogolne*/
@@ -75,6 +96,7 @@ h3{
 }
 .data{
     padding:20px;
+    overflow-y: hidden;
 }
 
 /*Add Machine/Vehicle*/
@@ -91,11 +113,15 @@ h3{
 }
 .popup p{
     padding:15px;
+    font-size: 25px;
 }
 .popup-main,.popupGarageEdit{
-    background-color: darkkhaki;
-    height: 60%;
+    background-image: linear-gradient(to bottom,#166f5e,#97f756);
+    height: 65%;
     overflow: auto;
+    border-radius: 12px;
+    min-width: 300px;
+    color: #3c0303;
 }
 .popupGarageEdit{
     height: auto;
@@ -110,12 +136,41 @@ h3{
     display: inherit;
     padding:10px;
 }
+#addForm label input,.editForm label input{
+    border-radius: 3px;
+    border: none;
+    padding: 3px;
+    outline: none;
+    min-width: 100px;
+}
+#addForm label input:focus, .editForm label input:focus{
+    outline: 2px solid #6c0909;
+}
+#addForm label select, .editForm label select{
+    background-color: #093637;
+    color: aliceblue;
+    border-radius: 3px;
+    border: none;
+    padding: 5px;
+    height:30px
+}
 .popupButtons{
     padding: 15px;
+}
+.popupButtons button{
+    padding:7px;
+    margin: 4px;
+    background-color: #151c08;
+    border: none;
+    border-radius: 5px;
+    color: antiquewhite;
 }
 @media screen and (max-width:650px){
     .popupForm form{
         grid-template-columns: 1fr;
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto;
     }
     .popup-main,.popupGarageEdit{
         width: 90%;
