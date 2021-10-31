@@ -5,37 +5,91 @@ const AddVehicle = (props) => {
     const [name,setName] = useState('');
     const [production_date,setDate] = useState('');
     const [technical_examination_date,setTechDate] = useState('');
-    const [number,setNumber] = useState(0);
+    //const [number,setNumber] = useState(0);
     const [vehicle_type_id,setType] = useState(1);
     const [status_id,setStatus] = useState(1);
     const [fuel_level_id,setFuelLevel] = useState(1);
     const [farm_id,setFarm] = useState(0);
+    const [capacity,setCapacity] = useState(0);
+    const [power,setPower] = useState(0);
+    const [vin,setVin] = useState('');
+    const [image,setImage] = useState('');
 
     useEffect(() => {
         setFarm(props.farmId);
     },[])
 
-    const addHandler = () => {
-        console.log(name)
-        console.log(production_date);
-        console.log(technical_examination_date)
-        console.log(number)
-        console.log(vehicle_type_id);
-        console.log(status_id);
-        console.log(fuel_level_id);
-        console.log('farm_id'+farm_id);
+    const addHandler = (event) => {
+        event.preventDefault();
+        document.querySelector('#addVehicleInfo').innerHTML='';
 
-        fetch(process.env.REACT_APP_SERVER+'/api/vehicle/create',{
-            method: 'POST',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({name,production_date,technical_examination_date,number,vehicle_type_id,status_id,fuel_level_id,farm_id})
-        })
-        .then(response => response.json())
-        .then(res => {console.log(res.data);
-            const updateVehicles= [...props.vehicles,res.data];
-            props.setVehicles(updateVehicles);
-        })
-        props.setTrigger(false)
+        if(validation()){
+            document.querySelector('#addVehicleInfo').innerHTML='Dodawanie...';
+            //Create request body
+            let body = {name,production_date,technical_examination_date,vehicle_type_id,status_id,fuel_level_id,farm_id};
+            //if(number) body['number']=number;
+            if(capacity) body['capacity']=capacity;
+            if(power) body['power']=power;
+            if(vin) body['vin']=vin;
+            if(image) body['image']=image;
+
+            //Send request
+            fetch(process.env.REACT_APP_SERVER+'/api/vehicle/create',{
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify(body)
+            })
+            .then(response => response.json())
+            .then(res => {console.log(res.data);
+                const updateVehicles= [...props.vehicles,res.data];
+                props.setVehicles(updateVehicles);
+                props.setTrigger(false);
+                clearFormData();
+            })
+            .catch(err => {console.log(err);document.querySelector('#addVehicleInfo').innerHTML='Błąd podczas dodawania';});
+        }
+    }
+
+    const validation = () => {
+        let validate = true;;
+
+        //Name validation
+        if(!name){
+            validate=false;
+            document.querySelector('#vehicleName').innerHTML='Podaj nazwę!'
+        } else document.querySelector('#vehicleName').innerHTML='';
+
+        //Production date validation
+        let date = new Date();
+        let productionDate = new Date(production_date);
+        
+        if(!production_date){
+            validate=false;
+            document.querySelector('#vehicleYear').innerHTML='Wprowadź datę!'
+        } else document.querySelector('#vehicleYear').innerHTML='';
+
+        if(productionDate.getTime()>date.getTime()){
+            validate=false;
+            document.querySelector('#vehicleYear').innerHTML='Wprowadź minioną datę!'
+        } 
+
+        //Tech date validation
+        let techDate = new Date(technical_examination_date);
+        if(!technical_examination_date){
+            validate=false;
+            document.querySelector('#vehicleTechDate').innerHTML='Wprowadź datę!'
+        } else document.querySelector('#vehicleTechDate').innerHTML='';
+
+        if(techDate.getTime()<date.getTime()){
+            validate=false;
+            document.querySelector('#vehicleTechDate').innerHTML='Wprowadź przyszłą datę!'
+        } 
+        return validate;
+    }
+
+    const clearFormData = () => {
+        setName('');setDate('');setTechDate('');setType(1);setStatus(1);setFuelLevel(1);
+        setCapacity(0);setPower(0);setVin('');setImage('');
     }
 
     return(props.trigger ? <div className='popup'>
@@ -43,10 +97,14 @@ const AddVehicle = (props) => {
             <p>Dodawanie pojazdu</p>
             <section className='popupForm'>
                 <form onSubmit={addHandler} id='addForm'>
-                    <label>Nazwa <input type='text' onChange={e => setName(e.target.value)}/></label>
-                    <label>Rok produkcji <input type='date' onChange={e => setDate(e.target.value)}/></label>
-                    <label>Termin badania technicznego <input type='date' onChange={e => setTechDate(e.target.value)}/></label>
-                    <label>Numer <input type='number' onChange={e => setNumber(e.target.value)}/></label>
+                <label>Nazwa* <input type='text' onChange={e => setName(e.target.value)}/>
+                        <span id='vehicleName' className='info'></span></label>
+                    <label>Rok produkcji* <input type='date' onChange={e => setDate(e.target.value)}/>
+                        <span id='vehicleYear' className='info'></span></label>
+                    <label>Badanie techniczne* <input type='date' onChange={e => setTechDate(e.target.value)}/>
+                        <span id='vehicleTechDate' className='info'></span></label>
+                    {/*<label>Numer <input type='number' onChange={e => setNumber(e.target.value)}/>
+                        <span id='vehicleNumber' className='info'></span></label>*/}
                     <label>Rodzaj pojazdu 
                         <select onChange={e => setType(e.target.value)}>
                             <option value='1'>Ciągnik</option>
@@ -68,17 +126,22 @@ const AddVehicle = (props) => {
                             <option value='3'>Wymaga zatankowania</option>
                         </select>
                     </label>
-                    <label>Pojemność <input type='text'/></label>
-                    <label>Moc <input type='text'/></label>
-                    <label>VIN <input type='text'/></label>
-                    <label>Zdjęcie <input type='file'/></label>
+                    <label>Pojemność <input type='number' onChange={e => setCapacity(e.target.value)}/>
+                        <span id='vehicleCapacity' className='info'></span></label>
+                    <label>Moc <input type='number' onChange={e => setPower(e.target.value)}/>
+                        <span id='vehiclePower' className='info'></span></label>
+                    <label>VIN <input type='text' onChange={e => setVin(e.target.value)}/>
+                        <span id='vehicleVin' className='info'></span></label>
+                    <label>Zdjęcie <input type='file' onChange={e => setImage(e.target.value)}/>
+                        <span id='vehicleImg' className='info'></span></label>
                    
                     
                 </form>
             </section>
             <section className='popupButtons'>
-                <button onClick={() => props.setTrigger(false)}>Anuluj</button>
+                <button onClick={() => {props.setTrigger(false); clearFormData();}}>Anuluj</button>
                 <button form='addForm'>Potwierdź</button>
+                <h3 className='info' id='addVehicleInfo'></h3>
             </section>
         </section>
     </div> : "")

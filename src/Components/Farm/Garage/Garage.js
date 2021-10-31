@@ -4,6 +4,7 @@ import '../../../css/garage.css';
 import AddMachine from './AddMachine';
 import VehicleInfo from './VehicleInfo';
 import MachineInfo from './MachineInfo';
+import { useHistory } from 'react-router';
 
 const Garage = (props) => {
 
@@ -12,6 +13,7 @@ const Garage = (props) => {
 
     const [loading,setloading] = useState(true);
     const [dataType,setDataType] = useState('list');
+    const [displayed,setDisplayed] = useState([]);
 
     var machineResources='';
     const [triggerAddV,setTriggerAddV] = useState(false);
@@ -25,6 +27,8 @@ const Garage = (props) => {
     const [machineFilter,setMF] = useState(true);
     const [vehicleFilter,setVF] = useState(true);
 
+    const history = useHistory();
+
     useEffect(() => {
         console.log(props.farmId)
         fetch(process.env.REACT_APP_SERVER+'/api/garage',{
@@ -32,15 +36,17 @@ const Garage = (props) => {
             headers: {'Content-Type':'application/json'},
             credentials: 'include'
         })
-        .then(response => {console.log(response);response.json()})
+        .then(response => response.json())
         .then(res => {
             setMachines(res.data.machines);
             setVehicles(res.data.vehicles);
+            //setDisplayed(res.data.vehicles.concat(res.data.machines));
             //renderMachines(res.data.vehicles,'vehicle');
             //renderMachines(res.data.machines,'machine');
-            console.log('res'+res.json())
+            console.log(res.data)
             setloading(false);
-        }).catch(err => document.querySelector('.getDataStatus').innerHTML='Błąd podczas pobierania');
+        })
+        .catch(err => document.querySelector('.getDataStatus').innerHTML='Błąd podczas pobierania');
     },[]);
 
     const renderMachines = (machine,type) => {
@@ -133,25 +139,33 @@ const Garage = (props) => {
                 <label><input type='checkbox' name='vehicleFilter' checked={vehicleFilter} onChange={filterHandler}/> Pojazdy</label>
                 <label><input type='checkbox' name='machineFilter' checked={machineFilter} onChange={filterHandler}/> Sprzęt rolniczy</label>
                 </div>
-                <span id='addMachine' onClick={() => setTriggerAddV(true)}>+Dodaj pojazd</span>
-                <span id='addMachine' onClick={() => setTriggerAddM(true)}>+Dodaj sprzęt</span>
+                <div className='addButtons'>
+                    <span id='addMachine' onClick={() => setTriggerAddV(true)}>+Pojazd</span>
+                    <span id='addMachine' onClick={() => setTriggerAddM(true)}>+Sprzęt</span>
+                </div>
             </div>
-            <div id='machines'>
-                <div id='legend'>
+            <div id='garageLegend' className='legend'>
                     <span>Nazwa</span>
                     <span>Numer</span>
                 </div>
-                <p className='getDataStatus'> {loading && 'Ładowanie danych...'}</p>
-                {machines.map(m => (
-                    <div key={m.id} className='unit machine' onClick={() => onInfoClick(m.id,'m')}>
-                        <span>{m.name}</span>
-                        <span>{m.number}</span>
-                </div>))} 
-                {vehicles.map(v => (
-                    <div key={v.id} className='unit vehicle' onClick={() => onInfoClick(v.id,'v')}>
-                        <span>{v.name}</span>
-                        <span>{v.number}</span>
-                </div>))}
+            <div id='machines'>
+                {loading ? <p className='getDataStatus'>Ładowanie danych...</p>: machines.map(m => (
+                        <div key={m.id} className='unit machine' onClick={() => onInfoClick(m.id,'m')}>
+                            <span>{m.name}</span>
+                            <span>{m.number}</span>
+                            <span className='garageList_Status'>{'Sprawny'}</span>
+                    </div>))}
+                    {vehicles.map(v => (
+                        <div key={v.id} className='unit vehicle' onClick={() => onInfoClick(v.id,'v')}>
+                            <span>{v.name}</span>
+                            <span>{v.number}</span>
+                            <span className='garageList_Status'>{v.status.status}</span>
+                    </div>))}
+                    {/*displayed.map(d => <div key={d.id} className='unit vehicle' onClick={() => onInfoClick(d.id,'v')}>
+                            <span>{d.name}</span>
+                            <span>{d.number}</span>
+                            <span className='garageList_Status'>{d.status.status}</span>
+                </div>)*/}
             </div>
             <AddVehicle trigger={triggerAddV} setTrigger={setTriggerAddV} vehicles={vehicles} setVehicles={setVehicles} farmId={props.farmId}/>
             <AddMachine trigger={triggerAddM} setTrigger={setTriggerAddM} machines={machines} setMachines={setMachines} farmId={props.farmId}/>

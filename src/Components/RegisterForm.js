@@ -13,8 +13,8 @@ const RegisterForm = (props) => {
     const [surname,setSurname] = useState('');
     const [town,setTown] = useState('');
 
-    const [countryList,setCountryList] = useState([{id:1,name:'Polska'},{id:2,name:'Szwecja'}]);
-    const [country_id,setCountry] = useState(1);
+    const [countryList,setCountryList] = useState([{id:0,name:'Ładowanie..'}]);
+    const [country_id,setCountry] = useState(0);
 
     useEffect(() => {
         //Get country list
@@ -23,7 +23,7 @@ const RegisterForm = (props) => {
             headers: {'Content-Type':'application/json'}
         })
         .then(response => response.json())
-        .then(res => setCountryList(res.data))
+        .then(res => {setCountryList(res.data); document.getElementById('countrySelect').disabled=false; setCountry(1)})
         .catch(err => console.log(err));
     },[])
 

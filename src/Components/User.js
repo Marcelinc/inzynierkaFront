@@ -30,7 +30,8 @@ const User = (props) => {
         email:'',
         street:'',
         house_number:'',
-        flat_number:''
+        flat_number:'',
+        farm_id:null
     });
     const [load,setLoad] = useState(true);
     const [content,setContent] = useState(props.content);
@@ -57,7 +58,7 @@ const User = (props) => {
                 {props.log && name ?
                     <main className='user'>
                         <Dashboard name={name} surname={surname} setLogIn={props.setLog} content={setContent} title={user.job_title}/>
-                        {content === 'farm' && <Farm content={setContent} hasFarm={user.job_title}/>}
+                        {content === 'farm' && <Farm content={setContent} hasFarm={user.farm_id}/>}
                         {content === 'zlecenia' && <OwnOrders/>}
                         {content === '' &&
                             <section className='data'>
@@ -86,8 +87,8 @@ const User = (props) => {
                         {content === 'stats' && <Stats/>}
                         {content === 'note' && <Notifications/>}
                         {content === 'garage' && <Garage farmId={props.farmId}/>}
-                        {content === 'crops' && <Crops/>}
-                        {content === 'chemicals' && <Chemicals/>}
+                        {content === 'crops' && <Crops farmId={user.farm_id}/>}
+                        {content === 'chemicals' && <Chemicals farmId={user.farm_id}/>}
                         {content === 'workers' && <Workers/>}
                         {content === 'plot' && <Plots/>}
                         {content === 'manage' && <FarmManage/>}

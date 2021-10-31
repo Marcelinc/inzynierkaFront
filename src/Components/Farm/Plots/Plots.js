@@ -26,7 +26,7 @@ const Plots = () => {
             <div id='farmResMenu'>
                 <div id='options'>
                     <p>Wyszukaj</p>
-                    <input type='text' placeholder='Lokalizacja...' onChange={filterHandler}/>
+                    <input type='text' className='searchButton' placeholder='Lokalizacja...' onChange={filterHandler}/>
                 </div>
                 <span id='addCrops' onClick={() => setTrigger(true)}>+Dodaj działkę</span>
             </div>

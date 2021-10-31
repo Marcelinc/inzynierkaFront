@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
+import { useHistory } from 'react-router';
 import DeleteVehicle from './DeleteVehicle';
 import VehicleEdit from './VehicleEdit';
 
 const VehicleInfo = (props) => {
     const [triggerDeleteV,setTriggerDeleteV] = useState(false);
     const [editMode,setMode] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
         
@@ -13,6 +15,7 @@ const VehicleInfo = (props) => {
 
     const onReturnHandler = () => {
         props.setDataType('list');
+        history.push('/gospodarstwo/garaz');
     }
 
     const onEditClick = function (){
@@ -37,14 +40,15 @@ const VehicleInfo = (props) => {
             </div>
         </section>
              <section className='vehicle-info'>
-                <p><span>Rok produkcji</span> {props.vehicle.production_date}</p>
+             <p><span>Rok produkcji</span> {props.vehicle.production_date}</p>
                 <p><span>Termin badania technicznego</span> {props.vehicle.technical_examination_date}</p>
-                <p><span>Rodzaj pojazdu</span> {props.vehicle.vehicle_type_id}</p>
-                <p><span>Status</span> {props.vehicle.status_id}</p>
+                <p><span>Rodzaj pojazdu</span> {props.vehicle.vehicle_type.name}</p>
+                <p><span>Status</span> {props.vehicle.status.status}</p>
                 <p><span>Pojemność</span> {props.vehicle.capacity}</p>
                 <p><span>Moc</span> {props.vehicle.power}</p>
                 <p><span>VIN</span> {props.vehicle.vin}</p>
-                <p><span>Stan paliwa </span> {props.vehicle.fuel_level_id}</p>
+                <p><span>Stan paliwa </span> {props.vehicle.fuel_level.name}</p>
+                <p>Ostatnia aktualizacja <span>{props.vehicle.date_update_fuel_level}</span></p>
                 <section className='vehicle-actions'>
                     <button className='MachEdit' onClick={() => onEditClick()}>Edytuj</button>
                     <button className='MachDelete' onClick={() => onDeleteClick(props.vehicle.id)}>Usuń</button>

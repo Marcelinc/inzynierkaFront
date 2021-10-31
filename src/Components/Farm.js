@@ -6,7 +6,7 @@ import { useHistory } from 'react-router';
 const Farm = (props) => {
 
     const history = useHistory();
-    //const [hasFarm,setHasFarm] = useState(false);
+    const [hasFarm,setHasFarm] = useState(false);
 
     const onGarage = (e) =>{
         props.content('garage');
@@ -44,7 +44,7 @@ const Farm = (props) => {
     }
 
     return(
-         props.hasFarm == '' || props.hasFarm == undefined ? <section className='farm'>
+        props.hasFarm === null ? <section className='farm'>
             <h2>Nie jesteś w żadnym gospodarstwie</h2>
             <p><Link to='#' onClick={onCreateFarm}>Załóż</Link> swoje gospodarstwo <br/> lub <br/> dołącz do istniejącego</p>
             <section id='farmCode'>

@@ -59,7 +59,7 @@ const LoginForm = (props) => {
                     document.querySelector('#loginInfo').innerHTML='Niepoprawny email lub hasło!'}
                     setPassword('');
                 })
-            .catch(err => {document.querySelector('#loginInfo').innerHTML='Błąd podczas logowania. Spróbuj później'; console.log(err)});
+            .catch(err => {document.querySelector('#loginInfo').innerHTML='Błąd podczas logowania. Spróbuj później'});
         }
     }
 
