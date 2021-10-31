@@ -1,10 +1,13 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 
 const OwnOrderInfo = (props) => {
     
+    const history = useHistory();
 
     const onReturnHandler = () => {
         props.setType('list');
+        history.push('/user/zlecenia');
     }
 
     const onCancelClick = () => {

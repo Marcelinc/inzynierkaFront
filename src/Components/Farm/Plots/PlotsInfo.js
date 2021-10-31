@@ -16,26 +16,32 @@ const PlotsInfo = (props) => {
             </section>
             <section className='plot-info'>
                 <div className='plotOverall'>
-                    <p>Aktualna uprawa </p>
-                    <div className='plotHistory'>
+                    <p>Aktualna uprawa: Burak cukrowy </p>
+                    <div>
                         <p>Historia upraw</p>
-                        <div>
+                        <div className='plotHistory'>
                             <p>Pszenica 07.21.2020</p>
+                            <p>Owies 04.25.2020</p>
+                            <p>Owies 04.25.2020</p>
+                            <p>Burak cukrowy 04.25.2020</p>
+                            <p>Owies 04.25.2020</p>
+                            <p>Ziemniaki 04.25.2020</p>
+                            <p>Owies 04.25.2020</p>
+                            <p>Maliny 04.25.2020</p>
                             <p>Owies 04.25.2020</p>
                         </div>
                     </div>
-                    <div className='plotHistory'>
+                    <div>
                         <p>Historia zabiegów</p>
-                        <div>
+                        <div className='plotHistory'>
                             <p>Orka 17.03.2020</p>
                             <p>Oprysk 30.09.2020</p>
                         </div>
                     </div>
                 </div>
                 <div className='plotLocalization'>
-                    <p>Lokalizacja Polanówka, obok lasu</p>
+                    <p>Lokalizacja: Polanówka, obok lasu</p>
                     <div className='plotsMap'>
-                        
                     </div>
                 </div>
             </section>

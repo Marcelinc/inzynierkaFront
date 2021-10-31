@@ -1,15 +1,48 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../../../css/crops.css';
 import AddCrops from './AddCrops';
 import CropInfo from './CropInfo';
 
-const Crops = () => {
+const Crops = (props) => {
 
     const [trigger,setTrigger] = useState(false);
     const [dataType,setType] = useState('list');
+    const [loading,setloading] = useState(true);
 
-    const filterHandler = () => {
-        console.log('filtr');
+    const [crops,setCrops] = useState([]);
+    const [farm_id,setId] = useState(props.farmId);
+
+    const [displayedCrops,setDisplay] = useState([]);
+
+
+    useEffect(() => {
+        fetch(process.env.REACT_APP_SERVER+'/api/farm-crop/get-all',{
+            method:"POST",
+            headers: {'Content-Type':'application/json'},
+            body:JSON.stringify({farm_id}),
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(res => {
+            setCrops(res.data);
+            setDisplay(res.data);
+            console.log(res.data)
+            setloading(false);
+        })
+        .catch(err => console.log(err));
+    },[]);
+
+    const filterHandler = (event) => {
+        let reg = new RegExp(event.target.value,'i');
+        let selectedCrops = crops.filter(c => c.crop.match(reg));
+        setDisplay(selectedCrops);
+        if(selectedCrops.length === 0){
+            document.querySelector('.filterInfo').innerHTML='Brak szukanych plonów';
+            document.querySelector('.filterInfo').style.display='inherit';
+        }else{
+            document.querySelector('.filterInfo').innerHTML='';
+            document.querySelector('.filterInfo').style.display='none';
+        } 
     }
 
     return(<section className='data'>
@@ -18,33 +51,26 @@ const Crops = () => {
             <div id='farmResMenu'>
                 <div id='options'>
                     <p>Wyszukaj</p>
-                    <input type='text' onChange={filterHandler}/>
+                    <input type='text' className='searchButton' placeholder='Nazwa plonu...' onChange={filterHandler}/>
                 </div>
                 <span id='addCrops' onClick={() => setTrigger(true)}>+Dodaj nowy plon</span>
             </div>
-            <div id='crops'>
-                <div id='cropsLegend'>
+            <div id='cropsLegend'>
                     <span>Nazwa</span>
                     <span>Ilość</span>
                     <span>Jednostka</span>
-                </div>
-                <div className='unit' onClick={() => setType('crop')}>
-                    <span>Pszenica</span>
-                    <span>1400</span>
-                    <span>t</span>
-                </div>
-                <div className='unit' onClick={() => setType('crop')}>
-                    <span>Owies</span>
-                    <span>1400</span>
-                    <span>t</span>
-                </div>
-                <div className='unit' onClick={() => setType('crop')}>
-                    <span>Maliny</span>
-                    <span>600</span>
-                    <span>kg</span>
-                </div>
             </div>
-            <AddCrops trigger={trigger} setTrigger={setTrigger}/>
+            <div id='crops'>
+            <p className='filterInfo'></p>
+                {loading && <p className='getDataStatus'>Ładowanie danych...</p>} 
+                {displayedCrops.map(c => (
+                    <div key={c.crop} className='unit'>
+                        <span>{c.crop}</span>
+                        <span>{c.quantity}</span>
+                        <span>{c.unit}</span>
+                </div>))}
+            </div>
+            <AddCrops trigger={trigger} setTrigger={setTrigger} farmId={props.farmId}/>
         </div>}
         {dataType === 'crop' && <CropInfo setType={setType}/>}
     </section>)
