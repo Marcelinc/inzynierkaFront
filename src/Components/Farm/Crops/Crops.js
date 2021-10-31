@@ -16,7 +16,7 @@ const Crops = (props) => {
 
 
     useEffect(() => {
-        fetch(process.env.MIX_CUSTOM_URL+'/api/farm-crop/get-all',{
+        fetch(process.env.REACT_APP_SERVER+'/api/farm-crop/get-all',{
             method:"POST",
             headers: {'Content-Type':'application/json'},
             body:JSON.stringify({farm_id}),
