@@ -28,3 +28,9 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.html [QSA,L]
 ```
+5. W plku ```.env``` dodać zmienne: <br/>
+```
+REACT_APP_SERVER=http://inzynierka.com
+HOST='front.inzynierka.com'
+PORT=3001
+```
