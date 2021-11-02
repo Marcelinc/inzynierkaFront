@@ -33,6 +33,7 @@ const User = (props) => {
         flat_number:'',
         farm_id:null
     });
+    const [farmId,setFarm] = useState(props.farmId);
     const [load,setLoad] = useState(true);
     const [content,setContent] = useState(props.content);
 
@@ -86,7 +87,7 @@ const User = (props) => {
                         }
                         {content === 'stats' && <Stats/>}
                         {content === 'note' && <Notifications/>}
-                        {content === 'garage' && <Garage farmId={props.farmId}/>}
+                        {content === 'garage' && <Garage farmId={farmId}/>}
                         {content === 'crops' && <Crops farmId={user.farm_id}/>}
                         {content === 'chemicals' && <Chemicals farmId={user.farm_id}/>}
                         {content === 'workers' && <Workers/>}
