@@ -15,7 +15,8 @@ const VehicleEdit = (props) => {
         fetch(process.env.REACT_APP_SERVER+'/api/vehicle/update',{
             method: 'POST',
             headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({'name':props.vehicle.name,'vehicle_id':props.vehicle.id,})
+            body: JSON.stringify({'name':props.vehicle.name,'vehicle_id':props.vehicle.id,}),
+            credentials:'include'
         })
         .then(response => response.json())
         .then(res => {console.log(res.message);if(res.message === 'Success') props.setMode(false);})
