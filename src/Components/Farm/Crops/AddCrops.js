@@ -20,12 +20,23 @@ const AddCrops = (props) => {
 
             fetch(process.env.REACT_APP_SERVER+'/api/farm-crop/create',{
                 method: 'POST',
-                headers: {'Content-Type':'application/json'},//accept
+                headers: {'Content-Type':'application/json',
+                    'Accept': 'application/json'},
                 body: JSON.stringify({crop_id,farm_id,quantity,unit_id}),
                 credentials:'include'
             })
             .then(response => response.json())
-            .then(res => {console.log(res); props.setTrigger(false);clearFormData();})
+            .then(res => {console.log(res); 
+                if(res.message === 'The given data was invalid.') 
+                    document.querySelector('#addCropInfo').innerHTML='Plon już istnieje!'
+                else {
+                    const updatedCrops = [...props.crops,res.data];
+                    props.setCrops(updatedCrops);
+                    const updatedDisplay = [...props.displayed,res.data];
+                    props.setDisplay(updatedDisplay);
+                    props.setTrigger(false);
+                    clearFormData();
+                }})
             .catch(err => {console.log(err); document.querySelector('#addCropInfo').innerHTML='Błąd podczas dodawania'})
         }
     }

@@ -70,7 +70,8 @@ const Crops = (props) => {
                         <span>{c.unit}</span>
                 </div>))}
             </div>
-            <AddCrops trigger={trigger} setTrigger={setTrigger} farmId={props.farmId}/>
+            <AddCrops trigger={trigger} setTrigger={setTrigger} farmId={props.farmId} crops={crops} setCrops={setCrops} 
+                displayed={displayedCrops} setDisplay={setDisplay}/>
         </div>}
         {dataType === 'crop' && <CropInfo setType={setType}/>}
     </section>)

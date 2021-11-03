@@ -25,7 +25,13 @@ const AddChemicals = (props) => {
                 credentials:'include'
             })
             .then(response => response.json())
-            .then(res => {console.log(res); props.setTrigger(false)})
+            .then(res => {console.log(res); 
+                const updatedChemicals = [...props.chemicals,res.data];
+                props.setChemicals(updatedChemicals);
+                const updatedDisplay = [...props.display,res.data];
+                props.setDisplayed(updatedChemicals);
+                props.setTrigger(false); 
+                clearFormData();})
             .catch(err => {console.log(err);document.querySelector('#addChemicalInfo').innerHTML='Błąd podczas dodawania';})
         }
     }
@@ -61,6 +67,10 @@ const AddChemicals = (props) => {
         return validate;
     }
 
+    const clearFormData = () => {
+        setName('');setExpDate('');setQuantity(0);setUsedChem(0);setDesignation(1);setUnit(1);setType(1);
+    }
+
     return(props.trigger ? <div className='popup'>
         <section className='popup-main'>
             <p>Dodawanie środka chemicznego</p>
@@ -71,13 +81,13 @@ const AddChemicals = (props) => {
                     <label>Ilość/opakowanie* <input type='number' min={1} onChange={e => setQuantity(e.target.value)}/>
                         <span className='info' id='quantityInfo'></span></label>
                     <label>Typ*
-                        <select value={ppp_type_id} onChange={e => setType(e.target.value)}>
+                        <select onChange={e => setType(e.target.value)}>
                             <option value={1}>Nawóz</option>
                             <option value={2}>Oprysk</option>
                         </select>
                     </label>
                     <label>Jednostka* 
-                        <select value={ppp_type_id} onChange={e => setUnit(e.target.value)}>
+                        <select onChange={e => setUnit(e.target.value)}>
                             <option value={1}>Litr</option>
                             <option value={2}>Kilogram</option>
                         </select>
@@ -91,7 +101,7 @@ const AddChemicals = (props) => {
                 </form>
             </section>
             <section className='popupButtons'>
-                <button onClick={() => props.setTrigger(false)}>Anuluj</button>
+                <button onClick={() => {props.setTrigger(false); clearFormData();}}>Anuluj</button>
                 <button form='addForm'>Potwierdź</button>
                 <h3 className='info' id='addChemicalInfo'></h3>
             </section>

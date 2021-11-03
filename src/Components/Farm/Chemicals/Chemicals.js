@@ -73,7 +73,8 @@ const Chemicals = (props) => {
                         <span>{c.unit.name}</span>
                 </div>))}
             </div>
-            <AddChemicals trigger={trigger} setTrigger={setTrigger} farmId={farm_id}/>
+            <AddChemicals trigger={trigger} setTrigger={setTrigger} farmId={farm_id} chemicals={chemicals} setChemicals={setChemicals}
+                display={displayed} setDisplayed={setDisplayed}/>
         </div>}
         {dataType === 'chemical' && <ChemicalsInfo setType={setType}/>}
     </section>)
