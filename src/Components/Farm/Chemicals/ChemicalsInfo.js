@@ -1,28 +1,66 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import { useHistory, useParams } from 'react-router';
 
 const ChemicalsInfo = (props) => {
     const [triggerDeleteM,setTriggerDeleteM] = useState(false);
     const [editMode,setMode] = useState(false);
+    const [loading,setLoading] = useState(true);
 
-    return(<div>
-        <p className='backToList' onClick={() => props.setType('list')}>Powrót do listy</p>
-        <div className='vehicleContent'>
-        <section className='overall-info'>
-            <div className='vehicle-infoname'>
-                <h1>środek chemiczny</h1>
+    const history = useHistory();
+
+    const {id} = useParams();
+    const [crop_id,setId] = useState(null);
+    const [crop,setCrop] = useState({});
+
+    useEffect(() => {
+        let idState;
+        if(window.history.state)
+            idState = window.history.state.id;
+        else idState = id;
+        setId(idState);
+        //send request
+        fetch(process.env.REACT_APP_SERVER+`/api/farm-ppp/${idState}`,{
+            headers: {'Content-Type':'application/json',
+                'Accept':'application/json'},
+            credentials:'include'
+        })
+        .then(response => response.json())
+        .then(res => {console.log(res);
+            if(res.message === 'Success') {
+                setCrop(res.data);
+                setLoading(false);
+            }else document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
+        }).catch(err => console.log(err))
+    }, [])
+
+    const onReturnHandler = () => {
+        props.setContent('chemicals');
+        window.history.pushState(null,'MyFarm','/gospodarstwo/srodkiChemiczne');
+    }
+
+    return(<section className='data'>
+        <div>
+            <p className='backToList' onClick={onReturnHandler}>Powrót do listy</p>
+            <div className='vehicleContent'>
+                {loading ? <p id='getInfoStatus'>Ładowanie...</p> : <div>
+                    <section className='overall-info'>
+                        <div className='vehicle-infoname'>
+                            <h1>środek chemiczny</h1>
+                        </div>
+                    </section>
+                    <section className='vehicle-info'>
+                            <p><span>Rok produkcji</span> </p>
+                            <p><span>Rodzaj pojazdu</span> </p>
+                            <p><span>Szerokość </span> </p>
+                            <section className='vehicle-actions'>
+                                <button className='MachEdit' >Edytuj</button>
+                                <button className='MachDelete'>Usuń</button>
+                            </section>
+                    </section>
+                </div>}
             </div>
-        </section>
-        <section className='vehicle-info'>
-                <p><span>Rok produkcji</span> </p>
-                <p><span>Rodzaj pojazdu</span> </p>
-                <p><span>Szerokość </span> </p>
-                <section className='vehicle-actions'>
-                    <button className='MachEdit' >Edytuj</button>
-                    <button className='MachDelete'>Usuń</button>
-                </section>
-        </section>
         </div>
-    </div>)
+    </section>)
 }
 
 export default ChemicalsInfo;

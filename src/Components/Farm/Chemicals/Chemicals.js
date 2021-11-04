@@ -9,7 +9,6 @@ const Chemicals = (props) => {
     const [loading,setloading] = useState(true);
 
     const [chemicals,setChemicals] = useState([]);
-    const [chemical,setChemical] = useState({});
 
     const [farm_id,setId] = useState(props.farmId);
 
@@ -46,6 +45,13 @@ const Chemicals = (props) => {
         } 
     }
 
+    const infoHandler = (id) => {
+        console.log('info clicked '+id);
+        props.setContent('chemical');
+        window.history.pushState({'id':id},'MyFarm',`/gospodarstwo/srodekChemiczny/${id}`);
+
+    }
+
     return(<section className='data'>
         {dataType === 'list' &&<div className='equipment-content'> 
             <h3>Środki chemiczne</h3>
@@ -66,7 +72,7 @@ const Chemicals = (props) => {
                 <p className='filterInfo'></p>
                 {loading && <p className='getDataStatus'>Ładowanie danych...</p>} 
                 {displayed.map(c => (
-                    <div key={c.name} className='unit'>
+                    <div key={c.name} className='unit' onClick={() => infoHandler(c.id)}>
                         <span>{c.name}</span>
                         <span>{c.number}</span>
                         <span>{c.product_quantity_in_package}</span>
