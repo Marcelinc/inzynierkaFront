@@ -7,7 +7,6 @@ import User from "./Components/User";
 import Zlecenia from "./Components/Zlecenia";
 import NotExist from "./Components/NotExist";
 import ResetPswdReq from "./Components/ResetPswdReq";
-import Loader from "./Components/Loader";
 import './css/main.css'
 
 import './img/fontello-1c92c5fc/css/fontello.css'
@@ -43,7 +42,9 @@ function App(){
                 <Route path='/kreatorGospodarstwa' component={() => <User log={logged} setLog={setLogged} content='creator'/>}/>
                 <Route path='/gospodarstwo/garaz' component={() => <User log={logged} setLog={setLogged} content='garage' farmId={user.farm_id}/>}/>
                 <Route path='/gospodarstwo/pojazd/:id' component={() => <User log={logged} setLog={setLogged} content='vehicle'/>}/>
+                <Route path='/gospodarstwo/sprzet/:id' component={() => <User log={logged} setLog={setLogged} content='machine'/>}/>
                 <Route path='/gospodarstwo/plony' component={() => <User log={logged} setLog={setLogged} content='crops'/>}/>
+                <Route path='/gospodarstwo/plon/:id' component={() => <User log={logged} setLog={setLogged} content='crop'/>}/>
                 <Route path='/gospodarstwo/srodkiChemiczne' component={() => <User log={logged} setLog={setLogged} content='chemicals'/>}/>
                 <Route path='/gospodarstwo/pracownicy' component={() => <User log={logged} setLog={setLogged} content='workers'/>}/>
                 <Route path='/gospodarstwo/dzialki' component={() => <User log={logged} setLog={setLogged} content='plot'/>}/>
