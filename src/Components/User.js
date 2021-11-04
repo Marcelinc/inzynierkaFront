@@ -15,6 +15,7 @@ import FarmManage from "./Farm/FarmManage";
 import Workers from "./Farm/Workers/Workers";
 import FarmCreator from "./Farm/FarmCreator";
 import Navigation from "./Navigation";
+import VehicleInfo from "./Farm/Garage/VehicleInfo";
 
 const User = (props) => {
 
@@ -87,7 +88,8 @@ const User = (props) => {
                         }
                         {content === 'stats' && <Stats/>}
                         {content === 'note' && <Notifications/>}
-                        {content === 'garage' && <Garage farmId={farmId}/>}
+                        {content === 'garage' && <Garage farmId={farmId} type='list' setContent={setContent}/>}
+                        {content === 'vehicle' && <VehicleInfo setContent={setContent}/>}
                         {content === 'crops' && <Crops farmId={user.farm_id}/>}
                         {content === 'chemicals' && <Chemicals farmId={user.farm_id}/>}
                         {content === 'workers' && <Workers/>}

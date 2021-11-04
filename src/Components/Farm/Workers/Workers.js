@@ -23,7 +23,7 @@ const Workers = () => {
                 </div>
                 <button id='addCrops' onClick={onAddClick}>Pobierz kod gospodarstwa</button>
             </div>
-            <div id='legend'>
+            <div className='legend' id='workersLegend'>
                 <span>Imię i Nazwisko</span>
                 <span>Stanowisko</span>
             </div>

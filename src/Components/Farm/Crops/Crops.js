@@ -53,7 +53,7 @@ const Crops = (props) => {
                     <p>Wyszukaj</p>
                     <input type='text' className='searchButton' placeholder='Nazwa plonu...' onChange={filterHandler}/>
                 </div>
-                <span id='addCrops' onClick={() => setTrigger(true)}>+Dodaj nowy plon</span>
+                <span className='addContent' onClick={() => setTrigger(true)}>+Dodaj nowy plon</span>
             </div>
             <div id='cropsLegend'>
                     <span>Nazwa</span>

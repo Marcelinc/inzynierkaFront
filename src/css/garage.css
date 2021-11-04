@@ -25,7 +25,7 @@
 #garageMenu > *{
     padding-inline: 10px;
 }
-#addMachine:hover{
+.addContent:hover{
     cursor:pointer;
     color:rgb(11, 170, 11);
 }

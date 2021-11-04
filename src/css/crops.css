@@ -12,23 +12,26 @@
     padding-inline: 10px;
     text-align: left;
 }
-#addCrops{
-    color:green;
-}
-#addCrops:hover{
-    cursor:pointer;
-    color:rgb(11, 170, 11);
-}
 
 /*Resources list*/
+@media screen and (max-height: 639px) {
+    #chemicals,#workers,#crops,#plots{
+        height: 50vh;
+    }
+}
+@media screen and (min-height: 640px) {
+    #machines,#chemicals,#workers,#crops,#plots{
+        height: 55vh;
+    }
+}
 #crops,#chemicals,#workers,#plots{
     background-color: rgba(34, 25, 22, 0.64);
     padding:5px;
-    min-height: 30%;
-    max-height: 80%;
+    min-height: 60%;
     overflow-y: auto;
     color:black;
 }
+
 #cropsLegend,.unit{
     grid-template-columns: 25% 15% 20%;
 }
@@ -37,9 +40,6 @@
     display: grid;
     background-color: #711e0ebd;
     grid-auto-flow: column;
-}
-#workers #legend,#workers .unit{
-    grid-template-columns: 25% 25% auto;
 }
 #plots #legend,#plots .unit{
     grid-template-columns: 10% 40% auto;

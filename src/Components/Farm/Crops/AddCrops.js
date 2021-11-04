@@ -29,14 +29,15 @@ const AddCrops = (props) => {
             .then(res => {console.log(res); 
                 if(res.message === 'The given data was invalid.') 
                     document.querySelector('#addCropInfo').innerHTML='Plon już istnieje!'
-                else {
+                else if(res.message === 'Success') {
                     const updatedCrops = [...props.crops,res.data];
                     props.setCrops(updatedCrops);
                     const updatedDisplay = [...props.displayed,res.data];
                     props.setDisplay(updatedDisplay);
                     props.setTrigger(false);
                     clearFormData();
-                }})
+                } else document.querySelector('#addCropInfo').innerHTML='Błąd podczas dodawania';
+            })
             .catch(err => {console.log(err); document.querySelector('#addCropInfo').innerHTML='Błąd podczas dodawania'})
         }
     }

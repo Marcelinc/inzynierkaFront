@@ -30,6 +30,7 @@ const MachineInfo = (props) => {
         <section className='overall-info'>
             <div className='vehicleImg'>
                 <img src={props.machine.image_path} alt='machine'></img>
+                <span className='imgInfo'>Zmień zdjęcie</span>
             </div>
             <div className='vehicle-infoname'>
                 <h1>{props.machine.name}</h1>
