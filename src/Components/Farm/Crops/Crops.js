@@ -45,6 +45,13 @@ const Crops = (props) => {
         } 
     }
 
+    const infoHandler = (id) => {
+        console.log('info clicked '+id);
+        props.setContent('crop');
+        window.history.pushState({'id':id},'MyFarm',`/gospodarstwo/plon/${id}`);
+
+    }
+
     return(<section className='data'>
         {dataType === 'list' && <div className='equipment-content'>
             <h3>Plony</h3>
@@ -64,7 +71,7 @@ const Crops = (props) => {
             <p className='filterInfo'></p>
                 {loading && <p className='getDataStatus'>Ładowanie danych...</p>} 
                 {displayedCrops.map(c => (
-                    <div key={c.crop} className='unit'>
+                    <div key={c.crop} className='unit' onClick={() => infoHandler(c.id)}>
                         <span>{c.crop}</span>
                         <span>{c.quantity}</span>
                         <span>{c.unit}</span>

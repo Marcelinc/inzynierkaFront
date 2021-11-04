@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../css/user.css';
 import Photo from '../img/userDefault.png';
 

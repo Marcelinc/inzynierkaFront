@@ -37,7 +37,6 @@ const VehicleInfo = (props) => {
     }, [])
 
     const onReturnHandler = () => {
-        //props.setDataType('list');
         props.setContent('garage');
         window.history.pushState(null,'MyFarm','/gospodarstwo/garaz');
     }
@@ -54,6 +53,7 @@ const VehicleInfo = (props) => {
     const changeImgHandler = (e) => {
         e.preventDefault();
         
+        
         //Get input file dialog
         if(isPickedImg){
             console.log(image); 
@@ -68,7 +68,7 @@ const VehicleInfo = (props) => {
             .then(res => console.log(res))
             .catch(err => console.log(err))   
         }
-        document.getElementById('getImage').click(); 
+        //document.getElementById('getImage').click(); 
     }
 
     return(<section className='data'>
@@ -80,7 +80,7 @@ const VehicleInfo = (props) => {
                         <div className='vehicleImg'>
                             <img src={vehicle.image_path} alt='vehicle' onClick={changeImgHandler}></img>
                             <span className='imgInfo'>Zmień zdjęcie</span>
-                            <input type='file' id='getImage' onChange={e => {setImg(e.target.files[0]); console.log('wybrano'); setPicked(false)}}/>
+                            <input type='file' id='getImage' onChange={e => {setImg(e.target.files[0]); console.log('wybrano'); setPicked(true)}}/>
                         </div>
                         <div className='vehicle-infoname'>
                             <h1>{vehicle.name}</h1>

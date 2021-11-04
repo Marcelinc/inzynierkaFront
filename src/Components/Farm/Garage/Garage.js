@@ -12,7 +12,6 @@ const Garage = (props) => {
     const [vehicles,setVehicles] = useState([]);
 
     const [loading,setloading] = useState(true);
-    const [dataType,setDataType] = useState(props.type);
     const [displayed,setDisplayed] = useState([]);
 
     var machineResources='';
@@ -91,13 +90,13 @@ const Garage = (props) => {
         setEquipmentID(id);
         if(type === 'v'){
             setV(vehicles.find(v => v.id === id));
-            setDataType('vehicle');
             props.setContent('vehicle');
             window.history.pushState({'id':id},'MyFarm',`/gospodarstwo/pojazd/${id}`);
         }
         else if(type === 'm'){
             setM(machines.find(m => m.id === id));
-            setDataType('machine');
+            props.setContent('machine');
+            window.history.pushState({'id':id},'MyFarm',`/gospodarstwo/sprzet/${id}`);
         }
     }
 
@@ -121,7 +120,6 @@ const Garage = (props) => {
 
 
     return(<section className='data'>
-        {dataType === 'list' && 
         <div className='equipment-content'>
             <h3>Pojazdy i sprzęt rolniczy</h3>
             <div id='garageMenu'>
@@ -159,9 +157,7 @@ const Garage = (props) => {
             </div>
             <AddVehicle trigger={triggerAddV} setTrigger={setTriggerAddV} vehicles={vehicles} setVehicles={setVehicles} farmId={props.farmId}/>
             <AddMachine trigger={triggerAddM} setTrigger={setTriggerAddM} machines={machines} setMachines={setMachines} farmId={props.farmId}/>
-        </div>}
-        {/*dataType === 'vehicle' && <VehicleInfo />*/}
-        {dataType === 'machine' && <MachineInfo setDataType={setDataType} machine={machine} machines={machines} setMachines={setMachines}/>}
+        </div>
     </section>)
 }
 
