@@ -9,15 +9,12 @@ const AddVehicle = (props) => {
     const [vehicle_type_id,setType] = useState(1);
     const [status_id,setStatus] = useState(1);
     const [fuel_level_id,setFuelLevel] = useState(1);
-    const [farm_id,setFarm] = useState(0);
+    const [farm_id,setFarm] = useState(props.farmId);
     const [capacity,setCapacity] = useState(0);
     const [power,setPower] = useState(0);
     const [vin,setVin] = useState('');
     const [image,setImage] = useState('');
 
-    useEffect(() => {
-        setFarm(props.farmId);
-    },[])
 
     const addHandler = (event) => {
         event.preventDefault();
@@ -36,7 +33,8 @@ const AddVehicle = (props) => {
             //Send request
             fetch(process.env.REACT_APP_SERVER+'/api/vehicle/create',{
                 method: 'POST',
-                headers: {'Content-Type':'application/json'},
+                headers: {'Content-Type':'application/json',
+                    'Accept':'application/json'},
                 body: JSON.stringify(body),
                 credentials:'include'
             })

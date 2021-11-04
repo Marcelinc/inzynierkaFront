@@ -53,7 +53,7 @@ const Crops = (props) => {
                     <p>Wyszukaj</p>
                     <input type='text' className='searchButton' placeholder='Nazwa plonu...' onChange={filterHandler}/>
                 </div>
-                <span id='addCrops' onClick={() => setTrigger(true)}>+Dodaj nowy plon</span>
+                <span className='addContent' onClick={() => setTrigger(true)}>+Dodaj nowy plon</span>
             </div>
             <div id='cropsLegend'>
                     <span>Nazwa</span>
@@ -70,7 +70,8 @@ const Crops = (props) => {
                         <span>{c.unit}</span>
                 </div>))}
             </div>
-            <AddCrops trigger={trigger} setTrigger={setTrigger} farmId={props.farmId}/>
+            <AddCrops trigger={trigger} setTrigger={setTrigger} farmId={props.farmId} crops={crops} setCrops={setCrops} 
+                displayed={displayedCrops} setDisplay={setDisplay}/>
         </div>}
         {dataType === 'crop' && <CropInfo setType={setType}/>}
     </section>)

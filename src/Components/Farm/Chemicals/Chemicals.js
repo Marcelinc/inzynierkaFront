@@ -47,14 +47,14 @@ const Chemicals = (props) => {
     }
 
     return(<section className='data'>
-        {dataType === 'list' &&<div className='equipment-list'> 
+        {dataType === 'list' &&<div className='equipment-content'> 
             <h3>Środki chemiczne</h3>
             <div id='farmResMenu'>
                 <div id='options'>
                     <p>Wyszukaj</p>
                     <input type='text' className='searchButton' placeholder='Typ...' onChange={filterHandler}/>
                 </div>
-                <span id='addCrops' onClick={() => setTrigger(true)}>+Dodaj środek chemiczny</span>
+                <span className='addContent' onClick={() => setTrigger(true)}>+Dodaj środek chemiczny</span>
             </div>
             <div id='chemicalsLegend' className='legend'>
                     <span>Nazwa</span>
@@ -73,7 +73,8 @@ const Chemicals = (props) => {
                         <span>{c.unit.name}</span>
                 </div>))}
             </div>
-            <AddChemicals trigger={trigger} setTrigger={setTrigger} farmId={farm_id}/>
+            <AddChemicals trigger={trigger} setTrigger={setTrigger} farmId={farm_id} chemicals={chemicals} setChemicals={setChemicals}
+                display={displayed} setDisplayed={setDisplayed}/>
         </div>}
         {dataType === 'chemical' && <ChemicalsInfo setType={setType}/>}
     </section>)

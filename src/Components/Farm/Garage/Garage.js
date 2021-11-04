@@ -12,7 +12,7 @@ const Garage = (props) => {
     const [vehicles,setVehicles] = useState([]);
 
     const [loading,setloading] = useState(true);
-    const [dataType,setDataType] = useState('list');
+    const [dataType,setDataType] = useState(props.type);
     const [displayed,setDisplayed] = useState([]);
 
     var machineResources='';
@@ -33,7 +33,8 @@ const Garage = (props) => {
         console.log(props.farmId)
         fetch(process.env.REACT_APP_SERVER+'/api/garage',{
             method:"POST",
-            headers: {'Content-Type':'application/json'},
+            headers: {'Content-Type':'application/json',
+                'Accept': 'application/json'},
             credentials: 'include'
         })
         .then(response => response.json())
@@ -91,25 +92,14 @@ const Garage = (props) => {
         if(type === 'v'){
             setV(vehicles.find(v => v.id === id));
             setDataType('vehicle');
+            props.setContent('vehicle');
+            window.history.pushState({'id':id},'MyFarm',`/gospodarstwo/pojazd/${id}`);
         }
         else if(type === 'm'){
             setM(machines.find(m => m.id === id));
             setDataType('machine');
         }
     }
-
-    const onEditClick = function (id){
-        console.log('edit clicked '+id);
-    }
-
-    /*const onDeleteClick = (id,type) => {
-        console.log('delete clicked '+id);
-        setEquipmentID(id);
-        if(type === 'vehicle')
-            setTriggerDeleteV(true);
-        else if(type === 'machine')
-            setTriggerDeleteM(true);
-    }*/
 
     const filterHandler = (e) => {
         const {name,checked} = e.target;
@@ -140,8 +130,8 @@ const Garage = (props) => {
                 <label><input type='checkbox' name='machineFilter' checked={machineFilter} onChange={filterHandler}/> Sprzęt rolniczy</label>
                 </div>
                 <div className='addButtons'>
-                    <span id='addMachine' onClick={() => setTriggerAddV(true)}>+Pojazd</span>
-                    <span id='addMachine' onClick={() => setTriggerAddM(true)}>+Sprzęt</span>
+                    <span className='addContent' onClick={() => setTriggerAddV(true)}>+Pojazd</span>
+                    <span className='addContent' onClick={() => setTriggerAddM(true)}>+Sprzęt</span>
                 </div>
             </div>
             <div id='garageLegend' className='legend'>
@@ -170,7 +160,7 @@ const Garage = (props) => {
             <AddVehicle trigger={triggerAddV} setTrigger={setTriggerAddV} vehicles={vehicles} setVehicles={setVehicles} farmId={props.farmId}/>
             <AddMachine trigger={triggerAddM} setTrigger={setTriggerAddM} machines={machines} setMachines={setMachines} farmId={props.farmId}/>
         </div>}
-        {dataType === 'vehicle' && <VehicleInfo id={equipmentID} setDataType={setDataType} vehicle={vehicle} vehicles={vehicles} setVehicles={setVehicles}/>}
+        {/*dataType === 'vehicle' && <VehicleInfo />*/}
         {dataType === 'machine' && <MachineInfo setDataType={setDataType} machine={machine} machines={machines} setMachines={setMachines}/>}
     </section>)
 }
