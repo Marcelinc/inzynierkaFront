@@ -15,12 +15,12 @@
 
 /*Resources list*/
 @media screen and (max-height: 639px) {
-    #chemicals,#workers,#crops,#plots{
+    #chemicals,#workers,#crops,#plots,#myOrders{
         height: 50vh;
     }
 }
 @media screen and (min-height: 640px) {
-    #machines,#chemicals,#workers,#crops,#plots{
+    #machines,#chemicals,#workers,#crops,#plots,#myOrders{
         height: 55vh;
     }
 }
