@@ -77,14 +77,16 @@
     padding: 15px;
 }
 .userInfoButtons button{
-    background-color: rgb(161, 17, 161);
+    background-color: #151c08;
     border-radius: 5px;
     height: 40px;
-    width: 55px;
     border:0px;
+    padding-inline: 5px;
+    margin-inline: 5px;
+    color:antiquewhite;
 }
 
 .userInfoButtons button:hover{
-    background-color: rgb(196, 34, 196);
+    opacity:0.8;
     cursor:pointer;
 }

@@ -29,7 +29,7 @@ const Chemicals = (props) => {
             setloading(false);
             console.log(res.data)
         })
-        .catch(err => console.log(err));
+        .catch(err => {console.log(err); document.querySelector('.getDataStatus').innerHTML='Błąd podczas pobierania'});
     }, [])
 
     const filterHandler = (event) => {
@@ -82,7 +82,6 @@ const Chemicals = (props) => {
             <AddChemicals trigger={trigger} setTrigger={setTrigger} farmId={farm_id} chemicals={chemicals} setChemicals={setChemicals}
                 display={displayed} setDisplayed={setDisplayed}/>
         </div>}
-        {dataType === 'chemical' && <ChemicalsInfo setType={setType}/>}
     </section>)
 }
 
