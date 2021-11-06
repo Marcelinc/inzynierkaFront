@@ -45,7 +45,7 @@ const ChemicalsInfo = (props) => {
                 {loading ? <p id='getInfoStatus'>Ładowanie...</p> : <div>
                     <section className='overall-info'>
                         <div className='vehicle-infoname'>
-                            <h1>środek chemiczny</h1>
+                            <h1>{crop.name}</h1>
                         </div>
                     </section>
                     <section className='vehicle-info'>

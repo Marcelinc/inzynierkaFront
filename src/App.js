@@ -48,6 +48,7 @@ function App(){
                 <Route path='/gospodarstwo/srodkiChemiczne' component={() => <User log={logged} setLog={setLogged} content='chemicals'/>}/>
                 <Route path='/gospodarstwo/srodekChemiczny/:id' component={() => <User log={logged} setLog={setLogged} content='chemical'/>}/>
                 <Route path='/gospodarstwo/pracownicy' component={() => <User log={logged} setLog={setLogged} content='workers'/>}/>
+                <Route path='/gospodarstwo/pracownik/:id' component={() => <User log={logged} setLog={setLogged} content='worker'/>}/>
                 <Route path='/gospodarstwo/dzialki' component={() => <User log={logged} setLog={setLogged} content='plot'/>}/>
                 <Route path='/gospodarstwo/zarzadzanie' component={() => <User log={logged} setLog={setLogged} content='manage'/>}/>
                 <Route path='/statystyki' component={() => <User log={logged} setLog={setLogged} content='stats'/>}/>

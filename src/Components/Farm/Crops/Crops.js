@@ -16,10 +16,9 @@ const Crops = (props) => {
 
 
     useEffect(() => {
-        fetch(process.env.REACT_APP_SERVER+'/api/farm-crop/get-all',{
-            method:"POST",
-            headers: {'Content-Type':'application/json'},
-            body:JSON.stringify({farm_id}),
+        fetch(process.env.REACT_APP_SERVER+`/api/farm-crop/${farm_id}/get-all`,{
+            headers: {'Content-Type':'application/json',
+                'Accept': 'application/json'},
             credentials: 'include'
         })
         .then(response => response.json())
@@ -29,7 +28,7 @@ const Crops = (props) => {
             console.log(res.data)
             setloading(false);
         })
-        .catch(err => console.log(err));
+        .catch(err => {console.log(err); document.querySelector('.getDataStatus').innerHTML='Błąd podczas pobierania'});
     },[]);
 
     const filterHandler = (event) => {
