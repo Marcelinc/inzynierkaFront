@@ -18,7 +18,7 @@ const Navigation = (props) => {
         navElem = (<div className="links">
             {props.title !== null && props.title !== undefined && <Link className='link' to='/zlecenia'>Zlecenia</Link>}
             {props.title !== null && props.title !== undefined && <Link className='link' to='/logowanie'>Czat</Link>}
-            <Link className='link' to='/user'>Profil</Link>
+            {/*<Link className='link' to='/user'>Profil</Link>*/}
         </div>)
 
 //animations

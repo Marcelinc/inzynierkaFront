@@ -268,3 +268,11 @@
 #getImage{
     display: none;
 }
+
+/*OwnOrders*/
+#myOrders .unit{
+    background-color: #060505c4;
+}
+#ordersLegend, #myOrders .unit{
+    grid-template-columns: 28% 40% 32%;
+}

@@ -80,7 +80,6 @@ const Crops = (props) => {
             <AddCrops trigger={trigger} setTrigger={setTrigger} farmId={props.farmId} crops={crops} setCrops={setCrops} 
                 displayed={displayedCrops} setDisplay={setDisplay}/>
         </div>}
-        {dataType === 'crop' && <CropInfo setType={setType}/>}
     </section>)
 }
 

@@ -40,10 +40,12 @@ const AddVehicle = (props) => {
             })
             .then(response => response.json())
             .then(res => {console.log(res.data);
-                const updateVehicles= [...props.vehicles,res.data];
-                props.setVehicles(updateVehicles);
-                props.setTrigger(false);
-                clearFormData();
+                if(res.message === 'Success'){
+                    const updateVehicles= [...props.vehicles,res.data];
+                    props.setVehicles(updateVehicles);
+                    props.setTrigger(false);
+                    clearFormData();
+                }
             })
             .catch(err => {console.log(err);document.querySelector('#addVehicleInfo').innerHTML='Błąd podczas dodawania';});
         }
