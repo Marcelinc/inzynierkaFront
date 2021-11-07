@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { useHistory, useParams } from 'react-router';
 import Photo from './../../../img/userDefault.png';
+import WorkerChangeJob from './WorkerChangeJob';
 import WorkerFire from './WorkerFire';
 
 const WorkerInfo = (props) => {
     const [triggerFireW,setTriggerFire] = useState(false);
-    const [fireMode,setMode] = useState(false);
+    const [editMode,setMode] = useState(false);
     const [loading,setLoading] = useState(true);
 
     const history = useHistory();
@@ -69,12 +70,13 @@ const WorkerInfo = (props) => {
                         <p className='uData'>Nr. mieszkania: {worker.flat_number}</p>
                     </div>
                     <div className='userInfoButtons'>
-                        <button>Zmień stanowisko</button>
+                        <button onClick={() => setMode(true)}>Zmień stanowisko</button>
                         <button onClick={() => setTriggerFire(true)}>Zwolnij</button>
                     </div>
                 </div>}
             </div>
             <WorkerFire trigger={triggerFireW} setTrigger={setTriggerFire} id={worker.id} name={worker.name+' '+worker.surname} return={onReturnHandler}/>
+            {editMode && <WorkerChangeJob id={worker.id} farm={farm_id} setMode={setMode} worker={worker} setWorker={setWorker} actualTitle={worker.job_title}/>}
         </div>
     </section>)
 }

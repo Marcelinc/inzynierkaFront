@@ -276,3 +276,13 @@
 #ordersLegend, #myOrders .unit{
     grid-template-columns: 28% 40% 32%;
 }
+.changeForm select{
+    width: 50%;
+    background-color: #093637;
+    color: aliceblue;
+    height: 30px;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    padding:5px;
+}
