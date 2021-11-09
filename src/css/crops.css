@@ -41,6 +41,3 @@
     background-color: #711e0ebd;
     grid-auto-flow: column;
 }
-#plots #legend,#plots .unit{
-    grid-template-columns: 10% 40% auto;
-}

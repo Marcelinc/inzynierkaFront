@@ -64,8 +64,8 @@ const MachineInfo = (props) => {
                         </div>
                     </section>
                     <section className='vehicle-info'>
-                            <p><span>Rok produkcji</span> {machine.production_year}</p>
-                            <p><span>Rodzaj pojazdu</span> {machine.vehicle_type_id}</p>
+                            <p><span>Rok produkcji</span> {machine.production_date}</p>
+                            <p><span>Rodzaj pojazdu</span> {machine.vehicle_type.name}</p>
                             <p><span>Szerokość </span> {machine.working_width}</p>
                             <section className='vehicle-actions'>
                                 <button className='MachEdit' onClick={() => setMode(true)}>Edytuj</button>

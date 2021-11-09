@@ -10,18 +10,71 @@ const VehicleEdit = (props) => {
     const [vin,setVin] = useState(props.vehicle.vin);
     const [date_update_fuel_level,setFuel] = useState(props.vehicle.fuel_level.id);
 
+    const [actual_production_date,setActDate] = useState(props.vehicle.production_date);
+    const [actual_type,setActNumber] = useState(props.vehicle.vehicle_type.id);
+    const [act_technical_examination_date,setActTechDate] = useState(props.vehicle.technical_examination_date);
+    const [act_status,setActStatus] = useState(props.vehicle.status_id);
+    const [act_capacity,setActCapacity] = useState(props.vehicle.capacity);
+    const [act_power,setActPower] = useState(props.vehicle.power);
+    const [act_vin,setActVin] = useState(props.vehicle.vin);
+    const [act_date_update_fuel_level,setActFuel] = useState(props.vehicle.fuel_level.id);
+
     const editHandler = () => {
-        document.querySelector('#editVehicleInfo').innerHTML='Zapisywanie zmian...';
-        fetch(process.env.REACT_APP_SERVER+'/api/vehicle/update',{
-            method: 'POST',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({'name':props.vehicle.name,'vehicle_id':props.vehicle.id,}),
-            credentials:'include'
-        })
-        .then(response => response.json())
-        .then(res => {console.log(res.message);if(res.message === 'Success') props.setMode(false);})
-        .catch(err => {console.log(err);
-            document.querySelector('#editVehicleInfo').innerHTML='Wystąpił problem podczas edycji!';});
+        //Set body and validate
+        let body= {'vehicle_id':props.vehicle.id};
+        let validated = false;
+        if(actual_production_date!=production_date){
+            body['production_date']=production_date;
+            validated=true;
+        }
+        if(actual_type!=type){
+            body['type']=type;
+            validated=true;
+        } 
+        if(act_technical_examination_date!=technical_examination_date){
+            body['technical_examination_date']=technical_examination_date;
+            validated=true;
+        }
+        if(act_status!=status){
+            body['status']=status;
+            validated=true;
+        }
+        if(act_capacity!=capacity){
+            body['capacity']=capacity;
+            validated=true;
+        }
+        if(act_power!=power){
+            body['power']=power;
+            validated=true;
+        }
+        if(act_vin!=vin){
+            body['vin']=vin;
+            validated=true;
+        }
+        if(act_date_update_fuel_level!=date_update_fuel_level){
+            body['date_update_fuel_level']=date_update_fuel_level;
+            validated=true;
+        }
+   
+
+        if(validated){
+            document.querySelector('#editVehicleInfo').innerHTML='Zapisywanie zmian...';
+            fetch(process.env.REACT_APP_SERVER+'/api/vehicle/update',{
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify(body),
+                credentials:'include'
+            })
+            .then(response => response.json())
+            .then(res => {console.log(res.message);if(res.message === 'Success') {
+                const updatedVehicle = props.vehicle;
+                Object.keys(body).forEach(key => {if(key!='vehicle_id') updatedVehicle[key]=body[key]})
+                props.setVehicle(updatedVehicle);
+                props.setMode(false);
+            }})
+            .catch(err => {console.log(err);
+                document.querySelector('#editVehicleInfo').innerHTML='Wystąpił problem podczas edycji!';});
+        } else document.querySelector('#editVehicleInfo').innerHTML='Wprowadź jakieś zmiany!';
     }
 
 

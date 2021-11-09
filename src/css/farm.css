@@ -227,6 +227,9 @@
         flex-direction:column;
     }
 }
+#plotsLegend,#plots .unit{
+    grid-template-columns: 20% 50% 30%;
+}
 
 
 /*Worker info*/

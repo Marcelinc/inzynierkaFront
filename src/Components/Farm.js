@@ -29,7 +29,7 @@ const Farm = (props) => {
     }
 
     const onPlot = (e) => {
-        props.content('plot');
+        props.content('plots');
         window.history.pushState(null,'MyFarm','/gospodarstwo/dzialki');
     }
 
