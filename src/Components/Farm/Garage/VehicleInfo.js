@@ -50,26 +50,35 @@ const VehicleInfo = (props) => {
         setTriggerDeleteV(true);
     }
 
+    const invokeImgDialog = () => {
+        document.getElementById('getImage').click();
+    }
+    
     const changeImgHandler = (e) => {
         e.preventDefault();
-        
-        
-        //Get input file dialog
-        if(isPickedImg){
+        let formData = new FormData();
+        formData.append('image',e.target.files[0]);
+        formData.append('vehicleId',vehicleId);
+        //setImg(e.target.files[0]);
+        console.log('wybrano'); 
+       // setPicked(true);
+
+         //Get input file dialog
+         //if(isPickedImg){
             console.log(image); 
             fetch(process.env.REACT_APP_SERVER+'/api/vehicle/photo',{
                 method: 'POST',
-                headers: {'Content-Type':'application/json',
+                headers: {'Content-Type':'form-data',
                     'Accept': 'application/json'},
-                body: JSON.stringify({image,vehicleId}),
+                body: formData,
                 credentials:'include'
             })
             .then(response => response.json())
             .then(res => console.log(res))
             .catch(err => console.log(err))   
-        }
-        //document.getElementById('getImage').click(); 
+        //}
     }
+       
 
     return(<section className='data'>
         <div>
@@ -78,9 +87,9 @@ const VehicleInfo = (props) => {
                 {loading ? <p id='getInfoStatus'>Ładowanie...</p> :<div>
                     <section className='overall-info'> 
                         <div className='vehicleImg'>
-                            <img src={vehicle.image_path} alt='vehicle' onClick={changeImgHandler}></img>
+                            <img src={vehicle.image_path} alt='vehicle' onClick={invokeImgDialog}></img>
                             <span className='imgInfo'>Zmień zdjęcie</span>
-                            <input type='file' id='getImage' onChange={e => {setImg(e.target.files[0]); console.log('wybrano'); setPicked(true)}}/>
+                            <input type='file' id='getImage' onChange={changeImgHandler}/>
                         </div>
                         <div className='vehicle-infoname'>
                             <h1>{vehicle.name}</h1>
@@ -106,7 +115,7 @@ const VehicleInfo = (props) => {
             </div>
             <DeleteVehicle trigger={triggerDeleteV} setTrigger={setTriggerDeleteV} setVehicle={props.setVehicles} vehicles={props.vehicles}
                 setDataType={props.setDataType} id={vehicleId}/>
-            {editMode && <VehicleEdit vehicle={vehicle} setMode={setMode}/>}
+            {editMode && <VehicleEdit vehicle={vehicle} setMode={setMode} setVehicle={setVehicle}/>}
         </div>
     </section>)
 }

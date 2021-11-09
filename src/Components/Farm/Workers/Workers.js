@@ -34,15 +34,23 @@ const Workers = (props) => {
 
     }
 
-    const filterHandler = () => {
-        console.log('filtr');
+    const filterHandler = (event) => {
+        let reg = new RegExp(event.target.value,'i');
+        let selectedWorkers = workers.filter(w => w.name.match(reg)||w.surname.match(reg));
+        setDisplayed(selectedWorkers);
+        if(selectedWorkers.length === 0){
+            document.querySelector('.filterInfo').innerHTML='Brak szukanych plonów';
+            document.querySelector('.filterInfo').style.display='inherit';
+        }else{
+            document.querySelector('.filterInfo').innerHTML='';
+            document.querySelector('.filterInfo').style.display='none';
+        } 
     }
 
     const infoHandler = (id) => {
         console.log('info clicked '+id);
         props.setContent('worker');
         window.history.pushState({'id':id},'MyFarm',`/gospodarstwo/pracownik/${id}`);
-
     }
 
     return(<section className='data'>

@@ -20,6 +20,7 @@ import MachineInfo from "./Farm/Garage/MachineInfo";
 import CropInfo from "./Farm/Crops/CropInfo";
 import ChemicalsInfo from "./Farm/Chemicals/ChemicalsInfo";
 import WorkerInfo from "./Farm/Workers/WorkerInfo";
+import PlotsInfo from "./Farm/Plots/PlotsInfo";
 
 const User = (props) => {
 
@@ -101,7 +102,8 @@ const User = (props) => {
                         {content === 'chemical' && <ChemicalsInfo setContent={setContent}/>}
                         {content === 'workers' && <Workers farmId={user.farm_id} setContent={setContent}/>}
                         {content === 'worker' && <WorkerInfo setContent={setContent} farmId={user.farm_id}/>}
-                        {content === 'plot' && <Plots/>}
+                        {content === 'plots' && <Plots farmId={user.farm_id} setContent={setContent}/>}
+                        {content === 'plot' && <PlotsInfo setContent={setContent} farmId={user.farm_id}/>}
                         {content === 'manage' && <FarmManage/>}
                         {content === 'creator' && <FarmCreator user={id}/>}
                     </main>

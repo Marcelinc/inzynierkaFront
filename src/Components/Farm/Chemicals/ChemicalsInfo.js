@@ -9,8 +9,8 @@ const ChemicalsInfo = (props) => {
     const history = useHistory();
 
     const {id} = useParams();
-    const [crop_id,setId] = useState(null);
-    const [crop,setCrop] = useState({});
+    const [chemical_id,setId] = useState(null);
+    const [chemical,setChemical] = useState({});
 
     useEffect(() => {
         let idState;
@@ -27,7 +27,7 @@ const ChemicalsInfo = (props) => {
         .then(response => response.json())
         .then(res => {console.log(res);
             if(res.message === 'Success') {
-                setCrop(res.data);
+                setChemical(res.data);
                 setLoading(false);
             }else document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
         }).catch(err => console.log(err))
@@ -45,13 +45,15 @@ const ChemicalsInfo = (props) => {
                 {loading ? <p id='getInfoStatus'>Ładowanie...</p> : <div>
                     <section className='overall-info'>
                         <div className='vehicle-infoname'>
-                            <h1>{crop.name}</h1>
+                            <h1>{chemical.name}</h1>
                         </div>
                     </section>
                     <section className='vehicle-info'>
-                            <p><span>Rok produkcji</span> </p>
-                            <p><span>Rodzaj pojazdu</span> </p>
-                            <p><span>Szerokość </span> </p>
+                            <p><span>Rodzaj:</span> </p>
+                            <p><span>Termin ważności</span>{chemical.expiration_date} </p>
+                            <p><span>Ilość w opakowaniu: </span>{chemical.product_quantity_in_package} </p>
+                            <p><span>Jednostka: </span>{chemical.unit.name} </p>
+                            <p><span>Oznaczenie opakowania: </span>{chemical.number} </p>
                             <section className='vehicle-actions'>
                                 <button className='MachEdit' >Edytuj</button>
                                 <button className='MachDelete'>Usuń</button>
