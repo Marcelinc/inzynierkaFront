@@ -7,7 +7,8 @@ const DeleteMachine = (props) => {
         fetch(process.env.REACT_APP_SERVER+'/api/machine/delete',{
             method:'POST',
             headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({'id':props.id})
+            body: JSON.stringify({'id':props.id}),
+            credentials:'include'
         })
         .then(response => response.json())
         .then(res => {console.log(res.message); if(res.message==='Success') {
@@ -15,6 +16,7 @@ const DeleteMachine = (props) => {
             props.setMachine(updatedMachines);
             props.setTrigger(false);
             props.setDataType('list')
+            
         }})
         .catch(err => console.log('Błąd podczas usuwania pojazdu: '+err));
     }

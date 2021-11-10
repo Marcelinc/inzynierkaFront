@@ -47,6 +47,11 @@ const PlotsInfo = (props) => {
         info.forEach(p => {p.style.display==='none' ? p.style.display='inherit': p.style.display='none'})
     }
 
+    const moreWorkInfo = (id) => {
+        let info = document.querySelectorAll(`.historyWorkUnit${id}`);
+        info.forEach(p => {p.style.display==='none' ? p.style.display='inherit': p.style.display='none'})
+    }
+
     return(<section className='data'>
         <div><p className='backToList' onClick={onReturnHandler}>Powrót do listy</p>
             <div className='vehicleContent'>
@@ -72,8 +77,8 @@ const PlotsInfo = (props) => {
                                 <div>
                                     <p className='plotHistoryHeader'>Historia zabiegów</p>
                                     <div className='plotHistory'>
-                                        <p className='plotHistoryUnit'>Orka 17.03.2020</p>
-                                        <p className='plotHistoryUnit'>Oprysk 30.09.2020</p>
+                                        {plot.work_history.length ? plot.work_history.map((h,index) => <p key={index} className='plotHistoryUnit'
+                                            onClick={() => moreWorkInfo(index)}>{h.work_type.name} {h.work_date}</p>) : <p className='emptyPlotHistory'>Brak wpisów</p>}
                                     </div>
                                 </div>
                             </div>

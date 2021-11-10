@@ -104,8 +104,6 @@ const AddVehicle = (props) => {
                         <span id='vehicleYear' className='info'></span></label>
                     <label>Badanie techniczne* <input type='date' onChange={e => setTechDate(e.target.value)}/>
                         <span id='vehicleTechDate' className='info'></span></label>
-                    {/*<label>Numer <input type='number' onChange={e => setNumber(e.target.value)}/>
-                        <span id='vehicleNumber' className='info'></span></label>*/}
                     <label>Rodzaj pojazdu 
                         <select onChange={e => setType(e.target.value)}>
                             <option value='1'>Ciągnik</option>
@@ -133,10 +131,6 @@ const AddVehicle = (props) => {
                         <span id='vehiclePower' className='info'></span></label>
                     <label>VIN <input type='text' onChange={e => setVin(e.target.value)}/>
                         <span id='vehicleVin' className='info'></span></label>
-                    <label>Zdjęcie <input type='file' onChange={e => setImage(e.target.value)}/>
-                        <span id='vehicleImg' className='info'></span></label>
-                   
-                    
                 </form>
             </section>
             <section className='popupButtons'>

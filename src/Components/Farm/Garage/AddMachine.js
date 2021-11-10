@@ -58,7 +58,7 @@ const AddMachine = (props) => {
         //Name validation
         if(!name){
             validate=false;
-            document.querySelector('#machineName').innerHTML='Wprowadź nazwę!';
+            document.querySelector('#machineName').innerHTML='Podaj nazwę!';
         } else document.querySelector('#machineName').innerHTML='';
 
         //Production date validation
@@ -105,8 +105,6 @@ const AddMachine = (props) => {
                         <span className='info' id='machineStatus'></span>
                     </label>
                     <label>Szerokość robocza <input type='number' min='0' onChange={e => setWorkingWidth(e.target.value)}/></label>
-                    <label>Zdjęcie <input type='file' onChange={e => setImage(e.target.value)}/>
-                        <span className='info' id='machineImage'></span></label>
                 </form>
             </section>
             <section className='popupButtons'>
