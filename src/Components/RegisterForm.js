@@ -116,7 +116,7 @@ const RegisterForm = (props) => {
         return <Redirect to="/logowanie"/>
 
     if(props.log)
-        return <Redirect to='/user'/>
+        return <Redirect to='/uzytkownik'/>
 
     return(
         <div className='content'>

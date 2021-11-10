@@ -34,9 +34,10 @@ function App(){
                 <Route path="/" exact component={() => <Welcome log={logged} setLog={setLogged}/>}/>
                 <Route path="/rejestracja" component={() => <RegisterForm log={logged} setLog={setLogged}/>}/>                    
                 <Route path="/logowanie" component={() => <LoginForm log={logged} setLog={setLogged}/>}/>
-                <Route path='/resetPassword' component={() => <ResetPswdReq log={logged} setLog={setLogged}/>}/>
-                <Route path="/user" exact component={() => <User log={logged} setLog={setLogged} content=''/>}/>
-                <Route path="/user/zlecenia" component={() => <User log={logged} setLog={setLogged} content='zlecenia'/>}/>
+                <Route path='/resetowanieHasla' component={() => <ResetPswdReq log={logged} setLog={setLogged}/>}/>
+                <Route path="/uzytkownik" exact component={() => <User log={logged} setLog={setLogged} content=''/>}/>
+                <Route path="/uzytkownik/zlecenia" component={() => <User log={logged} setLog={setLogged} content='myorders'/>}/>
+                <Route path='/uzytkownik/zlecenie/:id' component={() => <User log={logged} setLog={setLogged} content='myorder'/>}/>
                 <Route path="/user/powiadomienia" component={() => <User log={logged} setLog={setLogged} content='note'/>}/>
                 <Route path='/gospodarstwo' exact component={() => <User log={logged} setLog={setLogged} content='farm'/>}/>
                 <Route path='/kreatorGospodarstwa' component={() => <User log={logged} setLog={setLogged} content='creator'/>}/>

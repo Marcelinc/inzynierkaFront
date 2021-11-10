@@ -11,12 +11,12 @@ const FarmManage = () => {
                 <span>Nr. domu: </span>
             </div>
             <div id='farmCodeManage'>
-                <p>Kod dostępu: 46dry6n6e6</p>
-                <button>Generuj nowy</button>
+                <p>Kod dostępu: <button className='farmManageButton'>Generuj nowy</button></p>
+                
             </div>
             <div id='farmDelete'>
-                <button>Edytuj dane</button>
-                <button>Usuń</button>
+                <button className='farmManageButton'>Edytuj dane</button>
+                <button className='farmManageButton'>Usuń</button>
             </div>
         </div>
     </section>)

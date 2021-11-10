@@ -19,10 +19,10 @@ const LoginForm = (props) => {
     }, []) 
 
     if(props.log)
-        return <Redirect to="/user"/>
+        return <Redirect to="/uzytkownik"/>
 
     if(forgot)
-        return <Redirect to='/resetPassword' />
+        return <Redirect to='/resetowanieHasla' />
 
     const validation = () => {
         let validated  = true;

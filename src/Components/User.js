@@ -21,6 +21,8 @@ import CropInfo from "./Farm/Crops/CropInfo";
 import ChemicalsInfo from "./Farm/Chemicals/ChemicalsInfo";
 import WorkerInfo from "./Farm/Workers/WorkerInfo";
 import PlotsInfo from "./Farm/Plots/PlotsInfo";
+import OwnOrderInfo from "./OwnOrderInfo";
+import UserEdit from "./UserEdit";
 
 const User = (props) => {
 
@@ -42,6 +44,7 @@ const User = (props) => {
     const [farmId,setFarm] = useState(props.farmId);
     const [load,setLoad] = useState(true);
     const [content,setContent] = useState(props.content);
+    const [editMode,setMode] = useState(false);
 
     useEffect(() => {
         fetch(process.env.REACT_APP_SERVER+"/api/get_user_data",{
@@ -66,7 +69,8 @@ const User = (props) => {
                     <main className='user'>
                         <Dashboard name={name} surname={surname} setLogIn={props.setLog} content={setContent} title={user.job_title}/>
                         {content === 'farm' && <Farm content={setContent} hasFarm={user.farm_id}/>}
-                        {content === 'zlecenia' && <OwnOrders/>}
+                        {content === 'myorders' && <OwnOrders setContent={setContent}/>}
+                        {content === 'myorder' && <OwnOrderInfo setContent={setContent} />}
                         {content === '' &&
                             <section className='data'>
                                 <div className='userInfo'>
@@ -87,13 +91,14 @@ const User = (props) => {
 
                                 </div>
                                 <div className='userInfoButtons'>
-                                    <button>Edytuj dane</button>
+                                    <button onClick={() => setMode(true)}>Edytuj dane</button>
                                 </div>
+                                <UserEdit trigger={editMode} setTrigger={setMode} user={user} setUser={setUser}/>
                             </section>
                         }
                         {content === 'stats' && <Stats/>}
                         {content === 'note' && <Notifications/>}
-                        {content === 'garage' && <Garage farmId={farmId} type='list' setContent={setContent}/>}
+                        {content === 'garage' && <Garage farmId={user.farm_id} type='list' setContent={setContent}/>}
                         {content === 'vehicle' && <VehicleInfo setContent={setContent}/>}
                         {content === 'machine' && <MachineInfo setContent={setContent}/>}
                         {content === 'crops' && <Crops farmId={user.farm_id} setContent={setContent}/>}
