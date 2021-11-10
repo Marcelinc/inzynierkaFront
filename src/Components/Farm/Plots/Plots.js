@@ -65,6 +65,7 @@ const Plots = (props) => {
             <div className='legend' id='plotsLegend'>
                     <span>Numer</span>
                     <span>Lokalizacja</span>
+                    <span>Uprawa</span>
             </div>
             <div id='plots'>
                 <p className='filterInfo'></p>
@@ -73,9 +74,11 @@ const Plots = (props) => {
                     <div key={plot.id} className='unit' onClick={() => infoHandler(plot.id)}>
                         <span>{plot.registration_number}</span>
                         <span>{plot.localization}</span>
+                        <span>{plot.actual_plant.name}</span>
                 </div>))}
             </div>
-            <AddPlot trigger={trigger} setTrigger={setTrigger}/>
+            <AddPlot trigger={trigger} setTrigger={setTrigger} farmId={farm_id} plots={plots} setPlots={setPlots} 
+                display={displayedPlots} setDisplayed={setDisplay}/>
         </div>}
     </section>)
 }

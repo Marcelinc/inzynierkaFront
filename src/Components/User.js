@@ -97,7 +97,7 @@ const User = (props) => {
                         {content === 'vehicle' && <VehicleInfo setContent={setContent}/>}
                         {content === 'machine' && <MachineInfo setContent={setContent}/>}
                         {content === 'crops' && <Crops farmId={user.farm_id} setContent={setContent}/>}
-                        {content === 'crop' && <CropInfo setContent={setContent}/>}
+                        {content === 'crop' && <CropInfo setContent={setContent} farmId={user.farm_id}/>}
                         {content === 'chemicals' && <Chemicals farmId={user.farm_id} setContent={setContent}/>}
                         {content === 'chemical' && <ChemicalsInfo setContent={setContent}/>}
                         {content === 'workers' && <Workers farmId={user.farm_id} setContent={setContent}/>}

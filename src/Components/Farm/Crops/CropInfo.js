@@ -14,6 +14,7 @@ const CropInfo = (props) => {
     const {id} = useParams();
     const [crop_id,setId] = useState(null);
     const [crop,setCrop] = useState({});
+    const [farm_id,setFarm] = useState(props.farmId)
 
     useEffect(() => {
         let idState;
@@ -22,11 +23,9 @@ const CropInfo = (props) => {
         else idState = id;
         setId(idState);
         //send request
-        fetch(process.env.REACT_APP_SERVER+`/api/farm-crop/get`,{
-            method:'POST',
+        fetch(process.env.REACT_APP_SERVER+`/api/farm-crop/farm/${farm_id}/crop/${idState}`,{
             headers: {'Content-Type':'application/json',
                 'Accept':'application/json'},
-            body: JSON.stringify({'crop_id':idState}),
             credentials:'include'
         })
         .then(response => response.json())

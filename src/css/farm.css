@@ -216,9 +216,11 @@
 }
 
 .plotHistory{
-    background-color: antiquewhite;
+    background-color: #84725a;
     height: 150px;
     overflow-y: auto;
+    border-radius: 3px;
+    padding:1px;
 }
 
 @media screen and (max-width:730px) {
@@ -229,6 +231,36 @@
 }
 #plotsLegend,#plots .unit{
     grid-template-columns: 20% 50% 30%;
+}
+.plotHistoryUnit:hover{
+    cursor: pointer;
+    background-color: rgb(103, 122, 122);
+    color: azure;
+}
+.plotHistoryUnit p{
+    font-size: .8em;
+    display: none;
+}
+.plotHistoryUnit p:first-child{
+    border-top: 1px dashed #4cac31;
+}
+.plotHistoryUnit{
+    padding:1px;
+    background-color: antiquewhite;
+    margin: 2px;
+    border-bottom: 1px solid #a86319;
+    border-top: 1px solid #a86319;
+}
+.plotHistoryHeader{
+    text-align: center;
+    padding:5px;
+}
+.plotInfo{
+    padding:1px;
+    margin-left:5px;
+}
+.emptyPlotHistory{
+    text-align: center;
 }
 
 
