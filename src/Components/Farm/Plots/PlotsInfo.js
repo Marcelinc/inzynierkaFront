@@ -23,7 +23,7 @@ const PlotsInfo = (props) => {
         else idState = id;
         setId(idState);
         //send request
-        fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/worker/${idState}`,{
+        fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/field/${idState}`,{
             headers: {'Content-Type':'application/json',
                 'Accept':'application/json'},
             credentials:'include'
@@ -42,6 +42,11 @@ const PlotsInfo = (props) => {
         window.history.pushState(null,'MyFarm','/gospodarstwo/dzialki');
     }
 
+    const moreInfo = (id) => {
+        let info = document.querySelectorAll(`.historyUnit${id}`);
+        info.forEach(p => {p.style.display==='none' ? p.style.display='inherit': p.style.display='none'})
+    }
+
     return(<section className='data'>
         <div><p className='backToList' onClick={onReturnHandler}>Powrót do listy</p>
             <div className='vehicleContent'>
@@ -53,31 +58,27 @@ const PlotsInfo = (props) => {
                         </section>
                         <section className='plot-info'>
                             <div className='plotOverall'>
-                                <p>Aktualna uprawa: Burak cukrowy </p>
+                                <p className='plotInfo'>Aktualna uprawa: {plot.actual_plant.name} </p>
+                                <p className='plotInfo'>Data siewu: {plot.plant_seed_date.slice(0,10)} </p>
                                 <div>
-                                    <p>Historia upraw</p>
+                                    <p className='plotHistoryHeader'>Historia upraw</p>
                                     <div className='plotHistory'>
-                                        <p>Pszenica 07.21.2020</p>
-                                        <p>Owies 04.25.2020</p>
-                                        <p>Owies 04.25.2020</p>
-                                        <p>Burak cukrowy 04.25.2020</p>
-                                        <p>Owies 04.25.2020</p>
-                                        <p>Ziemniaki 04.25.2020</p>
-                                        <p>Owies 04.25.2020</p>
-                                        <p>Maliny 04.25.2020</p>
-                                        <p>Owies 04.25.2020</p>
+                                        {plot.history.length ? plot.history.map((h,index) => <p key={index} className='plotHistoryUnit' onClick={() => moreInfo(index)}>{h.plant.name} {h.plant_liquidation_date}
+                                            <p className={`historyUnit${index}`}>Data siewu: {h.plant_seed_date}</p>
+                                            <p className={`historyUnit${index}`}>Data zbioru: {h.plant_liquidation_date}</p>
+                                        </p>) : <p className='emptyPlotHistory'>Brak wpisów</p>}
                                     </div>
                                 </div>
                                 <div>
-                                    <p>Historia zabiegów</p>
+                                    <p className='plotHistoryHeader'>Historia zabiegów</p>
                                     <div className='plotHistory'>
-                                        <p>Orka 17.03.2020</p>
-                                        <p>Oprysk 30.09.2020</p>
+                                        <p className='plotHistoryUnit'>Orka 17.03.2020</p>
+                                        <p className='plotHistoryUnit'>Oprysk 30.09.2020</p>
                                     </div>
                                 </div>
                             </div>
                             <div className='plotLocalization'>
-                                <p>Lokalizacja: Polanówka, obok lasu</p>
+                                <p>Lokalizacja: {plot.localization}</p>
                                 <div className='plotsMap'>
                                 </div>
                             </div>
