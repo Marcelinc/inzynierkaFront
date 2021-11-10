@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useHistory, useParams } from 'react-router';
 import DeleteVehicle from './DeleteVehicle';
+import UploadImage from './UploadImage';
 import VehicleEdit from './VehicleEdit';
 
 const VehicleInfo = (props) => {
@@ -13,8 +14,8 @@ const VehicleInfo = (props) => {
     const {id} = useParams();
     const [vehicleId,setId] = useState();
     const [vehicle,setVehicle] = useState({});
-    const [image,setImg] = useState(null);
-    const [isPickedImg,setPicked] = useState(false);
+
+    const [uploadImageInfo,setUploadInfo] = useState(false);
 
     useEffect(() => {
         let idState;
@@ -58,23 +59,19 @@ const VehicleInfo = (props) => {
         e.preventDefault();
         let formData = new FormData();
         formData.append('image',e.target.files[0]);
-        formData.append('vehicleId',vehicleId);
-        //setImg(e.target.files[0]);
+        formData.append('vehicle_id',vehicleId);
         console.log('wybrano'); 
-       // setPicked(true);
 
          //Get input file dialog
          //if(isPickedImg){
-            console.log(image); 
             fetch(process.env.REACT_APP_SERVER+'/api/vehicle/photo',{
                 method: 'POST',
-                headers: {'Content-Type':'form-data',
-                    'Accept': 'application/json'},
+                headers: {'Accept': 'application/json'},
                 body: formData,
                 credentials:'include'
             })
             .then(response => response.json())
-            .then(res => console.log(res))
+            .then(res => {console.log(res); if(res.message==='The given data was invalid.') setUploadInfo(true)})
             .catch(err => console.log(err))   
         //}
     }
@@ -116,6 +113,7 @@ const VehicleInfo = (props) => {
             <DeleteVehicle trigger={triggerDeleteV} setTrigger={setTriggerDeleteV} setVehicle={props.setVehicles} vehicles={props.vehicles}
                 setDataType={props.setDataType} id={vehicleId}/>
             {editMode && <VehicleEdit vehicle={vehicle} setMode={setMode} setVehicle={setVehicle}/>}
+            <UploadImage trigger={uploadImageInfo} setTrigger={setUploadInfo}/>
         </div>
     </section>)
 }

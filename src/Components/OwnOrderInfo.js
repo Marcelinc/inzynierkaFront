@@ -6,8 +6,8 @@ const OwnOrderInfo = (props) => {
     const history = useHistory();
 
     const onReturnHandler = () => {
-        props.setType('list');
-        history.push('/user/zlecenia');
+        props.setContent('myorders');
+        window.history.pushState(null,'MyFarm','/uzytkownik/zlecenia');
     }
 
     const onCancelClick = () => {
@@ -18,7 +18,7 @@ const OwnOrderInfo = (props) => {
         console.log('zakończono');
     }
 
-    return(<div>
+    return(<section className='data'><div>
         <p className='backToList' onClick={onReturnHandler}>Powrót do listy</p>
         <div className='vehicleContent'>
         <section className='overall-info'>
@@ -45,7 +45,7 @@ const OwnOrderInfo = (props) => {
                 </section>
             </section>
         </div>
-    </div>)
+    </div></section>)
 }
 
 export default OwnOrderInfo;

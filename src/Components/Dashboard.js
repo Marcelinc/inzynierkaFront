@@ -29,17 +29,17 @@ const Dashboard = (props) => {
 
     const onDaneClick = (e) => {
         props.content('');
-        window.history.pushState(null,'MyFarm','/user');
+        window.history.pushState(null,'MyFarm','/uzytkownik');
     }
 
     const onMojeZleceniaClick = (e) => {
-        props.content('zlecenia');
-        window.history.pushState(null,'MyFarm','/user/zlecenia');
+        props.content('myorders');
+        window.history.pushState(null,'MyFarm','/uzytkownik/zlecenia');
     }
 
     const onPowiadomieniaClick = (e) => {
         props.content('note');
-        window.history.pushState(null,'MyFarm','/user/powiadomienia')
+        window.history.pushState(null,'MyFarm','/uzytkownik/powiadomienia')
     }
         
     return(<section className="dash" >

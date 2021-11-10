@@ -2,13 +2,19 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import OwnOrderInfo from './OwnOrderInfo';
 
-const OwnOrders = () => {
+const OwnOrders = (props) => {
 
-    const [dataType,setType] = useState('list');
     const history = useHistory();
 
+    const infoHandler = (id) => {
+        console.log('info clicked '+id);
+        props.setContent('myorder');
+        window.history.pushState({'id':id},'MyFarm',`/uzytkownik/zlecenie/${id}`);
+
+    }
+
     return(<section className='data'>
-        {dataType === 'list' && <div className='equipment-content'>
+        <div className='equipment-content'>
             <h3>Moje zlecenia</h3>
             <div className='legend' id='ordersLegend'>
                 <span>Nazwa</span>
@@ -16,49 +22,48 @@ const OwnOrders = () => {
                 <span>Status</span>
             </div>
             <div id='myOrders'>
-                <div className='mOrder unit' onClick={() => {setType('order'); history.push(`/user/zlecenia/${1}`)}}>
+                <div className='mOrder unit' onClick={() => infoHandler(1)}>
                     <span>Nazwa zlecenia</span>
                     <span>Przewidywany czas rozpoczęcia</span>
                     <span>Zakończone</span>
                 </div>
-                <div className='mOrder unit' onClick={() => setType('order')}>
+                <div className='mOrder unit' onClick={() => infoHandler(1)}>
                     <span>Nazwa zlecenia</span>
                     <span>Przewidywany czas rozpoczęcia</span>
                     <span>Zakończone</span>
                 </div>
-                <div className='mOrder unit' onClick={() => setType('order')}>
+                <div className='mOrder unit' onClick={() => infoHandler(1)}>
                     <span>Nazwa zlecenia</span>
                     <span>Przewidywany czas rozpoczęcia</span>
                     <span>Zakończone</span>
                 </div>
-                <div className='mOrder unit' onClick={() => setType('order')}>
+                <div className='mOrder unit' onClick={() => infoHandler(1)}>
                     <span>Nazwa zlecenia</span>
                     <span>Przewidywany czas rozpoczęcia</span>
                     <span>Zakończone</span>
                 </div>
-                <div className='mOrder unit' onClick={() => setType('order')}>
+                <div className='mOrder unit' onClick={() => infoHandler(1)}>
                     <span>Nazwa zlecenia</span>
                     <span>Przewidywany czas rozpoczęcia</span>
                     <span>Zakończone</span>
                 </div>
-                <div className='mOrder unit' onClick={() => setType('order')}>
+                <div className='mOrder unit' onClick={() => infoHandler(1)}>
                     <span>Nazwa zlecenia</span>
                     <span>Przewidywany czas rozpoczęcia</span>
                     <span>Przerwane</span>
                 </div>
-                <div className='mOrder unit' onClick={() => setType('order')}>
+                <div className='mOrder unit' onClick={() => infoHandler(1)}>
                     <span>Nazwa zlecenia</span>
                     <span>Przewidywany czas rozpoczęcia</span>
                     <span>Przyjęte</span>
                 </div>
-                <div className='mOrder unit' onClick={() => setType('order')}>
+                <div className='mOrder unit' onClick={() => infoHandler(1)}>
                     <span>Nazwa zlecenia</span>
                     <span>Przewidywany czas rozpoczęcia</span>
                     <span>Zakończone</span>
                 </div>
             </div>
-        </div>}
-        {dataType === 'order' && <OwnOrderInfo setType={setType}/>}
+        </div>
     </section>)
 }
 

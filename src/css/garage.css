@@ -185,3 +185,13 @@ h3{
 }
 
 /*Edit vehicle*/
+
+/*Upload image*/
+.uploadImagePopup{
+    width:50%;
+    min-height: 170px;
+    height: 7%;
+}
+.uploadImagePopup p{
+    font-size: 17px;
+}
