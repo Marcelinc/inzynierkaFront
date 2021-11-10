@@ -71,7 +71,8 @@ const VehicleInfo = (props) => {
                 credentials:'include'
             })
             .then(response => response.json())
-            .then(res => {console.log(res); if(res.message==='The given data was invalid.') setUploadInfo(true)})
+            .then(res => {console.log(res); if(res.message==='The given data was invalid.') setUploadInfo(true)
+                else if(res.message==='Success') setVehicle(res.data)})
             .catch(err => console.log(err))   
         //}
     }

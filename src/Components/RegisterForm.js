@@ -38,7 +38,7 @@ const RegisterForm = (props) => {
                 body: JSON.stringify({email,password,name,surname,town,country_id})
             })
             .then(response => {console.log(response.ok);if(response.ok) setRegistered(true)})
-            .catch(err => {document.querySelector('#registerInfo').innerHTML='Błąd podczas rejestracji. Spróbuj później'});}
+            .catch(err => {document.querySelector('#registerInfo').innerHTML='Błąd podczas rejestracji. Spróbuj później'; console.log(err)});}
     }
 
     const validation = () => {

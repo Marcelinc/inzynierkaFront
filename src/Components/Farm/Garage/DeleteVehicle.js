@@ -6,7 +6,8 @@ const DeleteVehicle = (props) => {
         fetch(process.env.REACT_APP_SERVER+'/api/vehicle/delete',{
             method:"POST",
             headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({'id':props.id})
+            body: JSON.stringify({'id':props.id}),
+            credentials:'include'
         })
         .then(response => response.json())
         .then(res => {console.log(res.message); if(res.message==='Success') {
