@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 const DeleteVehicle = (props) => {
 
     const deleteHandler = () => {
+        document.querySelector('#deleteVehicleInfo').innerHTML='Usuwanie...'
         fetch(process.env.REACT_APP_SERVER+'/api/vehicle/delete',{
             method:"POST",
             headers: {'Content-Type':'application/json'},
@@ -11,12 +12,9 @@ const DeleteVehicle = (props) => {
         })
         .then(response => response.json())
         .then(res => {console.log(res.message); if(res.message==='Success') {
-            const updatedVehicles = props.vehicles.filter(v => v.id !== props.id);
-            props.setVehicle(updatedVehicles);
-            props.setTrigger(false);
-            props.setDataType('list');
+            props.setContent();
         }})
-        .catch(err => console.log('Błąd podczas usuwania pojazdu: '+err));
+        .catch(err => {console.log(err); document.querySelector('#deleteVehicleInfo').innerHTML='Błąd podczas usuwania pojazdu'});
     }
 
     return(props.trigger ? <div className='popup'>
@@ -26,6 +24,7 @@ const DeleteVehicle = (props) => {
                 <button onClick={() => props.setTrigger(false)}>Anuluj</button>
                 <button onClick={deleteHandler}>Potwierdź</button>
             </section>
+            <h3 className='info' id='deleteVehicleInfo'></h3>
         </section>
     </div> : "")
 }

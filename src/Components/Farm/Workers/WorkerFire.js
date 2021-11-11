@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 const WorkerFire = (props) => {
 
     const fireHandler = () => {
+        document.querySelector('#fireWorkerInfo').innerHTML='Przetwarzanie...'
         fetch(process.env.REACT_APP_SERVER+'/api/farm/detach-worker',{
             method:"POST",
             headers: {'Content-Type':'application/json',
@@ -13,9 +14,9 @@ const WorkerFire = (props) => {
         .then(response => response.json())
         .then(res => {console.log(res.message); if(res.message==='Success')
             props.return();
-            else console.log('Błąd podczas zwalniania pracownika: ')
+            else document.querySelector('#fireWorkerInfo').innerHTML='Błąd podczas zwalniania pracownika'
         })
-        .catch(err => console.log('Błąd podczas zwalniania pracownika: '+err));
+        .catch(err => console.log(err));
     }
 
     return(props.trigger ? <div className='popup'>
@@ -25,6 +26,7 @@ const WorkerFire = (props) => {
                 <button onClick={() => props.setTrigger(false)}>Anuluj</button>
                 <button onClick={fireHandler}>Potwierdź</button>
             </section>
+            <h3 className='info' id='fireWorkerInfo'></h3>
         </section>
     </div> : "")
 }

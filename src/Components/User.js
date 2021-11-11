@@ -33,7 +33,7 @@ const User = (props) => {
         name:'',
         surname:'',
         job_title:'',
-        country:'',
+        country:{id:0,name:''},
         town:'',
         email:'',
         street:'',
@@ -77,7 +77,7 @@ const User = (props) => {
                                     <h3>Dane osobowe</h3>
                                     <p className='uData'>Imie: {user.name}</p>
                                     <p className='uData'>Nazwisko: {user.surname}</p>
-                                    <p className='uData'>Kraj: {user.country}</p>
+                                    <p className='uData'>Kraj: {user.country.name}</p>
                                     <p className='uData'>Aktualne stanowisko: {user.job_title}</p>
                                     
                                 </div>
@@ -109,7 +109,7 @@ const User = (props) => {
                         {content === 'worker' && <WorkerInfo setContent={setContent} farmId={user.farm_id}/>}
                         {content === 'plots' && <Plots farmId={user.farm_id} setContent={setContent}/>}
                         {content === 'plot' && <PlotsInfo setContent={setContent} farmId={user.farm_id}/>}
-                        {content === 'manage' && <FarmManage/>}
+                        {content === 'manage' && <FarmManage setContent={setContent}/>}
                         {content === 'creator' && <FarmCreator user={id}/>}
                     </main>
                 : <main className='user'><p>You are not logged</p></main>}

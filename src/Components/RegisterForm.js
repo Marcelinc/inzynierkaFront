@@ -23,7 +23,7 @@ const RegisterForm = (props) => {
             headers: {'Content-Type':'application/json'}
         })
         .then(response => response.json())
-        .then(res => {setCountryList(res.data); document.getElementById('countrySelect').disabled=false; setCountry(1)})
+        .then(res => {setCountryList(res.data); setCountry(1); document.getElementById('countrySelect').disabled=false; })
         .catch(err => console.log(err));
     },[])
 
@@ -107,6 +107,10 @@ const RegisterForm = (props) => {
         if(!town){
             validated=false;
             document.getElementById('townValidate').innerHTML='Wprowadź miasto!';
+        }
+        if(!country_id){
+            validated=false;
+            document.getElementById('countryValidate').innerHTML='Wprowadź miasto!';
         }
 
         return validated;

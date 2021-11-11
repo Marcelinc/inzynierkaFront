@@ -42,10 +42,6 @@ const MachineInfo = (props) => {
         window.history.pushState(null,'MyFarm','/gospodarstwo/garaz');
     }
 
-    const onEditClick = function (id){
-        console.log('edit clicked '+id);
-    }
-
     const onDeleteClick = (id) => {
         console.log('delete clicked '+id);
         setTriggerDeleteM(true);
@@ -105,8 +101,7 @@ const MachineInfo = (props) => {
                     </section>
                 </div>}
             </div>
-            <DeleteMachine trigger={triggerDeleteM} setTrigger={setTriggerDeleteM} setMachine={props.setMachines} machines={props.machines} 
-                setDataType={props.setDataType} id={machine.id} setContent={props.setContent}/>
+            <DeleteMachine trigger={triggerDeleteM} setTrigger={setTriggerDeleteM} id={machine.id} setContent={onReturnHandler}/>
             {editMode && <MachineEdit machine={machine} setMode={setMode} setMachine={setMachine}/>}
             <UploadImage trigger={uploadImageInfo} setTrigger={setUploadInfo}/>
         </div>

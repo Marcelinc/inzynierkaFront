@@ -83,6 +83,7 @@ const PlotsInfo = (props) => {
                                 </div>
                             </div>
                             <div className='plotLocalization'>
+                                <p>Powierzchnia: {plot.area}ha</p>
                                 <p>Lokalizacja: {plot.localization}</p>
                                 <div className='plotsMap'>
                                 </div>
@@ -94,8 +95,8 @@ const PlotsInfo = (props) => {
                         </section>
                     </div>}
                 </div>
-            <PlotsDelete trigger={triggerDelete} setTrigger={setTriggerDelete} setDataType={props.setType} />
-            {editMode && <PlotsEdit setMode={setMode}/>}
+            <PlotsDelete trigger={triggerDelete} setTrigger={setTriggerDelete} setContent={onReturnHandler} farmId={farm_id} id={plot.id} />
+            {editMode && <PlotsEdit setMode={setMode} plot={plot} setPlot={setPlot}/>}
         </div>
     </section>)
 }
