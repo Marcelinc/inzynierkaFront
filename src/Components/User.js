@@ -109,7 +109,7 @@ const User = (props) => {
                         {content === 'worker' && <WorkerInfo setContent={setContent} farmId={user.farm_id}/>}
                         {content === 'plots' && <Plots farmId={user.farm_id} setContent={setContent}/>}
                         {content === 'plot' && <PlotsInfo setContent={setContent} farmId={user.farm_id}/>}
-                        {content === 'manage' && <FarmManage setContent={setContent}/>}
+                        {content === 'manage' && <FarmManage setContent={setContent} farmId={user.farm_id}/>}
                         {content === 'creator' && <FarmCreator user={id}/>}
                     </main>
                 : <main className='user'><p>You are not logged</p></main>}

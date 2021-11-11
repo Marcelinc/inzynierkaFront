@@ -54,6 +54,12 @@
 #farmCodeManage p{
     padding-right: 10%;
 }
+#farmCodeValue{
+    user-select: text;
+}
+#getCodeResult span{
+    padding:10px;
+}
 
 /*Farm content data status*/
 .getDataStatus,.filterInfo{

@@ -6,19 +6,25 @@ const FarmCreator = (props) => {
     const [street,setStreet] = useState('');
     const [house_number,setHouse] = useState('');
     const [budget,setBudget] = useState(0);
-    const [access_code,setCode] = useState('');
 
     const createFarm = (e) => {
         e.preventDefault();
-        console.log(name+' '+town+' '+street+' '+house_number+' '+budget+' '+access_code);
+        console.log(name+' '+town+' '+street+' '+house_number+' '+budget);
 
         let user_id=props.user;
+        let farmBody = new URLSearchParams();
+        farmBody.append('name',name);
+        farmBody.append('town',town);
+        farmBody.append('street',street);
+        farmBody.append('house_number',house_number);
+        farmBody.append('budget',budget);
 
         fetch(process.env.MIX_CUSTOM_URL+"/api/farm",{
             method: 'PUT',
-            headers: {'Content-Type':'application/json'},
-            //credentials: 'include',
-            body: JSON.stringify({user_id,name,town,street,house_number,budget,access_code})
+            headers: {'Content-Type':'application/json',
+                'Accept':'application/json'},
+            body: farmBody,
+            credentials:'include'
         })
     }
 
@@ -30,7 +36,6 @@ const FarmCreator = (props) => {
             <input type='text' placeholder='Ulica' name='street' onChange={e => setStreet(e.target.value)}/>
             <input type='text' placeholder='Nr domu' name='house_number' onChange={e => setHouse(e.target.value)}/>
             <input type='text' placeholder='Budżet' onChange={e => setBudget(e.target.value)}/>
-            <input type='text' placeholder='Kod dostępu' onChange={e => setCode(e.target.value)}/>
             <button type='submit'>Załóż</button>
         </form>
     </section>)
