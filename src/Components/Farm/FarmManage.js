@@ -1,18 +1,19 @@
 import React, {useState} from 'react';
+import { FarmCode } from './FarmCode';
 import FarmDelete from './FarmDelete';
 
 const FarmManage = (props) => {
 
     const [editMode,setMode] = useState(false);
     const [deleteTrigger,setTrigger] = useState(false);
+    const [getCodeTrigger,setCodeTrigger] = useState(false);
+    const [farm_id,setFarmId] = useState(props.farmId);
 
     const setToUserPage = () => {
         props.setContent('');
     }
 
-    const getCodeHandler = () => {
-        //fetch(process.env.REACT_APP_SERVER+'/api/farm/')
-    }
+    
 
     return(<section className='data'>
         <div className='equipment-content'>
@@ -24,7 +25,7 @@ const FarmManage = (props) => {
                 <span>Nr. domu: </span>
             </div>
             <div id='farmCodeManage'>
-                <p>Kod dostępu: <button className='farmManageButton'>Generuj nowy</button></p>
+                <p>Kod dostępu: <button className='farmManageButton' onClick={() => setCodeTrigger(true)}>Generuj nowy</button></p>
                 
             </div>
             <div id='farmDelete'>
@@ -32,7 +33,8 @@ const FarmManage = (props) => {
                 <button className='farmManageButton' onClick={() => setTrigger(true)}>Usuń</button>
             </div>
         </div>
-        <FarmDelete trigger={deleteTrigger} setTrigger={setTrigger} id={1} setContent={setToUserPage}/>
+        <FarmDelete trigger={deleteTrigger} setTrigger={setTrigger} id={farm_id} setContent={setToUserPage}/>
+        {getCodeTrigger && <FarmCode id={farm_id} setTrigger={setCodeTrigger}/>}
     </section>)
 }
 

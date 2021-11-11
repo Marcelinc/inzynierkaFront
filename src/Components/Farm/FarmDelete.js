@@ -4,7 +4,7 @@ const FarmDelete = (props) => {
     
     const deleteHandler = () => {
         document.querySelector('#deleteInfo').innerHTML='Przetwarzanie...'
-        /*fetch(process.env.REACT_APP_SERVER+'/api/farm/delete',{
+        fetch(process.env.REACT_APP_SERVER+'/api/farm/delete',{
             method:"POST",
             headers: {'Content-Type':'application/json',
                 'Accept':'application/json'},
@@ -13,11 +13,12 @@ const FarmDelete = (props) => {
         })
         .then(response => response.json())
         .then(res => {console.log(res.message); if(res.message==='Success')
-            props.return();
-            else document.querySelector('#deleteInfo').innerHTML='Błąd podczas zwalniania pracownika'
+            props.setContent('');
+            else if(res.message==='Only owner can delete farm.') document.querySelector('#deleteInfo').innerHTML='Tylko właściciel może usunąć gospodarstwo!'
+            else document.querySelector('#deleteInfo').innerHTML='Błąd podczas usuwania gospodarstwa!'
         })
-        .catch(err => console.log(err));*/
-        props.setContent('');
+        .catch(err => console.log(err));
+        
     }
 
     return(props.trigger ? <div className='popup'>

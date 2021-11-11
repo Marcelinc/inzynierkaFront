@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { FarmCode } from '../FarmCode';
 import WorkerInfo from './WorkerInfo';
 
 const Workers = (props) => {
 
-    const [trigger,setTrigger] = useState(false);
+    const [triggergetCode,setTrigger] = useState(false);
     const [loading,setloading] = useState(true);
 
     const [workers,setWorkers] = useState([]);
@@ -30,8 +31,8 @@ const Workers = (props) => {
         .catch(err => {console.log(err); document.querySelector('.getDataStatus').innerHTML='Błąd podczas pobierania'});
     }, [])
 
-    const onAddClick = () => {
-
+    const onGetCodeHandler = () => {
+        setTrigger(true)
     }
 
     const filterHandler = (event) => {
@@ -61,7 +62,7 @@ const Workers = (props) => {
                     <p>Wyszukaj</p>
                     <input type='text' className='searchButton' onChange={filterHandler}/>
                 </div>
-                <button id='addCrops' onClick={onAddClick}>Pobierz kod gospodarstwa</button>
+                <button id='addCrops' onClick={onGetCodeHandler}>Pobierz kod gospodarstwa</button>
             </div>
             <div className='legend' id='workersLegend'>
                 <span>Imię i Nazwisko</span>
@@ -77,6 +78,7 @@ const Workers = (props) => {
                 </div>))}
             </div>
         </div>
+        {triggergetCode && <FarmCode id={farm_id} setTrigger={setTrigger}/>}
     </section>)
 }
 
