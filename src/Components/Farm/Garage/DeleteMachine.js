@@ -4,6 +4,7 @@ const DeleteMachine = (props) => {
 
     const deleteHandler = () => {
         console.log(props.id);
+        document.querySelector('#deleteMachineInfo').innerHTML='Usuwanie...'
         fetch(process.env.REACT_APP_SERVER+'/api/machine/delete',{
             method:'POST',
             headers: {'Content-Type':'application/json'},
@@ -12,13 +13,9 @@ const DeleteMachine = (props) => {
         })
         .then(response => response.json())
         .then(res => {console.log(res.message); if(res.message==='Success') {
-            const updatedMachines = props.machines.filter(m => m.id !== props.id);
-            props.setMachine(updatedMachines);
-            props.setTrigger(false);
-            props.setDataType('list')
-            
+            props.setContent();
         }})
-        .catch(err => console.log('Błąd podczas usuwania pojazdu: '+err));
+        .catch(err => {console.log(err); document.querySelector('#deleteMachineInfo').innerHTML='Błąd podczas usuwania sprzętu'});
     }
 
     return(props.trigger ? <div className='popup'>
@@ -28,6 +25,7 @@ const DeleteMachine = (props) => {
                 <button onClick={() => props.setTrigger(false)}>Anuluj</button>
                 <button onClick={deleteHandler}>Potwierdź</button>
             </section>
+            <h3 className='info' id='deleteMachineInfo'></h3>
         </section>
     </div> : "")
 }

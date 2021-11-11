@@ -111,8 +111,7 @@ const VehicleInfo = (props) => {
                     </section>
                 </div>}
             </div>
-            <DeleteVehicle trigger={triggerDeleteV} setTrigger={setTriggerDeleteV} setVehicle={props.setVehicles} vehicles={props.vehicles}
-                setDataType={props.setDataType} id={vehicleId}/>
+            <DeleteVehicle trigger={triggerDeleteV} setTrigger={setTriggerDeleteV} id={vehicleId} setContent={onReturnHandler}/>
             {editMode && <VehicleEdit vehicle={vehicle} setMode={setMode} setVehicle={setVehicle}/>}
             <UploadImage trigger={uploadImageInfo} setTrigger={setUploadInfo}/>
         </div>

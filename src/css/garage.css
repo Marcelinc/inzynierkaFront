@@ -181,7 +181,9 @@ h3{
 
 /*Delete Vehicle*/
 .popup-delete{
-    background-color: darkkhaki;
+    border-radius: 12px;
+    background-image: linear-gradient(to bottom,#166f5e,#97f756);
+    min-width: 300px;
 }
 
 /*Edit vehicle*/

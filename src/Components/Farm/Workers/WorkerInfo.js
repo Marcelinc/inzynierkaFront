@@ -56,7 +56,7 @@ const WorkerInfo = (props) => {
                             <div className='userData'>
                                 <p className='uData'>Imie: {worker.name}</p>
                                 <p className='uData'>Nazwisko: {worker.surname}</p>
-                                <p className='uData'>Kraj: {worker.country}</p>
+                                <p className='uData'>Kraj: {worker.country.name}</p>
                                 <p className='uData'>Aktualne stanowisko: {worker.job_title}</p>  
                             </div>
                         </div>     
