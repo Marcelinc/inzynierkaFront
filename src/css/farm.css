@@ -43,6 +43,7 @@
     text-align: left;
     padding: 10px;
     margin-top: 15px;
+    color:black;
 }
 #farmInfo span{
     padding: 5px;
@@ -50,6 +51,7 @@
 #farmCodeManage{
     padding: 25px 15px;
     display: flex;
+    color:black;
 }
 #farmCodeManage p{
     padding-right: 10%;

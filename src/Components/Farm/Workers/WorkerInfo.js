@@ -16,7 +16,11 @@ const WorkerInfo = (props) => {
     const [worker,setWorker] = useState({});
     const [farm_id,setFarmId] = useState(props.farmId);
 
+    const [buttonStyle,setStyle] = useState({});
+    const [disabledButton,setDisabled] = useState(false);
+
     useEffect(() => {
+        //Prepare request data
         let idState;
         if(window.history.state)
             idState = window.history.state.id;
@@ -32,7 +36,10 @@ const WorkerInfo = (props) => {
         .then(res => {console.log(res);
             if(res.message === 'Success') {
                 setWorker(res.data);
+                res.data.job_title === 'Właściciel' && setStyle({'opacity':'0.5'});
+                res.data.job_title === 'Właściciel' && setDisabled(true);
                 setLoading(false);
+                console.log(buttonStyle)
             }else document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
         }).catch(err => {console.log(err); document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!'})
     }, [])
@@ -70,13 +77,13 @@ const WorkerInfo = (props) => {
                         <p className='uData'>Nr. mieszkania: {worker.flat_number}</p>
                     </div>
                     <div className='userInfoButtons'>
-                        <button onClick={() => setMode(true)}>Zmień stanowisko</button>
+                        <button onClick={() => setMode(true)} disabled={disabledButton} style={buttonStyle} >Zmień stanowisko</button>
                         <button onClick={() => setTriggerFire(true)}>Zwolnij</button>
                     </div>
                 </div>}
             </div>
             <WorkerFire trigger={triggerFireW} setTrigger={setTriggerFire} id={worker.id} name={worker.name+' '+worker.surname} return={onReturnHandler}/>
-            {editMode && <WorkerChangeJob id={worker.id} farm={farm_id} setMode={setMode} worker={worker} setWorker={setWorker} actualTitle={worker.job_title}/>}
+            {editMode && <WorkerChangeJob id={worker.id} farm={farm_id} setMode={setMode} worker={worker} setWorker={setWorker} actualTitle={worker.job_title} title={props.title}/>}
         </div>
     </section>)
 }

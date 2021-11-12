@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { useHistory, useParams } from 'react-router';
+import ChemicalDelete from './ChemicalDelete';
 
 const ChemicalsInfo = (props) => {
-    const [triggerDeleteM,setTriggerDeleteM] = useState(false);
-    const [editMode,setMode] = useState(false);
+    const [triggerDelete,setTriggerDelete] = useState(false);
     const [loading,setLoading] = useState(true);
 
     const history = useHistory();
@@ -55,13 +55,13 @@ const ChemicalsInfo = (props) => {
                             <p><span>Jednostka: </span>{chemical.unit.name} </p>
                             <p><span>Oznaczenie opakowania: </span>{chemical.number} </p>
                             <section className='vehicle-actions'>
-                                <button className='MachEdit' >Edytuj</button>
-                                <button className='MachDelete'>Usuń</button>
+                                <button className='MachDelete' onClick={() => setTriggerDelete(true)}>Usuń</button>
                             </section>
                     </section>
                 </div>}
             </div>
         </div>
+        <ChemicalDelete setContent={onReturnHandler} id={chemical.id} trigger={triggerDelete} setTrigger={setTriggerDelete}/>
     </section>)
 }
 
