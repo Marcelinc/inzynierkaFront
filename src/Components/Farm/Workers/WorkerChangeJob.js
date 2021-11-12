@@ -61,7 +61,8 @@ const WorkerChangeJob = (props) => {
                 <section className='popupForm2'>
                     <form className='changeForm'>
                         <select onChange={e => setTitle(e.target.value)}>
-                            {titles.map(t => <option key={t.id} value={t.id}>{t.title}</option>)}
+                            {props.title === 'Właściciel' && titles.map(t => <option key={t.id} value={t.id}>{t.title}</option>)}
+                            {props.title === 'Pracownik biurowy' && titles.map(t => t.title != 'Właściciel' && <option key={t.id} value={t.id}>{t.title}</option>)}
                         </select>
                     </form>
                     <section className='vehicle-actions'>

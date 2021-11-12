@@ -106,7 +106,7 @@ const User = (props) => {
                         {content === 'chemicals' && <Chemicals farmId={user.farm_id} setContent={setContent}/>}
                         {content === 'chemical' && <ChemicalsInfo setContent={setContent}/>}
                         {content === 'workers' && <Workers farmId={user.farm_id} setContent={setContent}/>}
-                        {content === 'worker' && <WorkerInfo setContent={setContent} farmId={user.farm_id}/>}
+                        {content === 'worker' && <WorkerInfo setContent={setContent} farmId={user.farm_id} title={user.job_title}/>}
                         {content === 'plots' && <Plots farmId={user.farm_id} setContent={setContent}/>}
                         {content === 'plot' && <PlotsInfo setContent={setContent} farmId={user.farm_id}/>}
                         {content === 'manage' && <FarmManage setContent={setContent} farmId={user.farm_id}/>}
