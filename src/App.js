@@ -4,7 +4,6 @@ import LoginForm from "./Components/LoginForm";
 import React, { useEffect, useState } from "react";
 import {BrowserRouter as Router,Route, Switch} from "react-router-dom";
 import User from "./Components/User";
-import Zlecenia from "./Components/Zlecenia";
 import NotExist from "./Components/NotExist";
 import ResetPswdReq from "./Components/ResetPswdReq";
 import './css/main.css'
@@ -54,7 +53,7 @@ function App(){
                 <Route path='/gospodarstwo/dzialka/:id' component={() => <User log={logged} setLog={setLogged} content='plot'/>}/>
                 <Route path='/gospodarstwo/zarzadzanie' component={() => <User log={logged} setLog={setLogged} content='manage'/>}/>
                 <Route path='/statystyki' component={() => <User log={logged} setLog={setLogged} content='stats'/>}/>
-                <Route path="/zlecenia" component={() => <Zlecenia log={logged} setLog={setLogged}/>}/>
+                <Route path="/gospodarstwo/zlecenia" component={() => <User log={logged} setLog={setLogged} content='farmOrders'/>}/>
                 <Route component={() => <NotExist log={logged} setLog={setLogged}/>}/>
             </Switch>
         </Router>)

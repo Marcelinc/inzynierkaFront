@@ -7,7 +7,7 @@ import Navigation from "./Navigation"
 const Welcome = (props) => {
 
     if(props.log)
-        return <Redirect to='/user' />
+        return <Redirect to='/uzytkownik' />
 
     return(
         <div className='content'>
