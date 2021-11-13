@@ -96,14 +96,14 @@
     width:55%;
     margin: 10px 0px;
 }
-#options p{
+#options p, #farmOrdersOptions p{
     padding-bottom: 2px;
 }
-#options label{
+#options label, #farmOrdersOptions label{
     padding: 10px;
     display: inline-table;
 }
-#options label:hover{
+#options label:hover, #farmOrdersOptions label:hover{
     color:#04d004;
     cursor:pointer;
 }
@@ -313,10 +313,10 @@
 }
 
 /*OwnOrders*/
-#myOrders .unit{
+#myOrders .unit, #orders .unit{
     background-color: #060505c4;
 }
-#ordersLegend, #myOrders .unit{
+#ordersLegend, #myOrders .unit, #orders .unit{
     grid-template-columns: 28% 40% 32%;
 }
 .changeForm select{
@@ -327,5 +327,15 @@
     outline: none;
     border: none;
     border-radius: 3px;
+    padding:5px;
+}
+
+
+/*Farm orders*/
+#orders,#myOrders{
+    height:55vh;
+    overflow-y: auto;
+    min-height: 60%;
+    background-color: rgba(134, 121, 117, 0.64);
     padding:5px;
 }

@@ -1,21 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import AcceptedOrder from './Farm/AcceptedOrder';
+import FinishedOrder from './Farm/FinishedOrder';
+import PendingOrder from './Farm/PendingOrder';
 
 const OwnOrderInfo = (props) => {
+
+    const [status,setStatus] = useState('accepted');
     
     const history = useHistory();
 
     const onReturnHandler = () => {
         props.setContent('myorders');
         window.history.pushState(null,'MyFarm','/uzytkownik/zlecenia');
-    }
-
-    const onCancelClick = () => {
-        console.log('przerwano')
-    }
-
-    const onFinishClick = () => {
-        console.log('zakończono');
     }
 
     return(<section className='data'><div>
@@ -26,24 +23,9 @@ const OwnOrderInfo = (props) => {
                 <h1>Numer zlecenia: 86</h1>
             </div>
         </section>
-             <section className='vehicle-info'>
-                 <div>
-                    <p><span>Zadanie</span> Oprysk</p>
-                    <p><span>Miejsce</span> Działka nr. 222/54</p>
-                    <p><span>Czas rozpoczęcia</span> 2020-05-21</p>
-                    <p><span>Czas zakończenia</span> 2020-05-21</p>
-                    <p><span>Stan paliwa</span> Wymaga zatankowania</p>
-                    <p><span>Status pojazdu</span> Sprawny</p>
-                    <p><span>Status maszyny</span> Sprawny</p>
-                 </div>
-                 <div>
-                     <label>Informacje zwrotne<textarea/></label>
-                 </div>
-                <section className='vehicle-actions'>
-                    <button className='MachEdit' onClick={() => onCancelClick()}>Przerwij</button>
-                    <button className='MachDelete' onClick={() => onFinishClick()}>Zakończ</button>
-                </section>
-            </section>
+                {status==='finished' && <FinishedOrder/>}
+                {status === 'accepted' && <AcceptedOrder/>}
+                {status === 'pending' && <PendingOrder/>}
         </div>
     </div></section>)
 }

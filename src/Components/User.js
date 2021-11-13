@@ -23,6 +23,7 @@ import WorkerInfo from "./Farm/Workers/WorkerInfo";
 import PlotsInfo from "./Farm/Plots/PlotsInfo";
 import OwnOrderInfo from "./OwnOrderInfo";
 import UserEdit from "./UserEdit";
+import FarmOrders from "./FarmOrders";
 
 const User = (props) => {
 
@@ -64,7 +65,7 @@ const User = (props) => {
         return(<Loader log={props.log} setLog={props.setLog} title={user.job_title}/>)
 
         return(<div className='content'>
-                <Navigation log={props.log} setLog={props.setLog} title={user.job_title}/>
+                <Navigation log={props.log} setLog={props.setLog} title={user.job_title} setContent={setContent}/>
                 {props.log && name ?
                     <main className='user'>
                         <Dashboard name={name} surname={surname} setLogIn={props.setLog} content={setContent} title={user.job_title}/>
@@ -93,7 +94,7 @@ const User = (props) => {
                                 <div className='userInfoButtons'>
                                     <button onClick={() => setMode(true)}>Edytuj dane</button>
                                 </div>
-                                <UserEdit trigger={editMode} setTrigger={setMode} user={user} setUser={setUser}/>
+                                {editMode && <UserEdit setMode={setMode} user={user} setUser={setUser}/>}
                             </section>
                         }
                         {content === 'stats' && <Stats/>}
@@ -109,6 +110,7 @@ const User = (props) => {
                         {content === 'worker' && <WorkerInfo setContent={setContent} farmId={user.farm_id} title={user.job_title}/>}
                         {content === 'plots' && <Plots farmId={user.farm_id} setContent={setContent}/>}
                         {content === 'plot' && <PlotsInfo setContent={setContent} farmId={user.farm_id}/>}
+                        {content === 'farmOrders' && <FarmOrders />}
                         {content === 'manage' && <FarmManage setContent={setContent} farmId={user.farm_id}/>}
                         {content === 'creator' && <FarmCreator user={id}/>}
                     </main>
