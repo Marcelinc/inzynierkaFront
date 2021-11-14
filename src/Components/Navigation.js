@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {Link} from "react-router-dom";
+import LogoImage from './../img/MyFarm.png';
 
 const Navigation = (props) => {
 
@@ -83,7 +84,7 @@ const Navigation = (props) => {
             <div className='row2'></div>
             <div className='row3'></div>
         </div>}
-        <div className="logo"><Link to="/uzytkownik">Logo</Link></div>
+        <div className="logo"><Link to="/uzytkownik"><img id='logo' src={LogoImage} alt='Logo'></img></Link></div>
         {navElem}
         <div className='menu'>
             <div className='line1'></div>
