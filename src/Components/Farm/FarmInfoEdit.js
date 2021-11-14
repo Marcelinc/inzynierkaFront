@@ -14,6 +14,11 @@ const FarmInfoEdit = (props) => {
     const [act_house_number,setActHouse] = useState(props.farm.house_number);
     const [act_budget,setActBudget] = useState(props.farm.budget);
 
+    const [loading,setLoading] = useState(false);
+    const [error,setError] = useState(false);
+    const [message,setMessage] = useState('');
+    
+
     const editHandler = () => {
         //Set body and validate
         let body= {'farm_id':props.farm.id};
@@ -40,23 +45,31 @@ const FarmInfoEdit = (props) => {
         }
 
         if(validated){
+            setLoading(true);
             document.querySelector('#editFarmInfo').innerHTML='Zapisywanie zmian...';
-            /*fetch(process.env.REACT_APP_SERVER+'/api/field/update',{
+            fetch(process.env.REACT_APP_SERVER+'/api/farm/update',{
                 method: 'POST',
-                headers: {'Content-Type':'application/json'},
+                headers: {'Content-Type':'application/json',
+                    'Accept':'application/json'},
                 body: JSON.stringify(body),
                 credentials:'include'
             })
             .then(response => response.json())
             .then(res => {console.log(res.message);if(res.message === 'Success') {
-                const updatedPlot = props.plot;
-                Object.keys(body).forEach(key => {if(key!='field_id') updatedPlot[key]=body[key]})
-                props.setPlot(updatedPlot);
+                const updatedFarm = props.farm;
+                Object.keys(body).forEach(key => {if(key!='field_id') updatedFarm[key]=body[key]})
+                props.setFarm(updatedFarm);
                 props.setMode(false);
-            }})
-            .catch(err => {console.log(err);
-                document.querySelector('#editPlotInfo').innerHTML='Wystąpił problem podczas edycji!';});*/
-        } else document.querySelector('#editFarmInfo').innerHTML='Wprowadź jakieś zmiany!';
+            } else {
+                setError(true);
+                setMessage('Wystąpił problem podczas edycji!');
+            } setLoading(false)})
+            .catch(err => console.log(err));
+        } else {setMessage('Wprowadź jakieś zmiany!'); setError(true);};
+    }
+
+    const clearData = () => {
+
     }
 
     return(<div className='popup'>
@@ -74,7 +87,7 @@ const FarmInfoEdit = (props) => {
                     <button onClick={editHandler}>Zapisz</button>
                     <button onClick={() => props.setMode(false)}>Anuluj</button>
                 </section>
-                <h3 className='info' id='editFarmInfo'></h3>
+                <h3 className='info' id='editFarmInfo'>{loading && !error ? 'Usuwanie...' : (error ? message: '')}</h3>
             </section>
         </div>
     </div>)

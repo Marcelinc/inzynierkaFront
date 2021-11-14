@@ -10,10 +10,10 @@ const AcceptedOrder = () => {
         console.log('zakończono');
     }
 
-    return(<section className='vehicle-info'>
-        <div>
-            <p><span>Zadanie</span> Oprysk</p>
-            <p><span>Miejsce</span> Działka nr. 222/54</p>
+    return(<section className='order-info '>
+        <div className='orderDTO'>
+            <span>Zadanie Oprysk</span>
+            <span>Miejsce Działka nr. 222/54</span>
             <label>Czas rozpoczęcia:<input type='datetime-local'/></label>
             <label>Czas zakończenia<input type='datetime-local'/></label>
             <label>Stan paliwa<select>
@@ -27,7 +27,7 @@ const AcceptedOrder = () => {
             </select></label>
         </div>
         <div>
-            <label>Informacje zwrotne<textarea/></label>
+            <label>Informacje zwrotne<textarea id='feedback'/></label>
         </div>
         <section className='vehicle-actions'>
             <button className='MachEdit' onClick={() => onCancelClick()}>Przerwij</button>

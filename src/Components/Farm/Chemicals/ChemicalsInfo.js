@@ -49,7 +49,7 @@ const ChemicalsInfo = (props) => {
                         </div>
                     </section>
                     <section className='vehicle-info'>
-                            <p><span>Rodzaj:</span> </p>
+                            <p><span>Rodzaj:</span>{chemical.type.name} </p>
                             <p><span>Termin ważności</span>{chemical.expiration_date} </p>
                             <p><span>Ilość w opakowaniu: </span>{chemical.product_quantity_in_package} </p>
                             <p><span>Jednostka: </span>{chemical.unit.name} </p>

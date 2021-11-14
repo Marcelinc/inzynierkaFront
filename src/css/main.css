@@ -47,8 +47,16 @@ nav{
 .logo{
     width:45vw;
     text-align: center;
+    height: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
-
+#logo{
+    height: 100%;
+    border-radius: 37%;
+    background-color: #1c171096;
+}
+#logo:hover{opacity:0.9}
 footer{
     width:100vw;
     background-color:rgba(12, 88, 50, 0.83);

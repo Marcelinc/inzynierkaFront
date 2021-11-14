@@ -339,3 +339,26 @@
     background-color: rgba(134, 121, 117, 0.64);
     padding:5px;
 }
+
+.order-info{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display:grid;
+    grid-template-columns: 70% 25%;
+}
+.orderDTO{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.orderDTO *{
+    padding:5px;
+}
+#feedback{
+    resize: none;
+    border-radius: 10px;
+    border: none;
+    background-color: #87878e;
+    padding:3px;
+}
