@@ -12,24 +12,26 @@ const AcceptedOrder = () => {
 
     return(<section className='order-info '>
         <div className='orderDTO'>
-            <span>Zadanie Oprysk</span>
-            <span>Miejsce Działka nr. 222/54</span>
-            <label>Czas rozpoczęcia:<input type='datetime-local'/></label>
-            <label>Czas zakończenia<input type='datetime-local'/></label>
-            <label>Stan paliwa<select>
-                <option value={1}>Wymaga zatankowania</option>    
-            </select></label>
-            <label>Status pojazdu<select>
-                <option value={1}>Sprawny</option>    
-            </select></label>
-            <label>Status maszyny<select>
-                <option value={1}>Sprawny</option>    
-            </select></label>
+            <span>Zadanie: Oprysk</span>
+            <span>Miejsce: Działka nr. 222/54</span>
+            <span>Czas rozpoczęcia: 12-12-2012</span>
+            <span >Czas zakończenia: 12-12-2012</span>
+            <form>
+                <label className='orderForm'>Stan paliwa<select>
+                    <option value={1}>Wymaga zatankowania</option>    
+                </select></label>
+                <label className='orderForm'>Status pojazdu<select>
+                    <option value={1}>Sprawny</option>    
+                </select></label>
+                <label className='orderForm'>Status maszyny<select>
+                    <option value={1}>Sprawny</option>    
+                </select></label>
+            </form>
         </div>
         <div>
             <label>Informacje zwrotne<textarea id='feedback'/></label>
         </div>
-        <section className='vehicle-actions'>
+        <section className='order-actions'>
             <button className='MachEdit' onClick={() => onCancelClick()}>Przerwij</button>
             <button className='MachDelete' onClick={() => onFinishClick()}>Zakończ</button>
         </section>

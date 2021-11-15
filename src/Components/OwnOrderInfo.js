@@ -6,7 +6,7 @@ import PendingOrder from './Farm/PendingOrder';
 
 const OwnOrderInfo = (props) => {
 
-    const [status,setStatus] = useState('accepted');
+    const [status,setStatus] = useState('pending');
     
     const history = useHistory();
 
@@ -15,9 +15,9 @@ const OwnOrderInfo = (props) => {
         window.history.pushState(null,'MyFarm','/uzytkownik/zlecenia');
     }
 
-    return(<section className='data'><div>
+    return(<section className='data'><div className='farmOrder'>
         <p className='backToList' onClick={onReturnHandler}>Powrót do listy</p>
-        <div className='vehicleContent'>
+        <div className='order-content'>
         <section className='overall-info'>
             <div className='vehicle-infoname'>
                 <h1>Numer zlecenia: 86</h1>

@@ -1,6 +1,5 @@
 import React, { useState,useEffect } from 'react';
 import AddChemicals from './AddChemicals';
-import ChemicalsInfo from './ChemicalsInfo';
 
 
 const Chemicals = (props) => {

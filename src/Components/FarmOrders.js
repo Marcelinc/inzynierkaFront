@@ -4,7 +4,9 @@ import { AddFarmOrder } from "./Farm/AddFarmOrder";
 const FarmOrders = (props) => {
 
     const infoHandler = (id) => {
-
+        console.log('info clicked '+id);
+        props.setContent('farmOrder');
+        window.history.pushState({'id':id},'MyFarm',`/gospodarstwo/zlecenie/${id}`);
     }
 
     const addOrderHandler = () => {

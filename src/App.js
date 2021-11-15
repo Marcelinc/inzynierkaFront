@@ -9,6 +9,7 @@ import ResetPswdReq from "./Components/ResetPswdReq";
 import './css/main.css'
 
 import './img/fontello-1c92c5fc/css/fontello.css'
+import Chat from "./Components/Chat";
 
 function App(){
 
@@ -54,6 +55,8 @@ function App(){
                 <Route path='/gospodarstwo/zarzadzanie' component={() => <User log={logged} setLog={setLogged} content='manage'/>}/>
                 <Route path='/statystyki' component={() => <User log={logged} setLog={setLogged} content='stats'/>}/>
                 <Route path="/gospodarstwo/zlecenia" component={() => <User log={logged} setLog={setLogged} content='farmOrders'/>}/>
+                <Route path='/gospodarstwo/zlecenie/:id' component={() => <User log={logged} setLog={setLogged} content='farmOrder'/>}/>
+                <Route path='/czat' component={() => <Chat log={logged} setLog={setLogged}/>}/>
                 <Route component={() => <NotExist log={logged} setLog={setLogged}/>}/>
             </Switch>
         </Router>)

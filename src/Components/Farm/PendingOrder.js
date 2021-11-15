@@ -1,7 +1,8 @@
 import React from 'react';
 
 const PendingOrder = () => {
-    return(<section className='vehicle-info'>
+    return(<section className='pendingOrder-info'>
+        <h3>Informacje ogólne</h3>
         <p><span>Zadanie</span> Oprysk</p>
         <p><span>Miejsce</span> Działka nr. 222/54</p>
         <p><span>Przewidywany czas rozpoczęcia</span> 2020-05-21</p>
