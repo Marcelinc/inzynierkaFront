@@ -29,35 +29,35 @@ const UserEdit = (props) => {
         //Set body and validate
         let body= {};
         let validated = false;
-        if(act_name!=name){
+        if(act_name!==name){
             body['name']=name;
             validated=true;
         }
-        if(act_surname!=surname){
+        if(act_surname!==surname){
             body['surname']=surname;
             validated=true;
         }
-        if(act_email!=email){
+        if(act_email!==email){
             body['email']=email;
             validated=true;
         }
-        if(act_country_id!=country_id){
+        if(act_country_id!==country_id){
             body['country_id']=country_id;
             validated=true;
         }
-         if(act_town!=town){
+         if(act_town!==town){
              body['town']=town;
              validated=true;
          } 
-         if(act_street!=street){
+         if(act_street!==street){
              body['street']=street;
              validated=true;
          }
-         if(act_house_number!=house_number){
+         if(act_house_number!==house_number){
              body['house_number']=house_number;
              validated=true;
          }
-         if(act_flat_number!=flat_number){
+         if(act_flat_number!==flat_number){
              body['flat_number']=flat_number;
              validated=true;
          }    

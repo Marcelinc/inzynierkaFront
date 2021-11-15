@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 
@@ -6,7 +6,6 @@ import { useHistory } from 'react-router';
 const Farm = (props) => {
 
     const history = useHistory();
-    const [hasFarm,setHasFarm] = useState(false);
 
     const onGarage = (e) =>{
         props.content('garage');

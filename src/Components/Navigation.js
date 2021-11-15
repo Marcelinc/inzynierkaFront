@@ -18,7 +18,7 @@ const Navigation = (props) => {
     else
         navElem = (<div className="links">
             {props.title !== null && props.title !== undefined && <span className='link' onClick={props.setContent && (() => props.setContent('farmOrders'))}>Zlecenia</span>}
-            {props.title !== null && props.title !== undefined && <Link className='link' to='/logowanie'>Czat</Link>}
+            {props.title !== null && props.title !== undefined && <Link className='link' to='/czat'>Czat</Link>}
             {/*<Link className='link' to='/user'>Profil</Link>*/}
         </div>)
 
