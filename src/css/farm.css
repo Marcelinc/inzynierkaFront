@@ -407,3 +407,12 @@
     background-color: rgba(127, 255, 212, 0.664);
     border-radius: 3px;
 }
+
+.ordersEquipment{
+    margin-inline:10px;
+    border-top:1px dashed aliceblue;
+}
+.addEqButton:hover{
+    cursor:pointer;
+    color: #ecdf24;
+}

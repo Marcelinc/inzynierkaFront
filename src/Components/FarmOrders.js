@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { AddFarmOrder } from "./Farm/AddFarmOrder";
 
 const FarmOrders = (props) => {
+
+    const [trigger,setTrigger] = useState(false);
 
     const infoHandler = (id) => {
         console.log('info clicked '+id);
@@ -10,7 +12,7 @@ const FarmOrders = (props) => {
     }
 
     const addOrderHandler = () => {
-
+        setTrigger(true);
     }
 
     return(<section className='data'>
@@ -18,7 +20,6 @@ const FarmOrders = (props) => {
             <h3>Zlecenia</h3>
             <div id='garageMenu'>
                 <div id='options'>
-                <label><input type='checkbox' name='vehicleFilter' checked={true} />Przerwane</label>
                 <label><input type='checkbox' name='machineFilter' checked={true} />Zakończone</label>
                 <label><input type='checkbox' name='machineFilter' checked={true} />Przyjęte</label>
                 <label><input type='checkbox' name='machineFilter' checked={true} />Wolne</label>
@@ -74,7 +75,7 @@ const FarmOrders = (props) => {
                     <span>Zakończone</span>
                 </div>
             </div>
-            <AddFarmOrder/>
+            <AddFarmOrder trigger={trigger} setTrigger={setTrigger} farmId={props.farmId}/>
         </div>
     </section>)
 }

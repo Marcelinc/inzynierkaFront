@@ -19,17 +19,15 @@ const AddVehicle = (props) => {
     const addHandler = (event) => {
         event.preventDefault();
         document.querySelector('#addVehicleInfo').innerHTML='';
-
         if(validation()){
             document.querySelector('#addVehicleInfo').innerHTML='Dodawanie...';
             //Create request body
-            let body = {name,production_date,technical_examination_date,vehicle_type_id,status_id,fuel_level_id,farm_id};
-            //if(number) body['number']=number;
+            let body = {name,production_date,technical_examination_date,
+                vehicle_type_id,status_id,fuel_level_id,farm_id};
             if(capacity) body['capacity']=capacity;
             if(power) body['power']=power;
             if(vin) body['vin']=vin;
             if(image) body['image']=image;
-
             //Send request
             fetch(process.env.REACT_APP_SERVER+'/api/vehicle/create',{
                 method: 'POST',
@@ -47,7 +45,8 @@ const AddVehicle = (props) => {
                     clearFormData();
                 }
             })
-            .catch(err => {console.log(err);document.querySelector('#addVehicleInfo').innerHTML='Błąd podczas dodawania';});
+            .catch(err => {console.log(err);
+            document.querySelector('#addVehicleInfo').innerHTML='Błąd podczas dodawania';});
         }
     }
 
