@@ -28,7 +28,8 @@ const Crops = (props) => {
             console.log(res.data)
             setloading(false);
         })
-        .catch(err => {console.log(err); document.querySelector('.getDataStatus').innerHTML='Błąd podczas pobierania'});
+        .catch(err => {console.log(err); 
+            document.querySelector('.getDataStatus').innerHTML='Błąd podczas pobierania'});
     },[]);
 
     const filterHandler = (event) => {

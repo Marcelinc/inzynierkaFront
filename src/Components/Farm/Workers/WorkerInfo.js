@@ -82,8 +82,11 @@ const WorkerInfo = (props) => {
                     </div>
                 </div>}
             </div>
-            <WorkerFire trigger={triggerFireW} setTrigger={setTriggerFire} id={worker.id} name={worker.name+' '+worker.surname} return={onReturnHandler}/>
-            {editMode && <WorkerChangeJob id={worker.id} farm={farm_id} setMode={setMode} worker={worker} setWorker={setWorker} actualTitle={worker.job_title} title={props.title}/>}
+            
+            <WorkerFire trigger={triggerFireW} setTrigger={setTriggerFire} id={worker.id} 
+                name={worker.name+' '+worker.surname} return={onReturnHandler}/>
+            {editMode && <WorkerChangeJob id={worker.id} farm={farm_id} setMode={setMode} worker={worker} 
+                setWorker={setWorker} actualTitle={worker.job_title} title={props.title}/>}
         </div>
     </section>)
 }

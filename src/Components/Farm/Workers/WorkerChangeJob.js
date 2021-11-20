@@ -49,7 +49,8 @@ const WorkerChangeJob = (props) => {
                     props.setWorker(worker);
                     props.setMode(); 
                 }})
-            .catch(err => {console.log(err); document.querySelector('#changeTitleInfo').innerHTML='Błąd podczas wproowadzania zmian!'});
+            .catch(err => {console.log(err); 
+                document.querySelector('#changeTitleInfo').innerHTML='Błąd podczas wproowadzania zmian!'});
         } else document.querySelector('#changeTitleInfo').innerHTML='Pracownik jest już na wybranym stanowisku'
         
     }
@@ -62,7 +63,8 @@ const WorkerChangeJob = (props) => {
                     <form className='changeForm'>
                         <select onChange={e => setTitle(e.target.value)}>
                             {props.title === 'Właściciel' && titles.map(t => <option key={t.id} value={t.id}>{t.title}</option>)}
-                            {props.title === 'Pracownik biurowy' && titles.map(t => t.title != 'Właściciel' && <option key={t.id} value={t.id}>{t.title}</option>)}
+                            {props.title === 'Pracownik biurowy' && titles.map(t => t.title != 'Właściciel' && <option key={t.id} 
+                                value={t.id}>{t.title}</option>)}
                         </select>
                     </form>
                     <section className='vehicle-actions'>
