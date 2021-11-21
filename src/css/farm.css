@@ -411,8 +411,16 @@
 .ordersEquipment{
     margin-inline:10px;
     border-top:1px dashed aliceblue;
+    border-bottom: 1px dashed aliceblue;
+}
+.ordersEquipment label select, .extendedOrderInfo label select{
+    margin-left: 5px;
+    width: 100px;
 }
 .addEqButton:hover{
     cursor:pointer;
     color: #ecdf24;
+}
+.addOrderRemarks{
+    width: 100%;
 }
