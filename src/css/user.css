@@ -76,7 +76,7 @@
     border-bottom-right-radius: 15px;
     padding: 15px;
 }
-.userInfoButtons button,.farmManageButton{
+.userInfoButtons button,.farmManageButton, #farmCode button, .createSubmit{
     background-color: #151c08;
     border-radius: 5px;
     height: 40px;
@@ -86,7 +86,10 @@
     color:antiquewhite;
 }
 
-.userInfoButtons button:hover, .farmManageButton:hover{
+.userInfoButtons button:hover, .farmManageButton:hover, #farmCode button:hover, .createSubmit:hover{
     opacity:0.8;
     cursor:pointer;
+}
+.createSubmit{
+    margin-top:10px;
 }

@@ -50,9 +50,9 @@ const Dashboard = (props) => {
         <div className='user-nav'>
             <p className='dashLink' onClick={onDaneClick}>Dane osobowe</p>
             <p className='dashLink' onClick={onGospodarstwoClick}>Gospodarstwo</p>
-            {props.title !== null && <p className='dashLink' onClick={onMojeZleceniaClick}>Moje zlecenia</p>}
-            {props.title !== 'Pracownik rolny' && props.title !== null && <p className='dashLink' onClick={onStatsClick}>Statystyki</p>}
-            {props.title !== 'Pracownik rolny' && props.title !== null && <p className='dashLink' onClick={onPowiadomieniaClick}>Powiadomienia</p>}
+            {props.title !== null && props.title !== 'Niezatrudniony' && <p className='dashLink' onClick={onMojeZleceniaClick}>Moje zlecenia</p>}
+            {props.title !== null && <p className='dashLink' onClick={onStatsClick}>Statystyki</p>}
+            {(props.title === 'Pracownik biurowy' || props.title === 'Właściciel') && <p className='dashLink' onClick={onPowiadomieniaClick}>Powiadomienia</p>}
             <p className='dashLink' onClick={onClickHandle}><Link to='/logowanie'/>Wyloguj</p>
         </div>
     </section>)

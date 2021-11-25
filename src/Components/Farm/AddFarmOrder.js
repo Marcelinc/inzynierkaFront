@@ -14,7 +14,7 @@ export const AddFarmOrder = (props) => {
     const [error,setError] = useState(false);
     const [farm_id,setFarm] = useState(props.farmId);
 
-    const [work_type_id,setType] = useState(1);
+    const [work_type_id,setType] = useState(3);
     const [description,setDescription] = useState('');
     const [field_id,setField] = useState(1);
     const [reserved_from,setReservedFrom] = useState('');
@@ -101,13 +101,17 @@ export const AddFarmOrder = (props) => {
         let body = {description,machine_id,vehicle_id,reserved_from,reserved_to,work_type_id,field_id}
         fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/order/create`,{
             method:'POST',
-            headers: {'Accept':'application/json'},
+            headers: {'Content-Type':'application/json','Accept':'application/json'},
             body:JSON.stringify(body),
             credentials: 'include'
         })
         .then(response => response.json())
         .then(res => {
-                console.log(res);
+            if(res.message === 'Success'){
+                console.log(res.data);
+                props.setOrders([...props.orders,res.data]);
+                backHandler();
+            }
         }).catch(err => console.log(err));
     }
 
