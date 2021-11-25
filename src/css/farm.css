@@ -339,7 +339,7 @@
     background-color: #060505c4;
 }
 #ordersLegend, #myOrders .unit, #orders .unit{
-    grid-template-columns: 28% 40% 32%;
+    grid-template-columns: 10% 28% 30% 32%;
 }
 .changeForm select{
     width: 50%;
@@ -350,6 +350,15 @@
     border: none;
     border-radius: 3px;
     padding:5px;
+}
+
+@media screen and (min-width: 581px) and (max-width:735px){
+    .mOrderStatus{
+        display: none;
+    }
+    #ordersLegend, #myOrders .unit, #orders .unit{
+        grid-template-columns: 15% 35% 50%;
+    }
 }
 
 
@@ -447,6 +456,15 @@
     width: 100%;
 }
 
+@media screen and (max-width:490px){
+    .mOrderDate,.mOrderStatus{
+        display:none;
+    }
+    #ordersLegend, #myOrders .unit, #orders .unit{
+        grid-template-columns: 35% 55%;
+    }
+}
+
 
 /*notifications*/
 
@@ -472,7 +490,7 @@
     padding: 4px;
 }
 .seenNotification{
-    opacity: 0.75;
+    opacity: 0.6;
 }
 @media screen and (min-width: 400px) {
     .notification{

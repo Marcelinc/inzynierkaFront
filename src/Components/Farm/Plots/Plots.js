@@ -6,8 +6,9 @@ const Plots = (props) => {
 
     const [trigger,setTrigger] = useState(false);
     const [dataType,setType] = useState('list');
+    const [error,setError] = useState(false);
 
-     const [loading,setloading] = useState(true);
+    const [loading,setloading] = useState(true);
 
     const [plots,setPlots] = useState([]);
     const [farm_id,setId] = useState(props.farmId);
@@ -25,11 +26,11 @@ const Plots = (props) => {
             if(res.message === 'Success'){
                 setPlots(res.data);
                 setDisplay(res.data);
-                setloading(false);
                 console.log(res.data)
-            } else document.querySelector('.getDataStatus').innerHTML='Błąd podczas pobierania'
+            } else setError(true);
+            setloading(false);
         })
-        .catch(err => {console.log(err); document.querySelector('.getDataStatus').innerHTML='Błąd podczas pobierania'});
+        .catch(err => console.log(err));
     }, [])
 
     const filterHandler = (event) => {
@@ -69,7 +70,8 @@ const Plots = (props) => {
             </div>
             <div id='plots'>
                 <p className='filterInfo'></p>
-                {loading && <p className='getDataStatus'>Ładowanie danych...</p>} 
+                {loading && !error && <p className='getDataStatus'>Ładowanie danych...</p>}
+                {!loading && error && <p className='getDataStatus'>Błąd podczas pobierania</p>} 
                 {displayedPlots.map(plot => (
                     <div key={plot.id} className='unit' onClick={() => infoHandler(plot.id)}>
                         <span>{plot.registration_number}</span>
