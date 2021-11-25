@@ -6,6 +6,7 @@ const Workers = (props) => {
 
     const [triggergetCode,setTrigger] = useState(false);
     const [loading,setloading] = useState(true);
+    const [error,setError] = useState(false);
 
     const [workers,setWorkers] = useState([]);
     const [displayed,setDisplayed] = useState([]);
@@ -24,11 +25,11 @@ const Workers = (props) => {
             if(res.message === 'Success'){
                 setWorkers(res.data);
                 setDisplayed(res.data);
-                setloading(false);
                 console.log(res.data)
-            } else document.querySelector('.getDataStatus').innerHTML='Błąd podczas pobierania'
+            } else setError(true);
+            setloading(false);
         })
-        .catch(err => {console.log(err); document.querySelector('.getDataStatus').innerHTML='Błąd podczas pobierania'});
+        .catch(err => console.log(err));
     }, [])
 
     const onGetCodeHandler = () => {
@@ -71,6 +72,7 @@ const Workers = (props) => {
             <div id='workers'>
                 <p className='filterInfo'></p>
                 {loading && <p className='getDataStatus'>Ładowanie danych...</p>} 
+                {!loading && error && <p className='getDataStatus'>Błąd podczas pobierania</p>}
                 {displayed.map(worker => (
                     <div key={worker.id} className='unit' onClick={() => infoHandler(worker.id)}>
                         <span>{worker.name+' '+worker.surname}</span>

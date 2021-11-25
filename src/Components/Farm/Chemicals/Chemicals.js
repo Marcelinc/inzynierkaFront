@@ -6,6 +6,7 @@ const Chemicals = (props) => {
 
     const [trigger,setTrigger] = useState(false);
     const [loading,setloading] = useState(true);
+    const [error,setError] = useState(false);
 
     const [chemicals,setChemicals] = useState([]);
 
@@ -23,12 +24,14 @@ const Chemicals = (props) => {
         })
         .then(response => response.json())
         .then(res => {
-            setChemicals(res.data);
-            setDisplayed(res.data);
-            setloading(false);
-            console.log(res.data)
+            if(res.message==='Success'){
+                setChemicals(res.data);
+                setDisplayed(res.data);
+                console.log(res.data)
+                setloading(false);
+            }else setError(true);
         })
-        .catch(err => {console.log(err); document.querySelector('.getDataStatus').innerHTML='Błąd podczas pobierania'});
+        .catch(err => {console.log(err); document.querySelector('.getDataStatus').innerHTML=''});
     }, [])
 
     const filterHandler = (event) => {
@@ -69,8 +72,9 @@ const Chemicals = (props) => {
             </div>
             <div id='chemicals'>
                 <p className='filterInfo'></p>
-                {loading && <p className='getDataStatus'>Ładowanie danych...</p>} 
-                {displayed.map(c => (
+                {loading && !error && <p className='getDataStatus'>Ładowanie danych...</p>}
+                {loading && error && <p className='getDataStatus'>Błąd podczas pobierania danych</p>} 
+                {!loading && displayed.map(c => (
                     <div key={c.name} className='unit' onClick={() => infoHandler(c.id)}>
                         <span>{c.name}</span>
                         <span>{c.number}</span>

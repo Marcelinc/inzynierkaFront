@@ -8,6 +8,7 @@ const Crops = (props) => {
     const [trigger,setTrigger] = useState(false);
     const [dataType,setType] = useState('list');
     const [loading,setloading] = useState(true);
+    const [error,setError] = useState(false);
 
     const [crops,setCrops] = useState([]);
     const [farm_id,setId] = useState(props.farmId);
@@ -27,11 +28,10 @@ const Crops = (props) => {
                 setCrops(res.data);
                 setDisplay(res.data);
                 console.log(res.data);
-            }
+            } else setError(true);
             setloading(false);
         })
-        .catch(err => {console.log(err); 
-            document.querySelector('.getDataStatus').innerHTML='Błąd podczas pobierania'});
+        .catch(err => console.log(err));
     },[]);
 
     const filterHandler = (event) => {
@@ -72,6 +72,7 @@ const Crops = (props) => {
             <div id='crops'>
             <p className='filterInfo'></p>
                 {loading && <p className='getDataStatus'>Ładowanie danych...</p>} 
+                {error && <p className='getDataStatus'>Błąd podczas pobierania danych</p>}
                 {displayedCrops.map(c => (
                     <div key={c.crop} className='unit' onClick={() => infoHandler(c.id)}>
                         <span>{c.crop}</span>
