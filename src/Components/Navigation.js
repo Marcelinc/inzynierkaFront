@@ -17,8 +17,19 @@ const Navigation = (props) => {
         </div>)
     else
         navElem = (<div className="links">
-            {props.title !== null && props.title !== undefined && <span className='link' onClick={props.setContent && (() => props.setContent('farmOrders'))}>Zlecenia</span>}
-            {props.title !== null && props.title !== undefined && <Link className='link' to='/czat'>Czat</Link>}
+            {props.title !== null && props.title !== undefined && props.title !== 'Niezatrudniony' &&
+                <span className='link' onClick={props.setContent && (() => {props.setContent('farmOrders');  
+                    window.history.pushState(null,'MyFarm',`/gospodarstwo/zlecenia`);})}>
+                    Zlecenia
+                </span>}
+                {props.title !== null && props.title !== undefined && props.title !== 'Niezatrudniony' ? 
+                    <Link className='link' to='/czat'>Czat</Link> : <span className='link' onClick={props.setContent && (() => {
+                    props.setContent('creator'); window.history.pushState(null,'MyFarm',`/kreatorGospodarstwa`);
+                })}>
+                    Kreator
+                </span>
+            }
+            {props.title == null && props.title !== undefined }
             {/*<Link className='link' to='/user'>Profil</Link>*/}
         </div>)
 

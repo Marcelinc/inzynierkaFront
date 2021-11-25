@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 
@@ -6,6 +6,25 @@ import { useHistory } from 'react-router';
 const Farm = (props) => {
 
     const history = useHistory();
+    const [farmCode,setCode] = useState('');
+    const [validated,setValidated] = useState(true);
+
+    const [tileStyle,setStyle] = useState({});
+
+    useEffect(() => {
+        if(props.job_title !== 'Właściciel')
+            setStyle({'opacity':'0.8','cursor':'default', 'color': '#22281b'}); 
+    },[])
+
+    const joinHandler = () => {
+        if(farmCode){
+            console.log('send request');
+            setValidated(true)
+        }
+            
+        else setValidated(false)
+
+    }
 
     const onGarage = (e) =>{
         props.content('garage');
@@ -33,8 +52,10 @@ const Farm = (props) => {
     }
 
     const onManage = (e) => {
-        props.content('manage');
-        window.history.pushState(null,'MyFarm','/gospodarstwo/zarzadzanie');
+        if(props.job_title === 'Właściciel'){
+            props.content('manage');
+            window.history.pushState(null,'MyFarm','/gospodarstwo/zarzadzanie');
+        }
     }
 
     const onCreateFarm = (e) => {
@@ -47,9 +68,14 @@ const Farm = (props) => {
             <h2>Nie jesteś w żadnym gospodarstwie</h2>
             <p><Link to='#' onClick={onCreateFarm}>Załóż</Link> swoje gospodarstwo <br/> lub <br/> dołącz do istniejącego</p>
             <section id='farmCode'>
-                <h4>Kod gospodarstwa</h4>
-                <input type='text'></input>
-                <button>Dołącz</button>
+                <labe>
+                    <h4>Kod gospodarstwa</h4>
+                    <input id='insertFarmCode' type='text'placeholder='Wprowadź kod' onChange={e => setCode(e.target.value)}></input>
+                </labe>
+                <br/>
+                <button onClick={joinHandler}>Dołącz</button>
+                <br/>
+                <span className='info'>{validated ? '' : 'Podaj kod!'}</span>
             </section>
         </section>:
         <section className='data'>
@@ -59,7 +85,7 @@ const Farm = (props) => {
                 <div onClick={onChemicals} className='tile'>Środki chemiczne <i className="icon-tint"></i></div>
                 <div onClick={onWorkers} className='tile'>Pracownicy <i className="icon-users"></i> </div>
                 <div onClick={onPlot} className='tile'>Działki <i className="icon-location"></i></div>
-                <div onClick={onManage} className='tile'>Zarządzanie  <i className="icon-cogs"></i></div>
+                <div onClick={onManage} className='tile' style={tileStyle}>Zarządzanie  <i className="icon-cogs"></i></div>
             </div>
         </section>
     )

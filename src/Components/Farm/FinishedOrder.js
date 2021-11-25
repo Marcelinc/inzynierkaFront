@@ -1,17 +1,17 @@
 import React from 'react';
 
-const FinishedOrder = () => {
+const FinishedOrder = (props) => {
     return(<section className='finishedOrder-info'>
         <h3>Informacje ogólne </h3>
         <div className='overallOrderDTO'>
             
             <p><span>Wykonawca</span>Andrzej Rolny</p>
-            <p><span>Status zlecenia</span> Przerwane/Zakończone</p>
-            <p><span>Zadanie</span> Oprysk</p>
-            <p><span>Miejsce</span> Działka nr. 222/54</p>
+            <p><span>Status zlecenia</span> {props.order.order_status.name}</p>
+            <p><span>Zadanie</span> {props.order.work_type.name}</p>
+            <p><span>Miejsce</span> {props.order.field.localization}</p>
             <p><span>Przewidywany czas rozpoczęcia</span> 2020-05-21</p>
             <p><span>Przewidywany czas zakończenia</span> 2020-05-21</p>
-            <p><span>Uwagi</span> Brak dodatkowych informacji</p>
+            <p><span>Uwagi</span> {props.order.description ? props.order.description : 'Brak dodatkowych informacji'}</p>
         </div>
         <h3>Informacje zwrotne</h3>
         <div className='feedbackOrderDTO'>

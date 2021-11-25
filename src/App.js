@@ -56,7 +56,7 @@ function App(){
                 <Route path='/statystyki' component={() => <User log={logged} setLog={setLogged} content='stats'/>}/>
                 <Route path="/gospodarstwo/zlecenia" component={() => <User log={logged} setLog={setLogged} content='farmOrders'/>}/>
                 <Route path='/gospodarstwo/zlecenie/:id' component={() => <User log={logged} setLog={setLogged} content='farmOrder'/>}/>
-                <Route path='/czat' component={() => <Chat log={logged} setLog={setLogged}/>}/>
+                <Route path='/czat' component={() => <Chat log={logged} setLog={setLogged} title={user.job_title}/>}/>
                 <Route component={() => <NotExist log={logged} setLog={setLogged}/>}/>
             </Switch>
         </Router>)

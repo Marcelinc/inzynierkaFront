@@ -28,16 +28,16 @@ const FarmCreator = (props) => {
         })
     }
 
-    return(<section className='data'>
-        <h2>Kreator gospodarstwa</h2>
-        <form onSubmit={createFarm}>
-            <input type='text' placeholder='Nazwa' name='name' onChange={e => setName(e.target.value)}/>
-            <input type='text' placeholder='Miejscowość' name='towm' onChange={e => setTown(e.target.value)}/>
-            <input type='text' placeholder='Ulica' name='street' onChange={e => setStreet(e.target.value)}/>
-            <input type='text' placeholder='Nr domu' name='house_number' onChange={e => setHouse(e.target.value)}/>
-            <input type='text' placeholder='Budżet' onChange={e => setBudget(e.target.value)}/>
-            <button type='submit'>Załóż</button>
-        </form>
+    return(<section className='creatorContent'>
+            <h2>Kreator gospodarstwa</h2>
+            <form onSubmit={createFarm} className='creatorForm'>
+                <input type='text' placeholder='Nazwa' name='name' onChange={e => setName(e.target.value)}/>
+                <input type='text' placeholder='Miejscowość' name='towm' onChange={e => setTown(e.target.value)}/>
+                <input type='text' placeholder='Ulica' name='street' onChange={e => setStreet(e.target.value)}/>
+                <input type='text' placeholder='Nr domu' name='house_number' onChange={e => setHouse(e.target.value)}/>
+                <input type='text' placeholder='Budżet' onChange={e => setBudget(e.target.value)}/>
+                <button type='submit' className='createSubmit'>Załóż</button>
+            </form>
     </section>)
 }
 

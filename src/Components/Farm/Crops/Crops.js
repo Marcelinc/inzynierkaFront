@@ -23,9 +23,11 @@ const Crops = (props) => {
         })
         .then(response => response.json())
         .then(res => {
-            setCrops(res.data);
-            setDisplay(res.data);
-            console.log(res.data)
+            if(res.message === 'Success'){
+                setCrops(res.data);
+                setDisplay(res.data);
+                console.log(res.data);
+            }
             setloading(false);
         })
         .catch(err => {console.log(err); 

@@ -19,8 +19,9 @@ const AddPlot = (props) => {
             //Send request
             fetch(process.env.REACT_APP_SERVER+'/api/field/create',{
                 method: 'POST',
-                headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({farm_id,registration_number,localization,plant_type_id,plant_seed_date}),
+                headers: {'Content-Type':'application/json',
+                    'Accept': 'application/json'},
+                body: JSON.stringify({farm_id,registration_number,localization,plant_type_id,plant_seed_date,area}),
                 credentials:'include'
             })
             .then(response => response.json())
@@ -32,7 +33,8 @@ const AddPlot = (props) => {
                 props.setDisplayed(updatedDisplay);
                 props.setTrigger(false);
                 clearFormData();
-            }})
+                } else document.querySelector('#addPlotInfo').innerHTML='Błąd podczas dodawania';
+            })
             .catch(err => {console.log(err);document.querySelector('#addPlotInfo').innerHTML='Błąd podczas dodawania';})
         }   
     }

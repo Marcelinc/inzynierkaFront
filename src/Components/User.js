@@ -24,6 +24,7 @@ import PlotsInfo from "./Farm/Plots/PlotsInfo";
 import OwnOrderInfo from "./OwnOrderInfo";
 import UserEdit from "./UserEdit";
 import FarmOrders from "./FarmOrders";
+import FarmOrderInfo from "./Farm/FarmOrderInfo";
 
 const User = (props) => {
 
@@ -69,7 +70,7 @@ const User = (props) => {
                 {props.log && name ?
                     <main className='user'>
                         <Dashboard name={name} surname={surname} setLogIn={props.setLog} content={setContent} title={user.job_title}/>
-                        {content === 'farm' && <Farm content={setContent} hasFarm={user.farm_id}/>}
+                        {content === 'farm' && <Farm content={setContent} hasFarm={user.farm_id} job_title={user.job_title}/>}
                         {content === 'myorders' && <OwnOrders setContent={setContent}/>}
                         {content === 'myorder' && <OwnOrderInfo setContent={setContent} />}
                         {content === '' &&
@@ -110,8 +111,8 @@ const User = (props) => {
                         {content === 'worker' && <WorkerInfo setContent={setContent} farmId={user.farm_id} title={user.job_title}/>}
                         {content === 'plots' && <Plots farmId={user.farm_id} setContent={setContent}/>}
                         {content === 'plot' && <PlotsInfo setContent={setContent} farmId={user.farm_id}/>}
-                        {content === 'farmOrders' && <FarmOrders setContent={setContent}farmId={user.farm_id}/>}
-                        {content === 'farmOrder' && <OwnOrderInfo  setContent={setContent}/>}
+                        {content === 'farmOrders' && <FarmOrders setContent={setContent} farmId={user.farm_id}/>}
+                        {content === 'farmOrder' && <FarmOrderInfo  setContent={setContent} farmId={user.farm_id}/>}
                         {content === 'manage' && <FarmManage setContent={setContent} farmId={user.farm_id}/>}
                         {content === 'creator' && <FarmCreator user={id}/>}
                     </main>
