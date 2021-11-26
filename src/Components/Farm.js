@@ -6,8 +6,11 @@ import { useHistory } from 'react-router';
 const Farm = (props) => {
 
     const history = useHistory();
-    const [farmCode,setCode] = useState('');
+    const [access_code,setCode] = useState('');
     const [validated,setValidated] = useState(true);
+    const [loading,setLoading] = useState(false)
+    const [error,setError] = useState(false)
+    const [hasFarm,setFarm] = useState(props.hasFarm)
 
     const [tileStyle,setStyle] = useState({});
 
@@ -17,13 +20,27 @@ const Farm = (props) => {
     },[])
 
     const joinHandler = () => {
-        if(farmCode){
-            console.log('send request');
+        if(access_code){
+            setLoading(true);
+            setError(false)
+            fetch(process.env.REACT_APP_SERVER+'/api/attach-worker',{
+                method: 'POST',
+                headers: {'Content-Type':'application/json',
+                    'Accept': 'application/json'},
+                body: JSON.stringify({access_code}),
+                credentials:'include'
+            })
+            .then(response => response.json())
+            .then(res => {
+                console.log(res)
+                if(res.message ==='Success'){
+                    setFarm(true)
+                } else setError(true);
+                setLoading(false)
+            })
             setValidated(true)
         }
-            
         else setValidated(false)
-
     }
 
     const onGarage = (e) =>{
@@ -64,7 +81,7 @@ const Farm = (props) => {
     }
 
     return(
-        props.hasFarm === null ? <section className='farm'>
+        hasFarm === null ? <section className='farm'>
             <h2>Nie jesteś w żadnym gospodarstwie</h2>
             <p><Link to='#' onClick={onCreateFarm}>Załóż</Link> swoje gospodarstwo <br/> lub <br/> dołącz do istniejącego</p>
             <section id='farmCode'>
@@ -75,7 +92,7 @@ const Farm = (props) => {
                 <br/>
                 <button onClick={joinHandler}>Dołącz</button>
                 <br/>
-                <span className='info'>{validated ? '' : 'Podaj kod!'}</span>
+                <span className='info'>{!validated ? 'Podaj kod!' : error ? 'Błąd podczas przetwarzania' : loading ? 'Przetwarzanie...' : ''}</span>
             </section>
         </section>:
         <section className='data'>

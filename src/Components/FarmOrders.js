@@ -5,6 +5,7 @@ const FarmOrders = (props) => {
 
     const [trigger,setTrigger] = useState(false);
     const [farm_id,setFarm] = useState(props.farmId);
+    const [title,setTitle] = useState(props.title);
     const [loading,setLoading] = useState(true);
     const [error,setError] = useState(false);
 
@@ -16,19 +17,37 @@ const FarmOrders = (props) => {
     const [inprogressFilter,setInProgress] = useState(true);
 
     useEffect(() => {
-        fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/get-all-orders`,{
-            headers: {'Content-Type':'application/json','Accept':'application/json'},
-            credentials: 'include'
-        })
-        .then(response => response.json())
-        .then(res => {
-            console.log(res.data)
-            if(res.message === 'Success'){
-                setOrders(res.data);
-                setDisplayed(res.data);
-            } else setError(true);
-            setLoading(false);
-        }).catch(err => console.log(err));
+        console.log(title)
+        if(title === 'Pracownik biurowy' || title === 'Właściciel'){
+            console.log('pierwszy');
+            fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/get-all-orders`,{
+                headers: {'Content-Type':'application/json','Accept':'application/json'},
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(res => {
+                console.log(res.data)
+                if(res.message === 'Success'){
+                    setOrders(res.data);
+                    setDisplayed(res.data);
+                } else setError(true);
+                setLoading(false);
+            }).catch(err => console.log(err));
+        }
+        else if(title === 'Pracownik rolny')
+            fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/order/get-pending`,{
+                headers: {'Content-Type':'application/json','Accept':'application/json'},
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(res => {
+                console.log(res.data)
+                if(res.message === 'Success'){
+                    setOrders(res.data);
+                    setDisplayed(res.data);
+                } else setError(true);
+                setLoading(false);
+            }).catch(err => console.log(err));
     },[])
 
     const infoHandler = (id) => {
