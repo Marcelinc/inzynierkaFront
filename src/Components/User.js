@@ -99,7 +99,7 @@ const User = (props) => {
                             </section>
                         }
                         {content === 'stats' && <Stats/>}
-                        {content === 'note' && <Notifications/>}
+                        {content === 'note' && <Notifications id={user.id} farmId={user.farm_id}/>}
                         {content === 'garage' && <Garage farmId={user.farm_id} type='list' setContent={setContent}/>}
                         {content === 'vehicle' && <VehicleInfo setContent={setContent}/>}
                         {content === 'machine' && <MachineInfo setContent={setContent}/>}
@@ -110,8 +110,8 @@ const User = (props) => {
                         {content === 'workers' && <Workers farmId={user.farm_id} setContent={setContent}/>}
                         {content === 'worker' && <WorkerInfo setContent={setContent} farmId={user.farm_id} title={user.job_title}/>}
                         {content === 'plots' && <Plots farmId={user.farm_id} setContent={setContent}/>}
-                        {content === 'plot' && <PlotsInfo setContent={setContent} farmId={user.farm_id}/>}
-                        {content === 'farmOrders' && <FarmOrders setContent={setContent} farmId={user.farm_id}/>}
+                        {content === 'plot' && <PlotsInfo setContent={setContent} farmId={user.farm_id} title={user.job_title}/>}
+                        {content === 'farmOrders' && <FarmOrders setContent={setContent} farmId={user.farm_id} title={user.job_title}/>}
                         {content === 'farmOrder' && <FarmOrderInfo  setContent={setContent} farmId={user.farm_id}/>}
                         {content === 'manage' && <FarmManage setContent={setContent} farmId={user.farm_id}/>}
                         {content === 'creator' && <FarmCreator user={id}/>}
