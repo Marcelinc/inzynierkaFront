@@ -13,6 +13,10 @@ const OwnOrders = (props) => {
     const [orders,setOrders] = useState([]);
     const [displayed,setDisplayed]  = useState([]);
 
+    const [interruptedFilter,setInterrupted] = useState(true);
+    const [finishedFilter,setFinished] = useState(true);
+    const [inProgressFilter,setInProgress] = useState(true);
+
     const history = useHistory();
 
     useEffect(() => {
@@ -37,14 +41,58 @@ const OwnOrders = (props) => {
         window.history.pushState({'id':id},'MyFarm',`/uzytkownik/zlecenie/${id}`);
     }
 
+    const filterHandler = (e) => {
+        let updated;
+        let {name,checked} = e.target;
+        console.log(name+': '+checked)
+        if(name === 'finishedFilter'){
+            setFinished(checked);
+            if(checked){
+                updated = orders.filter(order => order.order_status.id === 4);
+                console.log(displayed.concat(updated))
+                setDisplayed(displayed.concat(updated));
+            }else{
+                updated = displayed.filter(order => order.order_status.id !== 4);
+                console.log(updated);
+                setDisplayed(updated);
+            } 
+        } 
+        else if(name === 'interruptedFilter'){
+            setInterrupted(checked);
+            if(checked){
+                updated = orders.filter(order => order.order_status.id === 3);
+                console.log(displayed.concat(updated))
+                setDisplayed(displayed.concat(updated));
+            }
+            else{
+                updated = displayed.filter(order => order.order_status.id !== 3);
+                console.log(updated);
+                setDisplayed(updated);
+            }
+        }
+        else if(name === 'inProgressFilter'){
+            setInProgress(checked);
+            if(checked){
+                updated = orders.filter(order => order.order_status.id === 2);
+                console.log(displayed.concat(updated))
+                setDisplayed(displayed.concat(updated));
+            }
+            else{
+                updated = displayed.filter(order => order.order_status.id !== 2);
+                console.log(updated);
+                setDisplayed(updated);
+            }
+        }
+    }
+
     return(<section className='data'>
         <div className='equipment-content'>
             <h3>Moje zlecenia</h3>
             <div id='garageMenu'>
                 <div id='farmOrdersOptions'>
-                <label><input type='checkbox' name='vehicleFilter' checked={true} />Przerwane</label>
-                <label><input type='checkbox' name='machineFilter' checked={true} />Zakończone</label>
-                <label><input type='checkbox' name='machineFilter' checked={true} />Przyjęte</label>
+                <label><input type='checkbox' name='interruptedFilter' checked={interruptedFilter} onChange={filterHandler} />Przerwane</label>
+                <label><input type='checkbox' name='finishedFilter' checked={finishedFilter} onChange={filterHandler} />Zakończone</label>
+                <label><input type='checkbox' name='inProgressFilter' checked={inProgressFilter} onChange={filterHandler} />Przyjęte</label>
             </div>
             </div>
             <div className='legend' id='ordersLegend'>
@@ -60,7 +108,7 @@ const OwnOrders = (props) => {
                     <span className='mOrderDate'>Przewidywany czas rozpoczęcia{o.id}</span>
                     <span className='mOrderStatus'>{o.order_status.human_readable_name}</span>
                 </div>)}
-                {!loading && !displayed.length && <p className='getDataStatus'>Nie dodano zleceń</p>}
+                {!loading && !displayed.length && <p className='getDataStatus'>Brak zleceń do wyświetlenia</p>}
                 {error && <p className='getDataStatus'>Błąd podczas ładowania danych</p>}
                 {loading && <p className='getDataStatus'>Ładowanie...</p>}
             </div>

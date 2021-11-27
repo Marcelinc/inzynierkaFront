@@ -17,6 +17,9 @@ const FarmOrders = (props) => {
     const [inprogressFilter,setInProgress] = useState(true);
 
     useEffect(() => {
+        setFinished(true);
+        setPending(true);
+        setInProgress(true)
         console.log(title)
         if(title === 'Pracownik biurowy' || title === 'Właściciel'){
             console.log('pierwszy');
@@ -61,25 +64,46 @@ const FarmOrders = (props) => {
     }
 
     const filterHandler = (e) => {
+        let updated;
         let {name,checked} = e.target;
         console.log(name+': '+checked)
         if(name === 'finishedFilter'){
             setFinished(checked);
             if(checked){
-                //
+                updated = orders.filter(order => order.order_status.id === 4 || order.order_status.id === 3);
+                console.log(displayed.concat(updated))
+                setDisplayed(displayed.concat(updated));
             }else{
-
-            } document.querySelectorAll('.machine').forEach(unit => unit.style.display='none');
-            //document.querySelectorAll('.machine').forEach(unit => unit.remove());
+                updated = displayed.filter(order => (order.order_status.id !== 4 && order.order_status.id !== 3));
+                console.log(updated);
+                setDisplayed(updated);
+            } 
         } 
         else if(name === 'acceptedFilter'){
             setInProgress(checked);
-            if(checked)
-            document.querySelectorAll('.vehicle').forEach(unit => unit.style.display='grid');//renderMachines(vehicles,'vehicle');
-            else document.querySelectorAll('.vehicle').forEach(unit => unit.style.display='none');
+            if(checked){
+                updated = orders.filter(order => order.order_status.id === 2);
+                console.log(displayed.concat(updated))
+                setDisplayed(displayed.concat(updated));
+            }
+            else{
+                updated = displayed.filter(order => order.order_status.id !== 2);
+                console.log(updated);
+                setDisplayed(updated);
+            }
         }
-        else {
-
+        else if(name === 'pendingFilter'){
+            setPending(checked);
+            if(checked){
+                updated = orders.filter(order => order.order_status.id === 1);
+                console.log(displayed.concat(updated))
+                setDisplayed(displayed.concat(updated));
+            }
+            else{
+                updated = displayed.filter(order => order.order_status.id !== 1);
+                console.log(updated);
+                setDisplayed(updated);
+            }
         }
     }
 
@@ -103,17 +127,18 @@ const FarmOrders = (props) => {
                 <span className='mOrderStatus'>Status</span>
             </div>
             <div id='orders'>
-                {!loading && displayed.map(o => <div key={o.id} className='mOrder unit' onClick={() => infoHandler(o.id)}>
+                {!loading && displayed.map((o,index) => <div key={index} className='mOrder unit' onClick={() => infoHandler(o.id)}>
                     <span className='mOrderName'>{o.number}</span>
                     <span className='mOrderName'>{o.work_type.name}</span>
                     <span className='mOrderDate'>Przewidywany czas rozpoczęcia{o.id}</span>
                     <span className='mOrderStatus'>{o.order_status.human_readable_name}</span>
                 </div>)}
-                {!loading && !displayed.length && <p className='getDataStatus'>Nie dodano zleceń</p>}
+                {!loading && !displayed.length && <p className='getDataStatus'>Brak zleceń do wyświetlenia</p>}
                 {error && <p className='getDataStatus'>Błąd podczas ładowania danych</p>}
                 {loading && <p className='getDataStatus'>Ładowanie...</p>}
             </div>
-            <AddFarmOrder trigger={trigger} setTrigger={setTrigger} farmId={props.farmId} orders={orders} setOrders={setOrders}/>
+            <AddFarmOrder trigger={trigger} setTrigger={setTrigger} farmId={props.farmId} orders={orders} setOrders={setOrders} 
+                pendingFilter={pendingFilter} setDisplayed={setDisplayed} displayed={displayed} filterHandler={filterHandler}/>
         </div>
     </section>)
 }

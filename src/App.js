@@ -38,7 +38,7 @@ function App(){
                 <Route path="/uzytkownik" exact component={() => <User log={logged} setLog={setLogged} content=''/>}/>
                 <Route path="/uzytkownik/zlecenia" component={() => <User log={logged} setLog={setLogged} content='myorders'/>}/>
                 <Route path='/uzytkownik/zlecenie/:id' component={() => <User log={logged} setLog={setLogged} content='myorder'/>}/>
-                <Route path="/user/powiadomienia" component={() => <User log={logged} setLog={setLogged} content='note'/>}/>
+                <Route path="/uzytkownik/powiadomienia" component={() => <User log={logged} setLog={setLogged} content='note'/>}/>
                 <Route path='/gospodarstwo' exact component={() => <User log={logged} setLog={setLogged} content='farm'/>}/>
                 <Route path='/kreatorGospodarstwa' component={() => <User log={logged} setLog={setLogged} content='creator'/>}/>
                 <Route path='/gospodarstwo/garaz' component={() => <User log={logged} setLog={setLogged} content='garage' farmId={user.farm_id}/>}/>

@@ -49,18 +49,21 @@ const User = (props) => {
     const [editMode,setMode] = useState(false);
 
     useEffect(() => {
-        fetch(process.env.REACT_APP_SERVER+"/api/get_user_data",{
-            method: 'POST',
-            headers: {'Content-Type':'application/json',
-            'X-Requested-With':'XMLHttpRequest'},
-            credentials: 'include'
-        })
-        .then(response => response.json())
-        .then(res =>  {console.log(res);if(res.message !== 'Unauthenticated.' && res.message !== 'error') {setName(res.data.name); setSurname(res.data.surname); setId(res.data.id); setUser(res.data)} setLoad(false);})
-        return(() => {setName('');setSurname('');setId(0);setUser({});setLoad();setContent('')})
-    },[])
-
-    
+        //get user data
+            setLoad(true)
+            fetch(process.env.REACT_APP_SERVER+"/api/get_user_data",{
+                method: 'POST',
+                headers: {'Content-Type':'application/json',
+                'X-Requested-With':'XMLHttpRequest'},
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(res =>  {console.log(res);if(res.message !== 'Unauthenticated.' && res.message !== 'error') {
+                setName(res.data.name); setSurname(res.data.surname); setId(res.data.id); setUser(res.data); 
+            } setLoad(false);})
+        
+        return(() => {setName('');setSurname('');setId(0);setUser({});setLoad(false);setContent('');})
+    },[])    
 
     if(load)
         return(<Loader log={props.log} setLog={props.setLog} title={user.job_title}/>)
@@ -69,7 +72,7 @@ const User = (props) => {
                 <Navigation log={props.log} setLog={props.setLog} title={user.job_title} setContent={setContent}/>
                 {props.log && name ?
                     <main className='user'>
-                        <Dashboard name={name} surname={surname} setLogIn={props.setLog} content={setContent} title={user.job_title}/>
+                        <Dashboard name={name} surname={surname} setLogIn={props.setLog} content={setContent} title={user.job_title} farmId={user.farm_id} id={user.id}/>
                         {content === 'farm' && <Farm content={setContent} hasFarm={user.farm_id} job_title={user.job_title}/>}
                         {content === 'myorders' && <OwnOrders setContent={setContent} userId={user.id} farmId={user.farm_id}/>}
                         {content === 'myorder' && <OwnOrderInfo setContent={setContent} />}

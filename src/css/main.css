@@ -43,6 +43,12 @@ nav{
     color: #235500;
     cursor: pointer;
 }
+.unseenLink{
+    text-shadow: 2px 2px 2px #FF0000;
+}
+.unseenLink:hover{
+    text-shadow: none;
+}
 
 .logo{
     width:45vw;
