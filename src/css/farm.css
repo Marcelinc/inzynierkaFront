@@ -86,7 +86,7 @@
 }
 
 /*Farm content data status*/
-.getDataStatus,.filterInfo{
+.getDataStatus,.filterInfo, .startOrderStatus{
     color:red;
     padding:15px;
 }
@@ -199,7 +199,7 @@
     margin-left: auto;
     margin-right: auto;
 }
-.vehicle-info p, .finishedOrder-info p, .pendingOrder-info p{
+.vehicle-info p, .finishedOrder-info p, .pendingOrder-info > p{
     display: grid;
     grid-template-columns: 50% 50%;
     text-align: left;
@@ -456,6 +456,12 @@
     width: 100%;
 }
 
+.startOrderStatus{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
 @media screen and (max-width:490px){
     .mOrderDate,.mOrderStatus{
         display:none;
@@ -491,6 +497,14 @@
 }
 .seenNotification{
     opacity: 0.6;
+}
+.notificationContent{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.notificationContent:hover{
+    white-space: normal;
 }
 @media screen and (min-width: 400px) {
     .notification{

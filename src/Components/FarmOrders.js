@@ -35,7 +35,7 @@ const FarmOrders = (props) => {
             }).catch(err => console.log(err));
         }
         else if(title === 'Pracownik rolny')
-            fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/order/get-pending`,{
+            fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/get-pending-orders`,{
                 headers: {'Content-Type':'application/json','Accept':'application/json'},
                 credentials: 'include'
             })
@@ -85,16 +85,16 @@ const FarmOrders = (props) => {
 
     return(<section className='data'>
         <div className='equipment-content'>
-            <h3>Zlecenia</h3>
+            {(title === 'Pracownik biurowy' || title === 'Właściciel') && <h3>Zlecenia</h3>}
             <div id='garageMenu'>
-                <div id='options'>
+                {(title === 'Pracownik biurowy' || title === 'Właściciel') && <div id='options'>
                 <label><input type='checkbox' name='finishedFilter' checked={finishedFilter} onChange={filterHandler} />Zakończone</label>
                 <label><input type='checkbox' name='acceptedFilter' checked={inprogressFilter} onChange={filterHandler} />Przyjęte</label>
                 <label><input type='checkbox' name='pendingFilter' checked={pendingFilter} onChange={filterHandler} />Wolne</label>
-                </div>
-                <div className='addButtons'>
+                </div>}
+                {(title === 'Pracownik biurowy' || title === 'Właściciel') ? <div className='addButtons'>
                     <span className='addContent' onClick={addOrderHandler}>+Zlecenie</span>
-                </div>
+                </div> : 'Zlecenia'}
             </div>
             <div className='legend' id='ordersLegend'>
                 <span>Numer</span>
