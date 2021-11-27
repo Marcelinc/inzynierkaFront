@@ -86,18 +86,6 @@ export const AddFarmOrder = (props) => {
 
     const addHandler = (e) => {
         e.preventDefault();
-        console.log('Dane:')
-        console.log(description)
-        console.log(machine_id)
-        console.log(vehicle_id)
-        console.log(dose)
-        console.log(field_id)
-        console.log(reserved_from)
-        console.log(reserved_to)
-        console.log(work_type_id)
-        console.log(farm_plant_protection_product_id)
-        console.log(water_amount)
-        console.log(product_quantity)
         let body = {description,machine_id,vehicle_id,reserved_from,reserved_to,work_type_id,field_id}
         fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/order/create`,{
             method:'POST',
@@ -110,6 +98,7 @@ export const AddFarmOrder = (props) => {
             if(res.message === 'Success'){
                 console.log(res.data);
                 props.setOrders([...props.orders,res.data]);
+                props.pendingFilter && props.setDisplayed([res.data,...props.displayed])
                 backHandler();
             }
         }).catch(err => console.log(err));

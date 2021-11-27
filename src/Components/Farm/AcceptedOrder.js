@@ -28,8 +28,8 @@ const AcceptedOrder = () => {
                 </select></label>
             </form>
         </div>
-        <div>
-            <label>Informacje zwrotne<textarea id='feedback'/></label>
+        <div id='feedbackInput'>
+            <label><p>Informacje zwrotne</p><textarea id='feedback'/></label>
         </div>
         <section className='order-actions'>
             <button className='MachEdit' onClick={() => onCancelClick()}>Przerwij</button>

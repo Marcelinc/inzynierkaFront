@@ -1,12 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import '../css/user.css';
 import Photo from '../img/userDefault.png';
 
 const Dashboard = (props) => {
+
+    const [hasUnread,setUnread] = useState(false);
+    const [refresh,setRefresh] = useState(false);
     
     const history = useHistory();
+
+    useEffect(() => {
+        //get unread notifications status
+        if(props.title === 'Pracownik biurowy' || props.title === 'Właściciel'){
+            fetch(process.env.REACT_APP_SERVER+`/api/farm/${props.farmId}/worker/${props.id}/notification/has-unread`,{
+                method: 'POST',
+                headers: {'Content-Type':'application/json',
+                'X-Requested-With':'XMLHttpRequest'},
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(res => {console.log(res); if(res.data === true) setUnread(true); else setUnread(false)})
+            .catch(err => console.log(err))
+
+            let updateRefresh = !refresh;
+            setTimeout(() => setRefresh(updateRefresh),60000)
+        }
+        
+    },[refresh])
 
     const onClickHandle = () => {
         fetch(process.env.REACT_APP_SERVER+"/api/logout",{
@@ -52,7 +74,7 @@ const Dashboard = (props) => {
             <p className='dashLink' onClick={onGospodarstwoClick}>Gospodarstwo</p>
             {props.title !== null && props.title !== 'Niezatrudniony' && <p className='dashLink' onClick={onMojeZleceniaClick}>Moje zlecenia</p>}
             {props.title !== null && <p className='dashLink' onClick={onStatsClick}>Statystyki</p>}
-            {(props.title === 'Pracownik biurowy' || props.title === 'Właściciel') && <p className='dashLink' onClick={onPowiadomieniaClick}>Powiadomienia</p>}
+            {(props.title === 'Pracownik biurowy' || props.title === 'Właściciel') && <p className={hasUnread ? 'dashLink unseenLink' : 'dashLink'} onClick={() => {onPowiadomieniaClick(); setUnread(false)}}>Powiadomienia</p>}
             <p className='dashLink' onClick={onClickHandle}><Link to='/logowanie'/>Wyloguj</p>
         </div>
     </section>)
