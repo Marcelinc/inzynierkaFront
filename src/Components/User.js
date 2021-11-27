@@ -71,7 +71,7 @@ const User = (props) => {
                     <main className='user'>
                         <Dashboard name={name} surname={surname} setLogIn={props.setLog} content={setContent} title={user.job_title}/>
                         {content === 'farm' && <Farm content={setContent} hasFarm={user.farm_id} job_title={user.job_title}/>}
-                        {content === 'myorders' && <OwnOrders setContent={setContent}/>}
+                        {content === 'myorders' && <OwnOrders setContent={setContent} userId={user.id} farmId={user.farm_id}/>}
                         {content === 'myorder' && <OwnOrderInfo setContent={setContent} />}
                         {content === '' &&
                             <section className='data'>
@@ -112,7 +112,7 @@ const User = (props) => {
                         {content === 'plots' && <Plots farmId={user.farm_id} setContent={setContent}/>}
                         {content === 'plot' && <PlotsInfo setContent={setContent} farmId={user.farm_id} title={user.job_title}/>}
                         {content === 'farmOrders' && <FarmOrders setContent={setContent} farmId={user.farm_id} title={user.job_title}/>}
-                        {content === 'farmOrder' && <FarmOrderInfo  setContent={setContent} farmId={user.farm_id}/>}
+                        {content === 'farmOrder' && <FarmOrderInfo  setContent={setContent} farmId={user.farm_id} userId={user.id}/>}
                         {content === 'manage' && <FarmManage setContent={setContent} farmId={user.farm_id}/>}
                         {content === 'creator' && <FarmCreator user={id}/>}
                     </main>

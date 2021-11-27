@@ -52,8 +52,9 @@ const FarmOrderInfo = (props) => {
             </div>
         </section>
             {loading ? <p id='getInfoStatus'>Ładowanie...</p> : 
-                (status==='finished' || status==='interrupted') ? <FinishedOrder order={order}/> : status === 'in_progress' ? <AcceptedOrder order={order}/> :
-                status === 'pending' && <PendingOrder order={order}/>}
+                (status==='finished' || status==='interrupted') ? <FinishedOrder order={order}/> : 
+                status === 'in_progress' ? <AcceptedOrder order={order}/> :
+                status === 'pending' && <PendingOrder order={order} farmId={farm_id} userId={props.userId}/>}
         </div>
     </div></section>)
 }
