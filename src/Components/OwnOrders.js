@@ -105,7 +105,7 @@ const OwnOrders = (props) => {
                 {!loading && displayed.map(o => <div key={o.id} className='mOrder unit' onClick={() => infoHandler(o.id)}>
                     <span className='mOrderName'>{o.number}</span>
                     <span className='mOrderName'>{o.work_type.name}</span>
-                    <span className='mOrderDate'>Przewidywany czas rozpoczęcia{o.id}</span>
+                    <span className='mOrderDate'>{o.reserved_from}</span>
                     <span className='mOrderStatus'>{o.order_status.human_readable_name}</span>
                 </div>)}
                 {!loading && !displayed.length && <p className='getDataStatus'>Brak zleceń do wyświetlenia</p>}
