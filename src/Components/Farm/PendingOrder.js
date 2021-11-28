@@ -10,7 +10,9 @@ const PendingOrder = (props) => {
     const [order_id,setOrder] = useState(props.order.id)
     const [user_id,setUser] = useState(props.userId)
 
-    const onCancelClick = () => {
+    const [disabled,setDisabled] = useState(false);
+
+    const onAcceptClick = () => {
         setLoading(true);
         setError(false);
         fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/order/${order_id}/worker/${user_id}/start-order`,{
@@ -24,6 +26,9 @@ const PendingOrder = (props) => {
             console.log(res)
             if(res.message === 'Success'){
                 setSuccess(true);
+                setDisabled(true);
+                let butt = document.getElementById('acceptOrderButton');
+                if(butt) {butt.style.opacity=0.8; butt.style.cursor='default'}
             } else setError(true);
             setLoading(false);
         })
@@ -34,18 +39,19 @@ const PendingOrder = (props) => {
         <h3>Informacje ogólne</h3>
         <p><span>Zadanie</span> {props.order.work_type.name}</p>
         <p><span>Miejsce</span> {props.order.field.localization}</p>
-        <p><span>Przewidywany czas rozpoczęcia</span> 2020-05-21</p>
-        <p><span>Przewidywany czas zakończenia</span> 2020-05-21</p>
-        <p><span>Pojazd</span>Fendt 209S</p>
-        <p><span>Sprzęt</span>Opryskiwacz Agrola</p>
+        <p><span>Przewidywany czas rozpoczęcia</span>{props.order.reserved_from}</p>
+        <p><span>Przewidywany czas zakończenia</span>{props.order.reserved_to}</p>
+        <p><span>Pojazd</span>{props.order.vehicles.length ? props.order.vehicles[0].name+' nr. '+props.order.vehicles[0].number : 'Nie wybrano'}</p>
+        <p><span>Sprzęt</span>{props.order.machines.length ? props.order.machines[0].name+' nr. '+props.order.machines[0].number : 'Nie wybrano'}</p>
 
-        {props.order.dose && <p><span>Środek chemiczny</span>KristaLeaf Foto</p> &&
-        <p><span>Dawka na 1ha</span>3kg</p> && 
-        <p><span>Woda na 1ha</span> 600l</p>}
+        {props.order.dose && props.order.dose.plant_protection_product!==null && <p><span>Środek chemiczny</span>
+            {props.order.dose.plant_protection_product.name}</p>}
+        {props.order.dose && props.order.dose.product_quantity !== null && <p><span>Dawka na 1ha</span>{props.order.dose.product_quantity}kg</p>}
+        {props.order.dose && props.order.dose.water_amount && <p><span>Woda na 1ha</span>{props.order.dose.water_amount}l</p>}
         <p><span>Uwagi</span> {props.order.description ? props.order.description : 'Brak dodatkowych informacji'}</p>
 
         <section className='order-actions'>
-            <button className='MachEdit' onClick={() => onCancelClick()}>Przyjmij</button>
+            <button className='MachEdit' id='acceptOrderButton' onClick={() => onAcceptClick()} disabled={disabled}>Przyjmij</button>
             <p className='startOrderStatus'>{loading ? 'Przetwarzanie..' : error ? 'Błąd podczas przetwarzania!' : 
                 success ? 'Przyjęto zlecenie! Możesz je znaleźć w zakładce Moje zlecenia.' : ''}</p>
         </section>

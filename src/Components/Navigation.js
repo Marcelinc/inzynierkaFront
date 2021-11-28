@@ -95,7 +95,7 @@ const Navigation = (props) => {
             <div className='row2'></div>
             <div className='row3'></div>
         </div>}
-        <div className="logo"><Link to="/uzytkownik"><img id='logo' src={LogoImage} alt='Logo'></img></Link></div>
+        <div className="logo"><Link to="/gospodarstwo"><img id='logo' src={LogoImage} alt='Logo'></img></Link></div>
         {navElem}
         <div className='menu'>
             <div className='line1'></div>

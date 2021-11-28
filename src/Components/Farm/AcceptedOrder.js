@@ -1,40 +1,92 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
-const AcceptedOrder = () => {
+const AcceptedOrder = (props) => {
+
+    const [statuses,setStatuses] = useState(props.statusesMV);
+    const [fuelStatuses,setFuelStatuses] = useState(props.fuelStatuses);
+
+    const [feedback,setFeedback] = useState('');
+    const [farm_id,setFarm] = useState(props.farmId);
+    const [order_id,setOrder] = useState(props.order.id)
+    const [worker_id,setWorker] = useState(props.userId);
+    const [fuel_level_id,setFuel] = useState(1);
+    const [vehicle_status_id,setVehicle] = useState(1);
+    const [machine_status_id,setMachine] = useState(1);
+
+    const [error,setError] = useState(false);
+    const [loading,setLoading] = useState(false);
+    const [finished,setFinished] = useState(false);
+    const [rejected,setRejected] = useState(false);
+
+    useEffect(() => {
+        console.log('accepted')
+        console.log(statuses)
+        console.log(fuelStatuses)
+    },[])
 
     const onCancelClick = () => {
         console.log('przerwano')
     }
 
     const onFinishClick = () => {
-        console.log('zakończono');
+        setError(false);
+        setLoading(true);
+        let body = {'fuel_level_id':fuel_level_id,'vehicle_status_id':vehicle_status_id,'machine_status_id':machine_status_id};
+        console.log(feedback)
+        console.log(fuel_level_id)
+        console.log(vehicle_status_id)
+        console.log(machine_status_id)
+        if(feedback)
+            body['feedback']=feedback;
+        //send request
+        fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/order/${order_id}/worker/${worker_id}/finish-order`,{
+            method:'POST',
+            headers: {'Content-Type':'application/json','Accept':'application/json'},
+            body:JSON.stringify(body),
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(res => {
+            if(res.message === 'Success'){
+                setFinished(true);
+            } else setError(true);
+            setLoading(false);
+        }).catch(err => console.log(err));
     }
 
     return(<section className='order-info '>
         <div className='orderDTO'>
-            <span>Zadanie: Oprysk</span>
-            <span>Miejsce: Działka nr. 222/54</span>
-            <span>Czas rozpoczęcia: 12-12-2012</span>
-            <span >Czas zakończenia: 12-12-2012</span>
+            <span>Zadanie: {props.order.work_type.name}</span>
+            <span>Wykonawca: {props.order.user && props.order.user.name+' '+props.order.user.surname}</span>
+            <span>Miejsce: {props.order.field.localization}</span>
+            <span>Czas rozpoczęcia: {props.order.started_at}</span>
             <form>
-                <label className='orderForm'>Stan paliwa<select>
-                    <option value={1}>Wymaga zatankowania</option>    
-                </select></label>
-                <label className='orderForm'>Status pojazdu<select>
-                    <option value={1}>Sprawny</option>    
-                </select></label>
-                <label className='orderForm'>Status maszyny<select>
-                    <option value={1}>Sprawny</option>    
-                </select></label>
+                <label className='orderForm'>Stan paliwa {props.order.vehicles.length ? props.order.vehicles[0].name : ''}
+                    <select onChange={e => setFuel(e.target.value)}>
+                        {fuelStatuses.map(status => <option key={status.id} value={status.id}>{status.name}</option> )}
+                    </select>
+                </label>
+                <label className='orderForm'>Status pojazdu {props.order.vehicles.length ? props.order.vehicles[0].name : ''}
+                    <select onChange={e => setVehicle(e.target.value)}>
+                        {statuses.map(status => <option key={status.id} value={status.id}>{status.status}</option>)}    
+                    </select>
+                </label>
+                <label className='orderForm'>Status maszyny {props.order.machines.length ? props.order.machines[0].name : ''}
+                    <select onChange={e => setMachine(e.target.value)}>
+                        {statuses.map(status => <option key={status.id} value={status.id}>{status.status}</option>)}     
+                    </select>
+                </label>
             </form>
         </div>
         <div id='feedbackInput'>
-            <label><p>Informacje zwrotne</p><textarea id='feedback'/></label>
+            <label><p>Informacje zwrotne</p><textarea id='feedback' value={feedback} onChange={e => setFeedback(e.target.value)}/></label>
         </div>
-        <section className='order-actions'>
+        {props.order.user !== null && !finished && !rejected && !loading && <section className='order-actions'>
             <button className='MachEdit' onClick={() => onCancelClick()}>Przerwij</button>
             <button className='MachDelete' onClick={() => onFinishClick()}>Zakończ</button>
-        </section>
+        </section>}
+        <p className='getDataStatus'>{error ? 'Błąd podczas przetwarzania!' : loading ? 'Zatwierdzanie...' : 
+            finished ? 'Zakończono zlecenie' : rejected ? 'Przerwano zlecenie' : ''}</p>
     </section>)
 }
 

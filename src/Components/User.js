@@ -58,8 +58,8 @@ const User = (props) => {
                 credentials: 'include'
             })
             .then(response => response.json())
-            .then(res =>  {console.log(res);if(res.message !== 'Unauthenticated.' && res.message !== 'error') {
-                setName(res.data.name); setSurname(res.data.surname); setId(res.data.id); setUser(res.data); 
+            .then(res =>  {console.log(res);if(res.message !== 'Unauthenticated.' && res.message !== 'error') { if(res.data){
+                setName(res.data.name); setSurname(res.data.surname); setId(res.data.id); setUser(res.data);} 
             } setLoad(false);})
         
         return(() => {setName('');setSurname('');setId(0);setUser({});setLoad(false);setContent('');})
@@ -75,7 +75,7 @@ const User = (props) => {
                         <Dashboard name={name} surname={surname} setLogIn={props.setLog} content={setContent} title={user.job_title} farmId={user.farm_id} id={user.id}/>
                         {content === 'farm' && <Farm content={setContent} hasFarm={user.farm_id} job_title={user.job_title}/>}
                         {content === 'myorders' && <OwnOrders setContent={setContent} userId={user.id} farmId={user.farm_id}/>}
-                        {content === 'myorder' && <OwnOrderInfo setContent={setContent} />}
+                        {content === 'myorder' && <OwnOrderInfo setContent={setContent} farmId={user.farm_id} userId={user.id}/>}
                         {content === '' &&
                             <section className='data'>
                                 <div className='userInfo'>
