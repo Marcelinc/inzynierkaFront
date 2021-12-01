@@ -17,11 +17,12 @@ const Navigation = (props) => {
         </div>)
     else
         navElem = (<div className="links">
-            {props.title !== null && props.title !== undefined && props.title !== 'Niezatrudniony' &&
+            {props.title !== null && props.title !== undefined && props.title !== 'Niezatrudniony' && !props.outside ?
                 <span className='link' onClick={props.setContent && (() => {props.setContent('farmOrders');  
                     window.history.pushState(null,'MyFarm',`/gospodarstwo/zlecenia`);})}>
                     Zlecenia
-                </span>}
+                </span> : props.title !== null && props.title !== undefined && props.title !== 'Niezatrudniony' && <Link className='link' 
+                    to='/gospodarstwo/zlecenia'>Zlecenia</Link>}
                 {props.title !== null && props.title !== undefined && props.title !== 'Niezatrudniony' ? 
                     <Link className='link' to='/czat'>Czat</Link> : <span className='link' onClick={props.setContent && (() => {
                     props.setContent('creator'); window.history.pushState(null,'MyFarm',`/kreatorGospodarstwa`);

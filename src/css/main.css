@@ -330,7 +330,71 @@ main{
 
 
 /*chat*/
-
-.chatBar{
-    width: 25%;
+.chatContent{
+    display:flex;
+    height:90%;
+    overflow-y:hidden;
+    text-align:center;
 }
+.chatBar{
+    width: 35%;
+    background-color: #40b758c2;
+    text-align: center;
+    color: #f7ff00;
+}
+.chatData{
+    width:65%;
+    overflow-y: hidden;
+    background-color: #d5181866;
+}
+.chatSearch{
+    height:70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.chatSearch input{
+    padding: 7px;
+    border:none;
+    border-radius: 3px;
+    width:70%;
+}
+.chatContacts{
+    margin-top: 15px;
+    height:70%;
+    overflow-y:scroll;
+    scrollbar-color: rgb(31, 58, 9) rgb(19, 19, 56);
+    scrollbar-width:thin;
+}
+/* width */
+.chatContacts::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  .chatContacts::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgb(19, 19, 56); 
+    background-color:rgb(19, 19, 56);
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  .chatContacts::-webkit-scrollbar-thumb {
+    background: rgb(31, 58, 9); 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  .chatContacts::-webkit-scrollbar-thumb:hover {
+    background: rgba(31, 58, 9,0.8); 
+  }
+.contact{
+    border-bottom: 2px solid rgb(6, 28, 31);
+    padding: 15px;
+}
+.contact:hover{
+    background-color: rgba(105, 92, 92, 0.466);
+    cursor:pointer;
+}
+
+

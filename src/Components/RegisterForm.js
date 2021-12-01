@@ -47,7 +47,7 @@ const RegisterForm = (props) => {
         //Email validation
         if(!email || !email.match(/^[a-z0-9]+[\.]?[a-z0-9]+[\@][a-z]{2,6}[\.][a-z]{2,3}$/i)){
             validated = false;
-            document.getElementById('emailValidate').innerHTML='Wprowadź email!';
+            document.getElementById('emailValidate').innerHTML='Wprowadź poprawny email!';
         } else document.getElementById('emailValidate').innerHTML='';
 
         //Password validation
@@ -62,7 +62,7 @@ const RegisterForm = (props) => {
         }
 
         //Name validation
-        if(name.match(/[^a-z]/i)){
+        if(name.match(/[^a-zóżź]/i)){
             validated=false;
             document.getElementById('nameValidate').innerHTML='Niepoprawne imię';
         } else document.getElementById('nameValidate').innerHTML='';
@@ -78,7 +78,7 @@ const RegisterForm = (props) => {
         }
 
         //Surname validation
-        if(surname.match(/[^a-z]/i)){
+        if(surname.match(/[^a-zóżź]/i)){
             validated=false;
             document.getElementById('surnameValidate').innerHTML='Niepoprawne nazwisko';
         } else document.getElementById('surnameValidate').innerHTML='';
@@ -94,7 +94,7 @@ const RegisterForm = (props) => {
         }
 
         //Town validation
-        if(town.match(/[^a-z]/i)){
+        if(town.match(/[^a-zó]/i)){
             validated=false;
             document.getElementById('townValidate').innerHTML='Niepoprawne miasto';
         } else document.getElementById('townValidate').innerHTML='';
@@ -129,7 +129,7 @@ const RegisterForm = (props) => {
                 <section className='loginSection'>
                     <h3>Zajerestruj się</h3>
                     <form className='registerForm' onSubmit={submitHandler}>
-                        <label><span className='registerLabel'>Email</span> <input type="email" name="email" className='registerInput' onChange={e => setEmail(e.target.value)}></input></label>
+                        <label><span className='registerLabel'>Email</span> <input type="text" name="email" className='registerInput' onChange={e => setEmail(e.target.value)}></input></label>
                         <span className='info' id='emailValidate'></span>
                         <label><span className='registerLabel'>Hasło</span> <input type="password" name="password" className='registerInput' onChange={e => setPassword(e.target.value)}></input></label>
                         <span className='info' id='passwordValidate'></span>
