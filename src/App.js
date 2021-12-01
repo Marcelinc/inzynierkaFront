@@ -14,7 +14,7 @@ import Chat from "./Components/Chat";
 function App(){
 
     const [logged,setLogged] = useState(false);
-    const [user,setUser] = useState({farm_id:0});
+    const [user,setUser] = useState({farm_id:0,job_title:null});
 
     useEffect(() => {
         fetch(process.env.REACT_APP_SERVER+"/api/get_user_data",{
@@ -56,7 +56,7 @@ function App(){
                 <Route path='/statystyki' component={() => <User log={logged} setLog={setLogged} content='stats'/>}/>
                 <Route path="/gospodarstwo/zlecenia" component={() => <User log={logged} setLog={setLogged} content='farmOrders'/>}/>
                 <Route path='/gospodarstwo/zlecenie/:id' component={() => <User log={logged} setLog={setLogged} content='farmOrder'/>}/>
-                <Route path='/czat' component={() => <Chat log={logged} setLog={setLogged} title={user.job_title}/>}/>
+                <Route path='/czat' component={() => <Chat log={logged} setLog={setLogged} title={user.job_title} farmId={user.farm_id}/>}/>
                 <Route component={() => <NotExist log={logged} setLog={setLogged}/>}/>
             </Switch>
         </Router>)

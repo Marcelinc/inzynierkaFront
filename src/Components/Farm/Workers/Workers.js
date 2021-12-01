@@ -41,7 +41,7 @@ const Workers = (props) => {
         let selectedWorkers = workers.filter(w => w.name.match(reg)||w.surname.match(reg));
         setDisplayed(selectedWorkers);
         if(selectedWorkers.length === 0){
-            document.querySelector('.filterInfo').innerHTML='Brak szukanych plonów';
+            document.querySelector('.filterInfo').innerHTML='Brak szukanych pracowników';
             document.querySelector('.filterInfo').style.display='inherit';
         }else{
             document.querySelector('.filterInfo').innerHTML='';
