@@ -367,25 +367,25 @@ main{
     scrollbar-width:thin;
 }
 /* width */
-.chatContacts::-webkit-scrollbar {
+.chatContacts::-webkit-scrollbar, .messages::-webkit-scrollbar {
     width: 10px;
   }
   
   /* Track */
-  .chatContacts::-webkit-scrollbar-track {
+  .chatContacts::-webkit-scrollbar-track, .messages::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px rgb(19, 19, 56); 
     background-color:rgb(19, 19, 56);
     border-radius: 10px;
   }
    
   /* Handle */
-  .chatContacts::-webkit-scrollbar-thumb {
+  .chatContacts::-webkit-scrollbar-thumb, .messages::-webkit-scrollbar-thumb {
     background: rgb(31, 58, 9); 
     border-radius: 10px;
   }
   
   /* Handle on hover */
-  .chatContacts::-webkit-scrollbar-thumb:hover {
+  .chatContacts::-webkit-scrollbar-thumb:hover, .messages::-webkit-scrollbar-thumb:hover {
     background: rgba(31, 58, 9,0.8); 
   }
 .contact{
@@ -395,6 +395,52 @@ main{
 .contact:hover{
     background-color: rgba(105, 92, 92, 0.466);
     cursor:pointer;
+}
+.chatRoom{
+    height:90%;
+}
+.messages{
+    display: block;
+    height:90%;
+    min-height: 500px;
+    overflow-y: auto;
+    margin-bottom: 5px;
+    scrollbar-color: rgba(31, 58, 9, 0.58) rgba(19, 19, 56, 0.51);
+    scrollbar-width:thin;
+    scroll-snap-type: y proximity;
+}
+.msg{
+    background-color: #0c8c8c;
+    margin:20px 10px;
+    padding: 17px 15px;
+    border-radius: 7px;
+    color: #c7ff00;
+    text-align: left;
+    max-width: 45%;
+    width: fit-content;
+}
+.receivedMessage{
+    float: right;
+    clear: left;
+}
+.sendedMessage{
+    float: left;
+    clear: right;
+    background-color: #267493;
+}
+.inputMessages{
+
+}
+#msgInputArea{
+    width: 100%;
+    min-height: 60px;
+    resize: none;
+    border-radius: 5px;
+    border: none;
+    background-color: #9b7edb;
+    padding: 2px;
+    font-size: 85%;
+    height: 100%;
 }
 
 

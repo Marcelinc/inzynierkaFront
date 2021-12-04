@@ -10,6 +10,8 @@ const Chat = (props) => {
     const [error,setError] = useState(false);
     const [active,setActive] = useState(null);
 
+    const [messages,setMessages] = useState([]);
+
     useEffect(() => {
         fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/get-workers-names`,{
             headers: {'Content-Type':'application/json',
@@ -23,8 +25,16 @@ const Chat = (props) => {
                 console.log(res.data);
             } else setError(true);
             setLoading(false);
+            document.querySelector('#last').scrollIntoView(true)
         })
         .catch(err => console.log(err));
+
+        return(() => {
+            setContacts([]);
+            setLoading(true);
+            setError(false);
+            setActive(null);
+        })
     },[])
 
     const setChatRoom = (user) => {
@@ -43,11 +53,47 @@ const Chat = (props) => {
                     {contacts.map(contact => <div key={contact.id} className='contact' onClick={e => setActive(contact)}>
                         {contact.name + ' ' + contact.surname}
                     </div>)}
+                    {loading ? 'Ładowanie..' : contacts.length === 0 && 'Brak kontaktów'}
                 </div>
             </section>
-            <section class='chatData'>
+            <section className='chatData'>
                 <div className='equipment-content'>
                     <h3>{active !== null ? 'Pokój rozmów: '+active.name+' '+active.surname : 'Wybierz pokój rozmów'}</h3>
+                    {active && <div className='chatRoom'>
+                        <div className='messages'>
+                            <div className='msg sendedMessage'>
+                                Siema eniu!
+                            </div>
+                            <div className='msg receivedMessage'>
+                                Elo lamo xd
+                            </div>
+                            <div className='msg sendedMessage'>
+                                wetdfsdf wer wdf hg fgh tr fgjhdf sf we dfh gjh f
+                                 rerery dgjgh khjlky hgjr w fsdga  fg dsfrw
+                            </div>
+                            <div className='msg receivedMessage'>
+                                Elo lamo xd
+                            </div>
+                            <div className='msg sendedMessage'>
+                                wetdfsdf wer wdf hg fgh tr fgjhdf sf we dfh gjh f
+                                 rerery dgjgh khjlky hgjr w fsdga  fg dsfrw
+                            </div>
+                            <div className='msg receivedMessage'>
+                                Elo lamo xd
+                            </div>
+                            <div className='msg sendedMessage'>
+                                wetdfsdf wer wdf hg fgh tr fgjhdf sf we dfh gjh f
+                                 rerery dgjgh khjlky hgjr w fsdga  fg dsfrw
+                            </div>
+                            <span id='last'></span>
+                        </div>
+                        <div className='inputMessages'>
+                            <textarea id='msgInputArea'>
+
+                            </textarea>
+                            <button>Wyślij</button>
+                        </div>
+                    </div>}
                 </div>
             </section>  
         </div>
