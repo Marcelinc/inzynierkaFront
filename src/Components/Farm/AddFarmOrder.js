@@ -13,6 +13,7 @@ export const AddFarmOrder = (props) => {
     const [loadingPlots,setLoadingPlots] = useState(true);
     const [loadingChem,setLoadingChem] = useState(true);
     const [loadingWorkTypes,setLoadingWorkTypes] = useState(true);
+    const [loadingVehicles,setLoadingVehicles] = useState(true);
     const [error,setError] = useState(false);
     const [farm_id,setFarm] = useState(props.farmId);
 
@@ -32,7 +33,7 @@ export const AddFarmOrder = (props) => {
     const [machineAddButton,setMStyle] = useState({'display':'inherit'});
 
     
-
+//Get farm equipment to create order
     useEffect(() => {
         if(props.trigger){
              //Get vehicles and machines
@@ -45,8 +46,8 @@ export const AddFarmOrder = (props) => {
             .then(response => response.json())
             .then(res => {
                 if(res.message && res.message==='Success'){
-                    setFarmMachines(res.data.machines);
-                    setFarmVehicles(res.data.vehicles);
+                    //setFarmMachines(res.data.machines);
+                    //setFarmVehicles(res.data.vehicles);
                     console.log(res.data)
                 } else setError(true);
                 setLoadingGarage(false);
@@ -99,6 +100,29 @@ export const AddFarmOrder = (props) => {
         }
     },[props.trigger])
 
+//Get vehicles and machines after insert order date's
+    useEffect(() => {
+        if(reserved_to !== '' && reserved_from !== ''){
+            //Get available vehicles
+            fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/get-available-vehicles`,{
+                method:"POST",
+                headers: {'Content-Type':'application/json',
+                    'Accept': 'application/json'},
+                    body: JSON.stringify({'reserved_from':'10.10.2022 10:00:00','reserved_to':'20.10.2022 10:00:00'}),
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(res => {
+                if(res.message && res.message==='Success'){
+                    console.log('Dostepne pojazdy:')
+                    console.log(res.data)
+                } else setError(true);
+                setLoadingVehicles(false);
+            }).catch(err => console.log(err))
+        }
+    },[reserved_from,reserved_to])
+
+//Prepare and send request to add order
     const addHandler = (e) => {
         e.preventDefault();
         let dose = null;
@@ -137,6 +161,7 @@ export const AddFarmOrder = (props) => {
         if(vehicles.length === 3) setVStyle({'display':'none'})
     }*/
 
+//Set chosen vehicle
     const setVehicle = (id,index) => {
         let modifiedVehicles = vehicle_id;
         modifiedVehicles[index] = id;
@@ -152,14 +177,16 @@ export const AddFarmOrder = (props) => {
         if(machines.length === 3) setMStyle({'display':'none'})
     }*/
 
+//set chosen
     const setMachine = (id,index) => {
         let modifiedMachines = machine_id;
         modifiedMachines[index] = id;
         setMachines(modifiedMachines);
     }
 
+//Clear inputs and variables after close pop-up
     const clearData = () => {
-        setType(1);
+        setType('2');
         setMachines([1]);
         setVehicles([1]);
         setVStyle({'display':'inherit'});
@@ -167,11 +194,19 @@ export const AddFarmOrder = (props) => {
         setError(false);
         setLoadingGarage(true);
         setLoadingPlots(true);
+        setReservedFrom('');
+        setReservedTo('');
     }
 
+//Return to order's list
     const backHandler = () => {
         clearData();
         props.setTrigger(false);
+    }
+
+//Validation
+    const validation = () => {
+        
     }
 
     return (props.trigger ? <div className='popup'>
@@ -191,11 +226,11 @@ export const AddFarmOrder = (props) => {
                 </label>
                 <div className='ordersEquipment'>
                     <h4>Pojazd</h4>
-                    {farmVehicles.length !== 0 && vehicle_id.map((v,index) => (<label key={index}>Wybierz pojazd
+                    {farmVehicles.length !== 0 ? vehicle_id.map((v,index) => (<label key={index}>Wybierz pojazd
                         <select onChange={e => setVehicle(e.target.value,index)}>
                             {farmVehicles.map(v => <option key={v.id} value={v.id}>{v.name}</option>)}
                         </select>
-                    </label>))}
+                    </label>)) : loadingVehicles ? 'Wybierz datę realizacji zlecenia' : 'Brak dostepnych pojazdów'}
                     {/*farmVehicles.length !== 0 ? <h4 onClick={addVehicle} style={vehicleAddButton} className='addEqButton'>+Dodaj kolejny</h4> : <h5>Brak pojazdów</h5>*/}
                     
                 </div>
