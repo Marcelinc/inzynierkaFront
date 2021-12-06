@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import Dashboard from "./Dashboard";
 import Loader from "./Loader";
 import Farm from './Farm';
@@ -48,6 +48,8 @@ const User = (props) => {
     const [content,setContent] = useState(props.content);
     const [editMode,setMode] = useState(false);
 
+    const [counter,setCounter] = useState(5);
+
     useEffect(() => {
         //get user data
             setLoad(true)
@@ -62,13 +64,21 @@ const User = (props) => {
                 setName(res.data.name); setSurname(res.data.surname); setId(res.data.id); setUser(res.data);} 
             } setLoad(false);})
         
-        return(() => {setName('');setSurname('');setId(0);setUser({});setLoad(false);setContent('');})
-    },[])    
+        return(() => {setName('');setSurname('');setId(0);setUser({});setLoad(false);setContent('');setCounter(5)})
+    },[]) 
 
-    if(load)
-        return(<Loader log={props.log} setLog={props.setLog} title={user.job_title}/>)
+    useEffect(() => {
+        if(counter > 0){
+            setTimeout(() => {
+                let count = counter-1;
+                setCounter(counter-1);
+            },1300)
+        }
+    },[props.log,counter])
 
-        return(<div className='content'>
+        return(
+            load ? <Loader log={props.log} setLog={props.setLog} title={user.job_title}/> : 
+            <div className='content'>
                 <Navigation log={props.log} setLog={props.setLog} title={user.job_title} setContent={setContent}/>
                 {props.log && name ?
                     <main className='user'>
@@ -119,7 +129,12 @@ const User = (props) => {
                         {content === 'manage' && <FarmManage setContent={setContent} farmId={user.farm_id}/>}
                         {content === 'creator' && <FarmCreator user={id}/>}
                     </main>
-                : <main className='user'><p>You are not logged</p></main>}
+                : <main className='user'>
+                    <section id='notLogged'>
+                        <p>Nie jesteś zalogowany</p>
+                        <p>{counter > 0 ? 'Przekierowanie na stronę logowania za... ' + counter : 'Przekierowywanie..' && <Redirect to='/logowanie'/>}</p>
+                    </section>
+                </main>}
             </div>
         )
 }

@@ -15,6 +15,7 @@ function App(){
 
     const [logged,setLogged] = useState(false);
     const [user,setUser] = useState({farm_id:0,job_title:null});
+    const [loading,setLoading] = useState(true);
 
     useEffect(() => {
         fetch(process.env.REACT_APP_SERVER+"/api/get_user_data",{
@@ -25,7 +26,7 @@ function App(){
         })
         .then(response => response.json())
         .then(res => {if(res.message !== 'Unauthenticated.' && res.message !== 'error') 
-            if(res.data) {setLogged(true); setUser(res.data);} })          
+            if(res.data) {setLogged(true); setUser(res.data);} console.log(res.data); setLoading(false) })          
     },[])
 
     return(
@@ -56,7 +57,8 @@ function App(){
                 <Route path='/statystyki' component={() => <User log={logged} setLog={setLogged} content='stats'/>}/>
                 <Route path="/gospodarstwo/zlecenia" component={() => <User log={logged} setLog={setLogged} content='farmOrders'/>}/>
                 <Route path='/gospodarstwo/zlecenie/:id' component={() => <User log={logged} setLog={setLogged} content='farmOrder'/>}/>
-                <Route path='/czat' component={() => <Chat log={logged} setLog={setLogged} title={user.job_title} farmId={user.farm_id}/>}/>
+                <Route path='/czat' component={() => <Chat log={logged} setLog={setLogged} title={user.job_title} farmId={user.farm_id} 
+                    loading={loading} id={user.id}/>}/>
                 <Route component={() => <NotExist log={logged} setLog={setLogged}/>}/>
             </Switch>
         </Router>)

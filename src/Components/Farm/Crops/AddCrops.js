@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react/cjs/react.development';
 
 const AddCrops = (props) => {
 
@@ -7,6 +8,24 @@ const AddCrops = (props) => {
     const [unit_id,setDenomination] = useState(1);
 
     const [farm_id,setFarmId] = useState(props.farmId)
+    const [error,setError] = useState(false);
+    const [crops,setCrops] = useState([]);
+
+    useEffect(() => {
+        fetch(process.env.REACT_APP_SERVER+'/api/lookup-table/crops',{
+            headers: {'Content-Type':'application/json',
+                'Accept': 'application/json'},
+            credentials:'include'
+        })
+        .then(response => response.json())
+        .then(res => {console.log(res); 
+            if(res.message === 'Success') {
+                console.log(res.data)
+                setCrops(res.data);
+            } else setError(true);
+        })
+        .catch(err => console.log(err))
+    },[])
 
     const addHandler = (e) => {
         e.preventDefault();
@@ -65,8 +84,7 @@ const AddCrops = (props) => {
                 <form onSubmit={addHandler} id='addForm'>
                 <label>Plon 
                         <select onChange={e => setCropName(e.target.value)}>
-                            <option value={1}>Pszenica</option>    
-                            <option value={7}>Grzyby</option>  
+                            {crops.length > 0 && crops.map(crop => <option key={crop.id} value={crop.id}>{crop.name}</option>)}
                         </select>
                     </label>
                     <label>Jednostka

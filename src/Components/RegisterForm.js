@@ -23,7 +23,8 @@ const RegisterForm = (props) => {
             headers: {'Content-Type':'application/json'}
         })
         .then(response => response.json())
-        .then(res => {setCountryList(res.data); setCountry(1); document.getElementById('countrySelect').disabled=false; })
+        .then(res => {setCountryList(res.data); setCountry(1); 
+            if(document.getElementById('countrySelect')) document.getElementById('countrySelect').disabled=false; })
         .catch(err => console.log(err));
     },[])
 
@@ -38,7 +39,10 @@ const RegisterForm = (props) => {
                 body: JSON.stringify({email,password,name,surname,town,country_id})
             })
             .then(response => {console.log(response.ok);if(response.ok) setRegistered(true)})
-            .catch(err => {document.querySelector('#registerInfo').innerHTML='Błąd podczas rejestracji. Spróbuj później'; console.log(err)});}
+            .catch(err => {
+                if(document.querySelector('#registerInfo')) 
+                    document.querySelector('#registerInfo').innerHTML='Błąd podczas rejestracji. Spróbuj później'; 
+                console.log(err)});}
     }
 
     const validation = () => {
