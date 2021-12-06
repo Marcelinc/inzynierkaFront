@@ -12,7 +12,7 @@ const Loader = (props) => {
                 <div className="bounceball">
                     <div className='ball'></div>
                 </div>
-                <div className="text">LOADING</div>
+                <div className="text">ŁADOWANIE...</div>
             </div>
         </main>
     </div>)

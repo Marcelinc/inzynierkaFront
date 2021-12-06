@@ -352,6 +352,10 @@ main{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+#searchWorker{
+    margin-top:10px;
 }
 .chatSearch input{
     padding: 7px;
@@ -421,11 +425,11 @@ main{
 }
 .receivedMessage{
     float: right;
-    clear: left;
+    clear: both;
 }
 .sendedMessage{
     float: left;
-    clear: right;
+    clear: both;
     background-color: #267493;
 }
 .inputMessages{
