@@ -19,12 +19,15 @@ const Chat = (props) => {
     const [active,setActive] = useState(null);
 
     const [messages,setMessages] = useState([]);
+    const [newMessages,setNewMessages] = useState([]);
+
+    const [checkStatus,setCheckMessages] = useState(false);
 
     useEffect(() => {
         if(!props.loading){
             console.log(props.farmId)
             //get workers
-            fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/get-workers-names`,{
+            fetch(process.env.REACT_APP_SERVER+`/api/farm/${props.farmId}/get-workers-names`,{
                 headers: {'Content-Type':'application/json',
                     'Accept': 'application/json'},
                 credentials: 'include'
@@ -33,7 +36,7 @@ const Chat = (props) => {
             .then(res => {
                 if(res.message === 'Success'){
                     setWorkers(res.data);
-                } else setError(true);
+                } else
                 setLoadingWorkers(false);
                 document.querySelector('#last') && document.querySelector('#last').scrollIntoView(true)
             })
@@ -49,7 +52,6 @@ const Chat = (props) => {
             .then(res => {
                 if(res.message === 'Success'){
                     setContacts(res.data);
-                    console.log(res.data);
                 } else setError(true);
                 setLoadingContacts(false);
             })
@@ -63,8 +65,17 @@ const Chat = (props) => {
             setActive(null);
             setSearching('')
             setMessage('');
+            setCheckMessages(false);
         })
     },[props.loading])
+
+    useEffect(() => {
+        if(!error && active){
+            let status = !checkStatus;
+            checkNewMessages(active.id);
+            setTimeout(() => setCheckMessages(status),5000)
+        }
+    },[checkStatus])
 
     //Creating new chat room 
     const createChatRoom = (user) => {
@@ -83,8 +94,26 @@ const Chat = (props) => {
                     setContacts([res.data.group,...contacts])
                 }
                 setChatRoom(res.data.group)
-                console.log(res.data);
             } else setError(true);
+        })
+        .catch(err => console.log(err));
+    }
+
+    const checkNewMessages = (group_id) => {
+        fetch(process.env.REACT_APP_SERVER+`/api/chat/group/${group_id}/get-group-messages`,{
+            headers: {'Content-Type':'application/json',
+                'Accept': 'application/json'},
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(res => {
+            if(res.message === 'Success'){
+                if(res.data){
+                    setMessages(res.data)
+                }
+            }
+            //let bottom = document.querySelector('.messages').lastElementChild;
+            //if(bottom) bottom.scrollIntoView(false);
         })
         .catch(err => console.log(err));
     }
@@ -108,9 +137,12 @@ const Chat = (props) => {
                 else {
                     setMessages([]);
                 }
-                console.log(res.data);
+                setCheckMessages(true);
             } else setError(true);
             setLoadingMessages(false);
+            let bottom = document.querySelector('.messages').lastElementChild;
+            if(bottom) bottom.scrollIntoView(false);
+            
         })
         .catch(err => console.log(err));
     }
@@ -137,6 +169,9 @@ const Chat = (props) => {
                 setMessages([...messages,msg]);
             }
             setSending(false);
+            setMessage('');
+            let bottom = document.querySelector('.messages').lastElementChild;
+            bottom.scrollIntoView(false);
         })
         .catch(err => console.log(err));
 
@@ -182,10 +217,9 @@ const Chat = (props) => {
                                     {msg.message}
                                 </div>)
                             : 'Początek rozmowy'}
-                            <span id='last'></span>
                         </div>
                         <div className='inputMessages'>
-                            <textarea id='msgInputArea' onChange={e => setMessage(e.target.value)}>
+                            <textarea id='msgInputArea' onChange={e => setMessage(e.target.value)} value={message}>
 
                             </textarea>
                             <button onClick={sendMessage} disabled={sending}>{sending ? 'Wysyłanie...' : 'Wyślij'}</button>
