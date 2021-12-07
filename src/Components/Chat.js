@@ -136,7 +136,9 @@ const Chat = (props) => {
                 msg = {'message':message+'(Wiadomość nie została wysłana)','sender_id':user_id}
                 setMessages([...messages,msg]);
             }
+            document.getElementById('last').scrollIntoView()
             setSending(false);
+            setMessage('');
         })
         .catch(err => console.log(err));
 
@@ -185,7 +187,7 @@ const Chat = (props) => {
                             <span id='last'></span>
                         </div>
                         <div className='inputMessages'>
-                            <textarea id='msgInputArea' onChange={e => setMessage(e.target.value)}>
+                            <textarea id='msgInputArea' onChange={e => setMessage(e.target.value)} value={message}>
 
                             </textarea>
                             <button onClick={sendMessage} disabled={sending}>{sending ? 'Wysyłanie...' : 'Wyślij'}</button>

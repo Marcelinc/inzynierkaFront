@@ -401,12 +401,12 @@ main{
     cursor:pointer;
 }
 .chatRoom{
-    height:90%;
+    height:85%;
 }
 .messages{
     display: block;
     height:90%;
-    min-height: 500px;
+    min-height: 300px;
     overflow-y: auto;
     margin-bottom: 5px;
     scrollbar-color: rgba(31, 58, 9, 0.58) rgba(19, 19, 56, 0.51);
@@ -423,11 +423,11 @@ main{
     max-width: 45%;
     width: fit-content;
 }
-.receivedMessage{
+.sendedMessage{
     float: right;
     clear: both;
 }
-.sendedMessage{
+.receivedMessage{
     float: left;
     clear: both;
     background-color: #267493;
