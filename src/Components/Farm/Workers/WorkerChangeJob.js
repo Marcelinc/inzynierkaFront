@@ -13,6 +13,11 @@ const WorkerChangeJob = (props) => {
 
     useEffect(() => {
         getTitles();
+
+        return(() => {
+            setTitles([])
+            setLoading(true)
+        })
     },[])
 
     const getTitles = () => {
@@ -49,9 +54,10 @@ const WorkerChangeJob = (props) => {
                     props.setWorker(worker);
                     props.setMode(); 
                 }})
-            .catch(err => {console.log(err); 
+            .catch(err => {console.log(err); if(document.querySelector('#changeTitleInfo'))
                 document.querySelector('#changeTitleInfo').innerHTML='Błąd podczas wproowadzania zmian!'});
-        } else document.querySelector('#changeTitleInfo').innerHTML='Pracownik jest już na wybranym stanowisku'
+        } else if(document.querySelector('#changeTitleInfo'))
+            document.querySelector('#changeTitleInfo').innerHTML='Pracownik jest już na wybranym stanowisku'
         
     }
 

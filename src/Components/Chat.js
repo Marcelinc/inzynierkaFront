@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router";
+import Loader from "./Loader";
 import Navigation from "./Navigation";
 
 const Chat = (props) => {
@@ -22,9 +24,14 @@ const Chat = (props) => {
     const [newMessages,setNewMessages] = useState([]);
 
     const [checkStatus,setCheckMessages] = useState(false);
+    const [activeChatBar,setActiveBar] = useState(false);
+
+    const [counter,setCounter] = useState(5);
 
     useEffect(() => {
-        if(!props.loading){
+        
+        if(!props.loading && props.log){
+            console.log(props.id)
             console.log(props.farmId)
             //get workers
             fetch(process.env.REACT_APP_SERVER+`/api/farm/${props.farmId}/get-workers-names`,{
@@ -77,6 +84,15 @@ const Chat = (props) => {
         }
     },[checkStatus])
 
+    useEffect(() => {
+        if(counter > 0){
+            setTimeout(() => {
+                let count = counter-1;
+                setCounter(counter-1);
+            },1300)
+        }
+    },[props.log,counter])
+
     //Creating new chat room 
     const createChatRoom = (user) => {
         fetch(process.env.REACT_APP_SERVER+`/api/chat/createGroup`,{
@@ -100,6 +116,7 @@ const Chat = (props) => {
     }
 
     const checkNewMessages = (group_id) => {
+    console.log('sprawdzanie')
         fetch(process.env.REACT_APP_SERVER+`/api/chat/group/${group_id}/get-group-messages`,{
             headers: {'Content-Type':'application/json',
                 'Accept': 'application/json'},
@@ -110,6 +127,7 @@ const Chat = (props) => {
             if(res.message === 'Success'){
                 if(res.data){
                     setMessages(res.data)
+                    console.log(res.data)
                 }
             }
             //let bottom = document.querySelector('.messages').lastElementChild;
@@ -168,6 +186,7 @@ const Chat = (props) => {
                 msg = {'message':message+'(Wiadomość nie została wysłana)','sender_id':user_id}
                 setMessages([...messages,msg]);
             }
+            console.log(msg)
             setSending(false);
             setMessage('');
             let bottom = document.querySelector('.messages').lastElementChild;
@@ -185,9 +204,18 @@ const Chat = (props) => {
         setDisplayedWorkes(searched);
     }
 
+    const slideChatBar = () => {
+        const chatBar = document.querySelector('.chatBar')
+        if(chatBar){
+            chatBar.classList.toggle('chatBar-active')
+            let activeBar = activeChatBar;
+            setActiveBar(!activeBar)
+        }
+    }
+
     return(<div className='content'>
         <Navigation log={props.log} setLog={props.setLog} title={props.title} outside={true}/>
-        <div className='chatContent'>
+        {props.loading ? <div className="text">ŁADOWANIE...</div> : props.log ? <div className='chatContent'>
             <section className='chatBar'>
                 <h3>Kontakty</h3>
                 <div className='chatSearch' onChange={(e) => {filterHandler(e); setSearching(e.target.value)}}>
@@ -207,6 +235,7 @@ const Chat = (props) => {
                     searchingWorkers !== '' && displayedWorkers.length === 0 && 'Brak pracowników'}
                 </div>
             </section>
+            <section id='slideChatBar' onClick={slideChatBar}>{activeChatBar ? '<' : '>'}</section>
             <section className='chatData'>
                 <div className='equipment-content'>
                     <h3>{active !== null ? 'Pokój rozmów: '+active.name+' '+active.surname : 'Wybierz pokój rozmów'}</h3>
@@ -222,13 +251,16 @@ const Chat = (props) => {
                             <textarea id='msgInputArea' onChange={e => setMessage(e.target.value)} value={message}>
 
                             </textarea>
-                            <button onClick={sendMessage} disabled={sending}>{sending ? 'Wysyłanie...' : 'Wyślij'}</button>
+                            <button id='sendMsgButton' onClick={sendMessage} disabled={sending}>{sending ? 'Wysyłanie...' : 'Wyślij'}</button>
                         </div>
                     </div>}
                 </div>
             </section>  
-        </div>
-    </div>)
+        </div> : <section id='notLogged'>
+            <p>Nie jesteś zalogowany</p>
+            <p>{counter > 0 ? 'Przekierowanie na stronę logowania za... ' + counter : 'Przekierowywanie..' && <Redirect to='/logowanie'/>}</p>
+        </section>}
+    </div> )
 }
 
 export default Chat;

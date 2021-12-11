@@ -34,6 +34,11 @@ const CropInfo = (props) => {
                 setLoading(false);
             }else document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
         }).catch(err => console.log(err))
+
+        return(() => {
+            setCrop({});
+            setLoading(true);
+        })
     }, [])
 
     const onReturnHandler = () => {

@@ -377,7 +377,8 @@
     margin-right: auto;
     display:flex;
     flex-direction: column;
-    justify-content: center;
+    height: inherit;
+    overflow-y: auto;
 }
 .finishedOrder-info{
     width: 80%;
@@ -436,6 +437,7 @@
     margin-top: 20px;
     height:90%;
     overflow:hidden;
+    padding-bottom: 25px;
 }
 .pendingOrder-info{
     width: 80%;
@@ -474,6 +476,11 @@
     }
     #ordersLegend, #myOrders .unit, #orders .unit{
         grid-template-columns: 35% 55%;
+    }
+}
+@media screen and (min-height: 640px) {
+    .order-info{
+        justify-content:center;
     }
 }
 

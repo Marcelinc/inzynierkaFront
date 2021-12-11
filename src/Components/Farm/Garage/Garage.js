@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import AddVehicle from './AddVehicle';
 import '../../../css/garage.css';
 import AddMachine from './AddMachine';
-import VehicleInfo from './VehicleInfo';
-import MachineInfo from './MachineInfo';
 import { useHistory } from 'react-router';
 
 const Garage = (props) => {
@@ -47,6 +45,12 @@ const Garage = (props) => {
             setloading(false);
         })
         .catch(err => document.querySelector('.getDataStatus').innerHTML='Błąd podczas pobierania');
+
+        return(() => {
+            setMachines([]);
+            setVehicles([]);
+            setloading(true);
+        })
     },[]);
 
     const renderMachines = (machine,type) => {

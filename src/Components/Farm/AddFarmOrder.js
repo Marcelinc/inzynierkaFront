@@ -32,6 +32,15 @@ export const AddFarmOrder = (props) => {
     const [vehicleAddButton,setVStyle] = useState({'display':'inherit'});
     const [machineAddButton,setMStyle] = useState({'display':'inherit'});
 
+    const [emptyReservedFrom,setEmptyReservedFrom] = useState(false);
+    const [badReservedFrom,setBadReservedFrom] = useState(false);
+    const [emptyReservedTo,setEmptyReservedTo] = useState(false);
+    const [badReservedTo,setBadReservedTo] = useState(false);
+
+    const [addingOrder,setAddingOrder] = useState(false);
+    const [addingError,setAddingError] = useState(false);
+
+
     
 //Get farm equipment to create order
     useEffect(() => {
@@ -125,31 +134,37 @@ export const AddFarmOrder = (props) => {
 //Prepare and send request to add order
     const addHandler = (e) => {
         e.preventDefault();
-        let dose = null;
-        let body;
-        if(work_type_id !== '2' && work_type_id !== '10' && work_type_id !== '8' && work_type_id !== '6')
-            dose = {'farm_plant_protection_product_id':farm_plant_protection_product_id,'product_quantity':product_quantity,
-            'water_amount':water_amount}
-        if(work_type_id === '6')
-            dose = {'water_amount':water_amount}
-        if(dose !== null)
-            body = {description,machine_id,vehicle_id,reserved_from,reserved_to,work_type_id,field_id,dose}
-        else body = {description,machine_id,vehicle_id,reserved_from,reserved_to,work_type_id,field_id}
-        fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/order/create`,{
-            method:'POST',
-            headers: {'Content-Type':'application/json','Accept':'application/json'},
-            body:JSON.stringify(body),
-            credentials: 'include'
-        })
-        .then(response => response.json())
-        .then(res => {
-            if(res.message === 'Success'){
-                console.log(res.data);
-                props.setOrders([...props.orders,res.data]);
-                props.pendingFilter && props.setDisplayed([res.data,...props.displayed])
-                backHandler();
-            }
-        }).catch(err => console.log(err));
+        setAddingError(false);
+        if(validation()){
+            setAddingOrder(true);
+            let dose = null;
+            let body;
+            if(work_type_id !== '2' && work_type_id !== '10' && work_type_id !== '8' && work_type_id !== '6')
+                dose = {'farm_plant_protection_product_id':farm_plant_protection_product_id,'product_quantity':product_quantity,
+                'water_amount':water_amount}
+            if(work_type_id === '6')
+                dose = {'water_amount':water_amount}
+            if(dose !== null)
+                body = {description,machine_id,vehicle_id,reserved_from,reserved_to,work_type_id,field_id,dose}
+            else body = {description,machine_id,vehicle_id,reserved_from,reserved_to,work_type_id,field_id}
+            fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/order/create`,{
+                method:'POST',
+                headers: {'Content-Type':'application/json','Accept':'application/json'},
+                body:JSON.stringify(body),
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(res => {
+                if(res.message === 'Success'){
+                    console.log(res.data);
+                    props.setOrders([...props.orders,res.data]);
+                    props.pendingFilter && props.setDisplayed([res.data,...props.displayed])
+                    backHandler();
+                } else setAddingError(true);
+                setAddingOrder(false);
+            }).catch(err => console.log(err));
+        }
+        
     }
 
     /*const addVehicle = () => {
@@ -196,6 +211,12 @@ export const AddFarmOrder = (props) => {
         setLoadingPlots(true);
         setReservedFrom('');
         setReservedTo('');
+        setEmptyReservedTo(false);
+        setEmptyReservedFrom(false);
+        setBadReservedFrom(false);
+        setBadReservedTo(false);
+        setAddingOrder(false);
+        setAddingError(false);
     }
 
 //Return to order's list
@@ -206,7 +227,30 @@ export const AddFarmOrder = (props) => {
 
 //Validation
     const validation = () => {
-        
+        let validated = true;
+        let actDate = new Date();
+        let fromDate = new Date(reserved_from);
+        let toDate = new Date(reserved_to);
+
+        if(!reserved_from){
+            validated = false;
+            setEmptyReservedFrom(true);
+        } else setEmptyReservedFrom(false);
+        if(fromDate.getTime()<actDate.getTime()){
+            validated = false;
+            setBadReservedFrom(true);
+        } else setBadReservedFrom(false);
+
+        if(!reserved_to){
+            validated=false;
+            setEmptyReservedTo(true);
+        } else setEmptyReservedTo(false);
+        if(toDate.getTime()<actDate.getTime()){
+            validated=false;
+            setBadReservedTo(true);
+        } else setBadReservedTo(false);
+
+        return validated;
     }
 
     return (props.trigger ? <div className='popup'>
@@ -244,9 +288,9 @@ export const AddFarmOrder = (props) => {
                     {/*<h4 onClick={addMachine} style={machineAddButton} className='addEqButton'>+Dodaj kolejny</h4>*/}
                 </div>
                 <label>Planowana data rozpoczęcia <input type='datetime-local' onChange={e => setReservedFrom(e.target.value)}/>
-                    <span className='info' id='startDateInfo'></span></label>
+                    <span className='info' id='startDateInfo'>{emptyReservedFrom ? 'Wybierz datę' : badReservedFrom ? 'Wprowadzono minioną datę' : ''}</span></label>
                 <label>Planowana data zakończenia <input type='datetime-local' onChange={e => setReservedTo(e.target.value)}/>
-                    <span className='info' id='endDateInfo'></span></label>
+                    <span className='info' id='endDateInfo'>{emptyReservedTo ? 'Wybierz datę' : badReservedTo ? 'Wprowadzono minioną datę' : ''}</span></label>
                 {work_type_id !== '2' && work_type_id !== '10' && work_type_id !== '8' ? <div className='extendedOrderInfo'>
                     {work_type_id === '1' ? <label>Wybierz oprysk
                         <select onChange={e => setProduct(e.target.value)}>
@@ -274,7 +318,7 @@ export const AddFarmOrder = (props) => {
         <section className='popupButtons'>
             <button onClick={backHandler}>Anuluj</button>
             <button form='addForm' onClick={addHandler}>Dodaj</button>
-            <h3 className='info' id='addPlotInfo'></h3>
+            <h3 className='info' id='addPlotInfo'>{addingOrder ? 'Dodawanie...' : addingError ? 'Błąd podczas dodawania' : ''}</h3>
         </section>
     </section>
 </div> : "")

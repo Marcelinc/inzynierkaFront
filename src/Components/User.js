@@ -44,15 +44,16 @@ const User = (props) => {
         farm_id:null
     });
     const [farmId,setFarm] = useState(props.farmId);
-    const [load,setLoad] = useState(true);
+    const [load,setLoad] = useState(props.load);
+    const [loadUserData,setLoadUserData] = useState(true);
     const [content,setContent] = useState(props.content);
     const [editMode,setMode] = useState(false);
 
     const [counter,setCounter] = useState(5);
 
     useEffect(() => {
+        setLoadUserData(true);
         //get user data
-            setLoad(true)
             fetch(process.env.REACT_APP_SERVER+"/api/get_user_data",{
                 method: 'POST',
                 headers: {'Content-Type':'application/json',
@@ -62,9 +63,9 @@ const User = (props) => {
             .then(response => response.json())
             .then(res =>  {console.log(res);if(res.message !== 'Unauthenticated.' && res.message !== 'error') { if(res.data){
                 setName(res.data.name); setSurname(res.data.surname); setId(res.data.id); setUser(res.data);} 
-            } setLoad(false);})
+            }setLoadUserData(false)})
         
-        return(() => {setName('');setSurname('');setId(0);setUser({});setLoad(false);setContent('');setCounter(5)})
+        return(() => {setName('');setSurname('');setId(0);setUser({});setContent('');setCounter(5)})
     },[]) 
 
     useEffect(() => {
@@ -77,10 +78,10 @@ const User = (props) => {
     },[props.log,counter])
 
         return(
-            load ? <Loader log={props.log} setLog={props.setLog} title={user.job_title}/> : 
+            load || loadUserData ? <Loader log={props.log} setLog={props.setLog} title={user.job_title}/> : 
             <div className='content'>
                 <Navigation log={props.log} setLog={props.setLog} title={user.job_title} setContent={setContent}/>
-                {props.log && name ?
+                {props.log ?
                     <main className='user'>
                         <Dashboard name={name} surname={surname} setLogIn={props.setLog} content={setContent} title={user.job_title} farmId={user.farm_id} id={user.id}/>
                         {content === 'farm' && <Farm content={setContent} hasFarm={user.farm_id} job_title={user.job_title}/>}

@@ -32,6 +32,13 @@ const Crops = (props) => {
             setloading(false);
         })
         .catch(err => console.log(err));
+
+        return(() => {
+            setCrops([]);
+            setDisplay([]);
+            setError(false);
+            setloading(true);
+        })
     },[]);
 
     const filterHandler = (event) => {

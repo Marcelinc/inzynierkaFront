@@ -23,7 +23,7 @@ const ResetPswdReq = (props) => {
                 <form>
                     <label>
                         Email
-                        <input type='text' onChange={e => setEmail(e.target.value)}/>
+                        <input type='text' className='loginInput' onChange={e => setEmail(e.target.value)}/>
                     </label>
                 </form>
                 <button id="logRegButton" onClick={sendRequest}>Prześlij</button>

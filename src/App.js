@@ -26,8 +26,8 @@ function App(){
         })
         .then(response => response.json())
         .then(res => {if(res.message !== 'Unauthenticated.' && res.message !== 'error') 
-            if(res.data) {setLogged(true); setUser(res.data);} console.log(res.data); setLoading(false) })          
-    },[])
+            if(res.data) {setLogged(true); setUser(res.data);} console.log(res.data); setLoading(false); console.log(res.data) })          
+    },[logged])
 
     return(
         <Router>
@@ -36,27 +36,27 @@ function App(){
                 <Route path="/rejestracja" component={() => <RegisterForm log={logged} setLog={setLogged}/>}/>                    
                 <Route path="/logowanie" component={() => <LoginForm log={logged} setLog={setLogged}/>}/>
                 <Route path='/resetowanieHasla' component={() => <ResetPswdReq log={logged} setLog={setLogged}/>}/>
-                <Route path="/uzytkownik" exact component={() => <User log={logged} setLog={setLogged} content=''/>}/>
-                <Route path="/uzytkownik/zlecenia" component={() => <User log={logged} setLog={setLogged} content='myorders'/>}/>
-                <Route path='/uzytkownik/zlecenie/:id' component={() => <User log={logged} setLog={setLogged} content='myorder'/>}/>
-                <Route path="/uzytkownik/powiadomienia" component={() => <User log={logged} setLog={setLogged} content='note'/>}/>
-                <Route path='/gospodarstwo' exact component={() => <User log={logged} setLog={setLogged} content='farm'/>}/>
-                <Route path='/kreatorGospodarstwa' component={() => <User log={logged} setLog={setLogged} content='creator'/>}/>
-                <Route path='/gospodarstwo/garaz' component={() => <User log={logged} setLog={setLogged} content='garage' farmId={user.farm_id}/>}/>
-                <Route path='/gospodarstwo/pojazd/:id' component={() => <User log={logged} setLog={setLogged} content='vehicle'/>}/>
-                <Route path='/gospodarstwo/sprzet/:id' component={() => <User log={logged} setLog={setLogged} content='machine'/>}/>
-                <Route path='/gospodarstwo/plony' component={() => <User log={logged} setLog={setLogged} content='crops'/>}/>
-                <Route path='/gospodarstwo/plon/:id' component={() => <User log={logged} setLog={setLogged} content='crop'/>}/>
-                <Route path='/gospodarstwo/srodkiChemiczne' component={() => <User log={logged} setLog={setLogged} content='chemicals'/>}/>
-                <Route path='/gospodarstwo/srodekChemiczny/:id' component={() => <User log={logged} setLog={setLogged} content='chemical'/>}/>
-                <Route path='/gospodarstwo/pracownicy' component={() => <User log={logged} setLog={setLogged} content='workers'/>}/>
-                <Route path='/gospodarstwo/pracownik/:id' component={() => <User log={logged} setLog={setLogged} content='worker'/>}/>
-                <Route path='/gospodarstwo/dzialki' component={() => <User log={logged} setLog={setLogged} content='plots'/>}/>
-                <Route path='/gospodarstwo/dzialka/:id' component={() => <User log={logged} setLog={setLogged} content='plot'/>}/>
-                <Route path='/gospodarstwo/zarzadzanie' component={() => <User log={logged} setLog={setLogged} content='manage'/>}/>
-                <Route path='/statystyki' component={() => <User log={logged} setLog={setLogged} content='stats'/>}/>
-                <Route path="/gospodarstwo/zlecenia" component={() => <User log={logged} setLog={setLogged} content='farmOrders'/>}/>
-                <Route path='/gospodarstwo/zlecenie/:id' component={() => <User log={logged} setLog={setLogged} content='farmOrder'/>}/>
+                <Route path="/uzytkownik" exact component={() => <User log={logged} setLog={setLogged} content='' load={loading}/>}/>
+                <Route path="/uzytkownik/zlecenia" component={() => <User log={logged} setLog={setLogged} content='myorders'/>} load={loading}/>
+                <Route path='/uzytkownik/zlecenie/:id' component={() => <User log={logged} setLog={setLogged} content='myorder'/>} load={loading}/>
+                <Route path="/uzytkownik/powiadomienia" component={() => <User log={logged} setLog={setLogged} content='note'/>}load={loading}/>
+                <Route path='/gospodarstwo' exact component={() => <User log={logged} setLog={setLogged} content='farm' load={loading}/>}load={loading}/>
+                <Route path='/kreatorGospodarstwa' component={() => <User log={logged} setLog={setLogged} content='creator'/>}load={loading}/>
+                <Route path='/gospodarstwo/garaz' component={() => <User log={logged} setLog={setLogged} content='garage' farmId={user.farm_id}/>}load={loading}/>
+                <Route path='/gospodarstwo/pojazd/:id' component={() => <User log={logged} setLog={setLogged} content='vehicle'/>}load={loading}/>
+                <Route path='/gospodarstwo/sprzet/:id' component={() => <User log={logged} setLog={setLogged} content='machine'/>}load={loading}/>
+                <Route path='/gospodarstwo/plony' component={() => <User log={logged} setLog={setLogged} content='crops'/>}load={loading}/>
+                <Route path='/gospodarstwo/plon/:id' component={() => <User log={logged} setLog={setLogged} content='crop'/>}load={loading}/>
+                <Route path='/gospodarstwo/srodkiChemiczne' component={() => <User log={logged} setLog={setLogged} content='chemicals'/>}load={loading}/>
+                <Route path='/gospodarstwo/srodekChemiczny/:id' component={() => <User log={logged} setLog={setLogged} content='chemical'/>}load={loading}/>
+                <Route path='/gospodarstwo/pracownicy' component={() => <User log={logged} setLog={setLogged} content='workers'/>}load={loading}/>
+                <Route path='/gospodarstwo/pracownik/:id' component={() => <User log={logged} setLog={setLogged} content='worker'/>}load={loading}/>
+                <Route path='/gospodarstwo/dzialki' component={() => <User log={logged} setLog={setLogged} content='plots'/>}load={loading}/>
+                <Route path='/gospodarstwo/dzialka/:id' component={() => <User log={logged} setLog={setLogged} content='plot'/>}load={loading}/>
+                <Route path='/gospodarstwo/zarzadzanie' component={() => <User log={logged} setLog={setLogged} content='manage'/>}load={loading}/>
+                <Route path='/statystyki' component={() => <User log={logged} setLog={setLogged} content='stats'/>}load={loading}/>
+                <Route path="/gospodarstwo/zlecenia" component={() => <User log={logged} setLog={setLogged} content='farmOrders'/>}load={loading}/>
+                <Route path='/gospodarstwo/zlecenie/:id' component={() => <User log={logged} setLog={setLogged} content='farmOrder'/>}load={loading}/>
                 <Route path='/czat' component={() => <Chat log={logged} setLog={setLogged} title={user.job_title} farmId={user.farm_id} 
                     loading={loading} id={user.id}/>}/>
                 <Route component={() => <NotExist log={logged} setLog={setLogged}/>}/>

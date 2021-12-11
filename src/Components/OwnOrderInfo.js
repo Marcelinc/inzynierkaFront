@@ -71,6 +71,13 @@ const OwnOrderInfo = (props) => {
             setLoadingFuelStatus(false);
         }).catch(err => console.log(err))
 
+        return(() => {
+            setStatus('');
+            setOrder({});
+            setStatuses([]);
+            setFuelStatuses([])
+        })
+
     }, [])
 
     const onReturnHandler = () => {

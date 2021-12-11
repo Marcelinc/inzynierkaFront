@@ -12,11 +12,15 @@ const Farm = (props) => {
     const [error,setError] = useState(false)
     const [hasFarm,setFarm] = useState(props.hasFarm)
 
-    const [tileStyle,setStyle] = useState({});
+    const [manageTileStyle,setManageTileStyle] = useState({});
+    const [workersTileStyle,setWorkersTileStyle] = useState({});
 
     useEffect(() => {
         if(props.job_title !== 'Właściciel')
-            setStyle({'opacity':'0.8','cursor':'default', 'color': '#22281b'}); 
+            setManageTileStyle({'opacity':'0.8','cursor':'default', 'color': '#22281b'}); 
+        if(props.job_title === 'Pracownik rolny'){
+            setWorkersTileStyle({'opacity':'0.8','cursor':'default', 'color': '#22281b'}); 
+        }
     },[])
 
     const joinHandler = () => {
@@ -59,8 +63,10 @@ const Farm = (props) => {
     }
 
     const onWorkers = (e) => {
-        props.content('workers');
-        window.history.pushState(null,'MyFarm','/gospodarstwo/pracownicy');
+        if(props.job_title === 'Właściciel' || props.job_title === 'Pracownik biurowy'){
+            props.content('workers');
+            window.history.pushState(null,'MyFarm','/gospodarstwo/pracownicy');
+        }
     }
 
     const onPlot = (e) => {
@@ -85,10 +91,10 @@ const Farm = (props) => {
             <h2>Nie jesteś w żadnym gospodarstwie</h2>
             <p><Link to='#' onClick={onCreateFarm}>Załóż</Link> swoje gospodarstwo <br/> lub <br/> dołącz do istniejącego</p>
             <section id='farmCode'>
-                <labe>
+                <label>
                     <h4>Kod gospodarstwa</h4>
                     <input id='insertFarmCode' type='text'placeholder='Wprowadź kod' onChange={e => setCode(e.target.value)}></input>
-                </labe>
+                </label>
                 <br/>
                 <button onClick={joinHandler}>Dołącz</button>
                 <br/>
@@ -100,9 +106,9 @@ const Farm = (props) => {
                 <div onClick={onGarage} className='tile'>Garaż <i className="icon-truck"></i></div>
                 <div onClick={onCrops} className='tile'>Plony <i className="icon-garden"></i></div>
                 <div onClick={onChemicals} className='tile'>Środki chemiczne <i className="icon-tint"></i></div>
-                <div onClick={onWorkers} className='tile'>Pracownicy <i className="icon-users"></i> </div>
+                <div onClick={onWorkers} className='tile' style={workersTileStyle}>Pracownicy <i className="icon-users"></i> </div>
                 <div onClick={onPlot} className='tile'>Działki <i className="icon-location"></i></div>
-                <div onClick={onManage} className='tile' style={tileStyle}>Zarządzanie  <i className="icon-cogs"></i></div>
+                <div onClick={onManage} className='tile' style={manageTileStyle}>Zarządzanie  <i className="icon-cogs"></i></div>
             </div>
         </section>
     )
