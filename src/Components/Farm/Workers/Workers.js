@@ -30,6 +30,13 @@ const Workers = (props) => {
             setloading(false);
         })
         .catch(err => console.log(err));
+
+        return(() => {
+            setWorkers([])
+            setDisplayed([])
+            setError(false)
+            setloading(true)
+        })
     }, [])
 
     const onGetCodeHandler = () => {
@@ -40,13 +47,15 @@ const Workers = (props) => {
         let reg = new RegExp(event.target.value,'i');
         let selectedWorkers = workers.filter(w => w.name.match(reg)||w.surname.match(reg));
         setDisplayed(selectedWorkers);
-        if(selectedWorkers.length === 0){
-            document.querySelector('.filterInfo').innerHTML='Brak szukanych pracowników';
-            document.querySelector('.filterInfo').style.display='inherit';
-        }else{
-            document.querySelector('.filterInfo').innerHTML='';
-            document.querySelector('.filterInfo').style.display='none';
-        } 
+        if(document.querySelector('.filterInfo')){
+            if(selectedWorkers.length === 0){
+                document.querySelector('.filterInfo').innerHTML='Brak szukanych pracowników';
+                document.querySelector('.filterInfo').style.display='inherit';
+            }else{
+                document.querySelector('.filterInfo').innerHTML='';
+                document.querySelector('.filterInfo').style.display='none';
+            } 
+        }
     }
 
     const infoHandler = (id) => {

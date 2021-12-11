@@ -20,23 +20,34 @@ const OwnOrders = (props) => {
     const history = useHistory();
 
     useEffect(() => {
-            fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/worker/${user_id}/order/get-interrupted-finished-in-progress`,{
-                headers: {'Content-Type':'application/json','Accept':'application/json'},
-                credentials: 'include'
-            })
-            .then(response => response.json())
-            .then(res => {
-                console.log(res.data)
-                if(res.message === 'Success'){
-                    setOrders(res.data);
-                    setDisplayed(res.data);
-                } else setError(true);
-                setLoading(false);
-            }).catch(err => console.log(err));
+        fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/worker/${user_id}/order/get-interrupted-finished-in-progress`,{
+            headers: {'Content-Type':'application/json','Accept':'application/json'},
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(res => {
+            //console.log(res.data)
+            if(res.message === 'Success'){
+                setOrders(res.data);
+                setDisplayed(res.data);
+            } else setError(true);
+            setLoading(false);
+        }).catch(err => console.log(err));
+
+        return(() => {
+            setLoading(true);
+            setError(false);
+            setOrders([]);
+            setDisplayed([]);
+            setInterrupted(true);
+            setFinished(true);
+            setInProgress(true);
+            setUserId(0);
+            setFarm(0);
+        })
     },[])
     
     const infoHandler = (id) => {
-        console.log('info clicked '+id);
         props.setContent('myorder');
         window.history.pushState({'id':id},'MyFarm',`/uzytkownik/zlecenie/${id}`);
     }
@@ -44,16 +55,16 @@ const OwnOrders = (props) => {
     const filterHandler = (e) => {
         let updated;
         let {name,checked} = e.target;
-        console.log(name+': '+checked)
+        //console.log(name+': '+checked)
         if(name === 'finishedFilter'){
             setFinished(checked);
             if(checked){
                 updated = orders.filter(order => order.order_status.id === 4);
-                console.log(displayed.concat(updated))
+                //console.log(displayed.concat(updated))
                 setDisplayed(displayed.concat(updated));
             }else{
                 updated = displayed.filter(order => order.order_status.id !== 4);
-                console.log(updated);
+                //console.log(updated);
                 setDisplayed(updated);
             } 
         } 
@@ -61,12 +72,12 @@ const OwnOrders = (props) => {
             setInterrupted(checked);
             if(checked){
                 updated = orders.filter(order => order.order_status.id === 3);
-                console.log(displayed.concat(updated))
+                //console.log(displayed.concat(updated))
                 setDisplayed(displayed.concat(updated));
             }
             else{
                 updated = displayed.filter(order => order.order_status.id !== 3);
-                console.log(updated);
+                //console.log(updated);
                 setDisplayed(updated);
             }
         }
@@ -74,12 +85,12 @@ const OwnOrders = (props) => {
             setInProgress(checked);
             if(checked){
                 updated = orders.filter(order => order.order_status.id === 2);
-                console.log(displayed.concat(updated))
+                //console.log(displayed.concat(updated))
                 setDisplayed(displayed.concat(updated));
             }
             else{
                 updated = displayed.filter(order => order.order_status.id !== 2);
-                console.log(updated);
+                //console.log(updated);
                 setDisplayed(updated);
             }
         }

@@ -24,6 +24,10 @@ const Notifications = (props) => {
             setloading(false);
         })
         .catch(err => console.log(err));
+
+        return(() => {
+            setNotifications([])
+        })
     }, [])
 
     const readHandler = (id) => {

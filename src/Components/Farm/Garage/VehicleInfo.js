@@ -35,6 +35,11 @@ const VehicleInfo = (props) => {
                 setLoading(false);
             }else document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
         }).catch(err => console.log(err))
+
+        return(() => {
+            setVehicle({});
+            setLoading(true);
+        })
     }, [])
 
     const onReturnHandler = () => {

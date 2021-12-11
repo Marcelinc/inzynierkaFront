@@ -29,8 +29,14 @@ const ChemicalsInfo = (props) => {
             if(res.message === 'Success') {
                 setChemical(res.data);
                 setLoading(false);
-            }else document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
+            }else if(document.querySelector('#getInfoStatus'))
+                document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
         }).catch(err => console.log(err))
+
+        return(() =>{
+            setChemical({})
+            setLoading(true)
+        })
     }, [])
 
     const onReturnHandler = () => {

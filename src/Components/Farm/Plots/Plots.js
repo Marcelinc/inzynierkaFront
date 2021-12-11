@@ -31,6 +31,13 @@ const Plots = (props) => {
             setloading(false);
         })
         .catch(err => console.log(err));
+
+        return(() => {
+            setPlots([])
+            setDisplay([])
+            setError(false)
+            setloading(true)
+        })
     }, [])
 
     const filterHandler = (event) => {

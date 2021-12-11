@@ -33,8 +33,15 @@ const PlotsInfo = (props) => {
             if(res.message === 'Success') {
                 setPlot(res.data);
                 setLoading(false);
-            }else document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
-        }).catch(err => {console.log(err); document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!'})
+            }else if(document.querySelector('#getInfoStatus'))
+                document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
+        }).catch(err => {console.log(err); if(document.querySelector('#getInfoStatus'))
+            document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!'})
+
+        return(() => {
+            setPlot({})
+            setLoading(true)
+        })
     }, [])
 
     const onReturnHandler = () => {

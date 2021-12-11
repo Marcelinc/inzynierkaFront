@@ -35,6 +35,11 @@ const MachineInfo = (props) => {
                 setLoading(false);
             }else document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
         }).catch(err => console.log(err))
+
+        return(() => {
+            setMachine({});
+            setLoading(true);
+        })
     }, [])
 
     const onReturnHandler = () => {

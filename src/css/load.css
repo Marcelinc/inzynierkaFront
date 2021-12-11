@@ -2,6 +2,8 @@
     color: #fbae17;
     display: inline-block;
     margin-left: 5px;
+    text-align: center;
+    width: 100%;
 }
 
 .bounceball {

@@ -32,6 +32,13 @@ const Chemicals = (props) => {
             }else setError(true);
         })
         .catch(err => {console.log(err); document.querySelector('.getDataStatus').innerHTML=''});
+
+        return(() => {
+            setChemicals([])
+            setDisplayed([])
+            setloading(true)
+            setError(false)
+        })
     }, [])
 
     const filterHandler = (event) => {

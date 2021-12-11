@@ -40,8 +40,15 @@ const WorkerInfo = (props) => {
                 res.data.job_title === 'Właściciel' && setDisabled(true);
                 setLoading(false);
                 console.log(buttonStyle)
-            }else document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
-        }).catch(err => {console.log(err); document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!'})
+            }else if(document.querySelector('#getInfoStatus')) 
+                document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
+        }).catch(err => {console.log(err);  if(document.querySelector('#getInfoStatus'))
+            document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!'})
+
+        return(() => {
+            setWorker({})
+            setLoading(true)
+        })
     }, [])
 
     const onReturnHandler = () => {

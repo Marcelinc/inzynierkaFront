@@ -25,7 +25,25 @@ const AcceptedOrder = (props) => {
     },[])
 
     const onCancelClick = () => {
-        console.log('przerwano')
+        setError(false);
+        setLoading(true);
+        let body = {'fuel_level_id':fuel_level_id,'vehicle_status_id':vehicle_status_id,'machine_status_id':machine_status_id};
+        if(feedback)
+            body['feedback']=feedback;
+        //sendinterrupt request
+        fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/order/${order_id}/worker/${worker_id}/interrupt-order`,{
+            method:'POST',
+            headers: {'Content-Type':'application/json','Accept':'application/json'},
+            body:JSON.stringify(body),
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(res => {
+            if(res.message === 'Success'){
+                setRejected(true);
+            } else setError(true);
+            setLoading(false);
+        }).catch(err => console.log(err));
     }
 
     const onFinishClick = () => {
@@ -38,7 +56,7 @@ const AcceptedOrder = (props) => {
         console.log(machine_status_id)
         if(feedback)
             body['feedback']=feedback;
-        //send request
+        //send finish request
         fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/order/${order_id}/worker/${worker_id}/finish-order`,{
             method:'POST',
             headers: {'Content-Type':'application/json','Accept':'application/json'},
