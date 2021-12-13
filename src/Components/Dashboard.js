@@ -44,10 +44,10 @@ const Dashboard = (props) => {
         window.history.pushState(null,'MyFarm','/gospodarstwo');
     }
 
-    const onStatsClick = (e) => {
+    /*const onStatsClick = (e) => {
         props.content('stats');
         window.history.pushState(null,'MyFarm','/statystyki');
-    }
+    }*/
 
     const onDaneClick = (e) => {
         props.content('');
@@ -73,7 +73,7 @@ const Dashboard = (props) => {
             <p className='dashLink' onClick={onDaneClick}>Dane osobowe</p>
             <p className='dashLink' onClick={onGospodarstwoClick}>Gospodarstwo</p>
             {props.title !== null && props.title !== 'Niezatrudniony' && <p className='dashLink' onClick={onMojeZleceniaClick}>Moje zlecenia</p>}
-            {props.title !== null && <p className='dashLink' onClick={onStatsClick}>Statystyki</p>}
+            {/*props.title !== null && <p className='dashLink' onClick={onStatsClick}>Statystyki</p>*/}
             {(props.title === 'Pracownik biurowy' || props.title === 'Właściciel') && <p className={hasUnread ? 'dashLink unseenLink' : 'dashLink'} onClick={() => {onPowiadomieniaClick(); setUnread(false)}}>Powiadomienia</p>}
             <p className='dashLink' onClick={onClickHandle}><Link to='/logowanie'/>Wyloguj</p>
         </div>
