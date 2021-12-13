@@ -1,5 +1,6 @@
 ## Konfiguracja Frontendu
 1. Zbudować front komendą
+```npm install```
 ```npm run build```
 
 2. Skonfigurować apache 
