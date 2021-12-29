@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import AddVehicle from './AddVehicle';
 import '../../../css/garage.css';
 import AddMachine from './AddMachine';
 import { useHistory } from 'react-router';
+import { JobTitleContext } from '../../User';
 
 const Garage = (props) => {
+
+    const job_title = useContext(JobTitleContext);
 
     const [machines,setMachines] = useState([]);
     const [vehicles,setVehicles] = useState([]);
@@ -27,7 +30,7 @@ const Garage = (props) => {
     const history = useHistory();
 
     useEffect(() => {
-        console.log(props.farmId)
+        console.log(job_title)
         fetch(process.env.REACT_APP_SERVER+'/api/garage',{
             method:"POST",
             headers: {'Content-Type':'application/json',
@@ -131,27 +134,31 @@ const Garage = (props) => {
                 <label><input type='checkbox' name='vehicleFilter' checked={vehicleFilter} onChange={filterHandler}/> Pojazdy</label>
                 <label><input type='checkbox' name='machineFilter' checked={machineFilter} onChange={filterHandler}/> Sprzęt rolniczy</label>
                 </div>
+                {(job_title === 'Pracownik biurowy' || job_title === 'Właściciel') &&
                 <div className='addButtons'>
                     <span className='addContent' onClick={() => setTriggerAddV(true)}>+Pojazd</span>
                     <span className='addContent' onClick={() => setTriggerAddM(true)}>+Sprzęt</span>
-                </div>
+                </div>}
             </div>
             <div id='garageLegend' className='legend'>
                     <span>Nazwa</span>
                     <span>Numer</span>
+                    <span>Status</span>
                 </div>
             <div id='machines'>
                 {loading ? <p className='getDataStatus'>Ładowanie danych...</p>: machines.map(m => (
                         <div key={m.id} className='unit machine' onClick={() => onInfoClick(m.id,'m')}>
                             <span>{m.name}</span>
                             <span>{m.number}</span>
-                            <span className='garageList_Status'>{'Sprawny'}</span>
+                            <span className='garageList_Status'>{m.status.status}</span>
+                            <span className='garageList_Fuel'>-</span>
                     </div>))}
                     {vehicles.map(v => (
                         <div key={v.id} className='unit vehicle' onClick={() => onInfoClick(v.id,'v')}>
                             <span>{v.name}</span>
                             <span>{v.number}</span>
                             <span className='garageList_Status'>{v.status.status}</span>
+                            <span className='garageList_Fuel'>{v.fuel_level.name}</span>
                     </div>))}
                     {/*displayed.map(d => <div key={d.id} className='unit vehicle' onClick={() => onInfoClick(d.id,'v')}>
                             <span>{d.name}</span>

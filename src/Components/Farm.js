@@ -16,12 +16,13 @@ const Farm = (props) => {
     const [workersTileStyle,setWorkersTileStyle] = useState({});
 
     useEffect(() => {
+        console.log(hasFarm)
         if(props.job_title !== 'Właściciel')
             setManageTileStyle({'opacity':'0.8','cursor':'default', 'color': '#22281b'}); 
         if(props.job_title === 'Pracownik rolny'){
             setWorkersTileStyle({'opacity':'0.8','cursor':'default', 'color': '#22281b'}); 
         }
-    },[])
+    },[hasFarm])
 
     const joinHandler = () => {
         if(access_code){
@@ -38,7 +39,10 @@ const Farm = (props) => {
             .then(res => {
                 console.log(res)
                 if(res.message ==='Success'){
-                    setFarm(true)
+                    if(res.id)
+                        setFarm(true);
+                        //props.content('farm');
+                    window.location.reload();
                 } else setError(true);
                 setLoading(false)
             })
@@ -83,7 +87,7 @@ const Farm = (props) => {
 
     const onCreateFarm = (e) => {
         props.content('creator')
-        history.push('/kreatorGospodarstwa');
+        window.history.pushState(null,'MyFarm','/kreatorGospodarstwa');
     }
 
     return(

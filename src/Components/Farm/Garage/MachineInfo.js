@@ -96,7 +96,7 @@ const MachineInfo = (props) => {
                     </section>
                     <section className='vehicle-info'>
                             <p><span>Rok produkcji</span> {machine.production_date}</p>
-                            <p><span>Rodzaj pojazdu</span> {machine.vehicle_type.name}</p>
+                            <p><span>Rodzaj sprzętu</span> {machine.vehicle_type.name}</p>
                             <p><span>Szerokość </span> {machine.working_width}</p>
                             <p><span>Stan</span>{machine.status.status}</p>
                             <section className='vehicle-actions'>

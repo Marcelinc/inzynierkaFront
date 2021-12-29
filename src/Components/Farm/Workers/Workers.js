@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { JobTitleContext } from '../../User';
 import { FarmCode } from '../FarmCode';
 import WorkerInfo from './WorkerInfo';
 
 const Workers = (props) => {
+
+    const job_title = useContext(JobTitleContext);
 
     const [triggergetCode,setTrigger] = useState(false);
     const [loading,setloading] = useState(true);

@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import { JobTitleContext } from '../../User';
 import AddPlot from './AddPlot';
-import PlotsInfo from './PlotsInfo';
 
 const Plots = (props) => {
+
+    const job_title = useContext(JobTitleContext)
 
     const [trigger,setTrigger] = useState(false);
     const [dataType,setType] = useState('list');
@@ -68,7 +70,7 @@ const Plots = (props) => {
                     <p>Wyszukaj</p>
                     <input type='text' className='searchButton' placeholder='Lokalizacja...' onChange={filterHandler}/>
                 </div>
-                <span id='addCrops' className='addContent' onClick={() => setTrigger(true)}>+Dodaj działkę</span>
+                {(job_title === 'Pracownik biurowy' || job_title === 'Właściciel') && <span id='addCrops' className='addContent' onClick={() => setTrigger(true)}>+Dodaj działkę</span>}
             </div>
             <div className='legend' id='plotsLegend'>
                     <span>Numer</span>

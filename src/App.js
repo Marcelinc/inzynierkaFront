@@ -32,14 +32,22 @@ function App(){
     return(
         <Router>
             <Switch>
-                <Route path="/" exact component={() => <Welcome log={logged} setLog={setLogged}/>}/>
-                <Route path="/rejestracja" component={() => <RegisterForm log={logged} setLog={setLogged}/>}/>                    
-                <Route path="/logowanie" component={() => <LoginForm log={logged} setLog={setLogged}/>}/>
-                <Route path='/resetowanieHasla' component={() => <ResetPswdReq log={logged} setLog={setLogged}/>}/>
-                <Route path="/uzytkownik" exact component={() => <User log={logged} setLog={setLogged} content='' load={loading}/>}/>
-                <Route path="/uzytkownik/zlecenia" component={() => <User log={logged} setLog={setLogged} content='myorders'/>} load={loading}/>
-                <Route path='/uzytkownik/zlecenie/:id' component={() => <User log={logged} setLog={setLogged} content='myorder'/>} load={loading}/>
-                <Route path="/uzytkownik/powiadomienia" component={() => <User log={logged} setLog={setLogged} content='note'/>}load={loading}/>
+                <Route path="/" exact component={() => 
+                    <Welcome log={logged} setLog={setLogged}/>}/>
+                <Route path="/rejestracja" component={() => 
+                    <RegisterForm log={logged} setLog={setLogged}/>}/>                    
+                <Route path="/logowanie" component={() => 
+                    <LoginForm log={logged} setLog={setLogged}/>}/>
+                <Route path='/resetowanieHasla' component={() => 
+                    <ResetPswdReq log={logged} setLog={setLogged}/>}/>
+                <Route path="/uzytkownik" exact component={() => 
+                    <User log={logged} setLog={setLogged} content='' load={loading}/>}/>
+                <Route path="/uzytkownik/zlecenia" component={() => 
+                    <User log={logged} setLog={setLogged} content='myorders'/>} load={loading}/>
+                <Route path='/uzytkownik/zlecenie/:id' 
+                    component={() => <User log={logged} setLog={setLogged} content='myorder'/>} load={loading}/>
+                <Route path="/uzytkownik/powiadomienia" 
+                    component={() => <User log={logged} setLog={setLogged} content='note'/>}load={loading}/>
                 <Route path='/gospodarstwo' exact component={() => <User log={logged} setLog={setLogged} content='farm' load={loading}/>}load={loading}/>
                 <Route path='/kreatorGospodarstwa' component={() => <User log={logged} setLog={setLogged} content='creator'/>}load={loading}/>
                 <Route path='/gospodarstwo/garaz' component={() => <User log={logged} setLog={setLogged} content='garage' farmId={user.farm_id}/>}load={loading}/>

@@ -35,14 +35,27 @@ const RegisterForm = (props) => {
             document.querySelector('#registerInfo').innerHTML='Przetwarzanie...';
             fetch(process.env.REACT_APP_SERVER+"/api/register",{
                 method: 'POST',
-                headers: {'Content-Type':'application/json'},
+                headers: {'Content-Type':'application/json',
+                    'Accept': 'application/json'},
                 body: JSON.stringify({email,password,name,surname,town,country_id})
             })
-            .then(response => {console.log(response.ok);if(response.ok) setRegistered(true)})
+            .then(response => {console.log(response.ok);if(response.ok) setRegistered(true);
+                return response.json()
+            })
+            .then(res => {
+                if(res.errors){
+                    if(res.errors.email[0] === 'The email has already been taken.') 
+                    if(document.querySelector('#registerInfo')) 
+                        document.querySelector('#registerInfo').innerHTML='Konto o podanym adresie już istnieje!'
+                    else if(res.errors.email[0] === 'The email field is required.')
+                        if(document.querySelector('#registerInfo')) 
+                            document.querySelector('#registerInfo').innerHTML='Nie podano adresu email!'
+                } 
+            })
             .catch(err => {
                 if(document.querySelector('#registerInfo')) 
-                    document.querySelector('#registerInfo').innerHTML='Błąd podczas rejestracji. Spróbuj później'; 
-                console.log(err)});}
+                    document.querySelector('#registerInfo').innerHTML='Błąd podczas rejestracji. Spróbuj później'; console.log('error: '); console.log(err)
+            });}
     }
 
     const validation = () => {

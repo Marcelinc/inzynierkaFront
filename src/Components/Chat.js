@@ -248,7 +248,7 @@ const Chat = (props) => {
                             : 'Początek rozmowy'}
                         </div>
                         <div className='inputMessages'>
-                            <textarea id='msgInputArea' onChange={e => setMessage(e.target.value)} value={message}>
+                            <textarea id='msgInputArea' onChange={e => setMessage(e.target.value)} value={message} placeholder="Napisz wiadomość..">
 
                             </textarea>
                             <button id='sendMsgButton' onClick={sendMessage} disabled={sending}>{sending ? 'Wysyłanie...' : 'Wyślij'}</button>

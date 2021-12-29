@@ -81,7 +81,7 @@ const WorkerInfo = (props) => {
                         <p className='uData'>Miejscowość: {worker.town}</p>
                         <p className='uData'>Ulica: {worker.street}</p>
                         <p className='uData'>Nr.domu: {worker.house_number}</p>
-                        <p className='uData'>Nr. mieszkania: {worker.flat_number}</p>
+                        <p className='uData'>Nr. mieszkania: {worker.flat_number ? worker.flat_number : 'Nie podano'}</p>
                     </div>
                     <div className='userInfoButtons'>
                         <button onClick={() => setMode(true)} disabled={disabledButton} style={buttonStyle} >Zmień stanowisko</button>

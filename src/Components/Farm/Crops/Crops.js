@@ -1,9 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import '../../../css/crops.css';
+import { JobTitleContext } from '../../User';
 import AddCrops from './AddCrops';
 import CropInfo from './CropInfo';
 
 const Crops = (props) => {
+
+    const job_title = useContext(JobTitleContext);
 
     const [trigger,setTrigger] = useState(false);
     const [dataType,setType] = useState('list');
@@ -69,7 +72,7 @@ const Crops = (props) => {
                     <p>Wyszukaj</p>
                     <input type='text' className='searchButton' placeholder='Nazwa plonu...' onChange={filterHandler}/>
                 </div>
-                <span className='addContent' onClick={() => setTrigger(true)}>+Dodaj nowy plon</span>
+                {(job_title==='Pracownik biurowy' || job_title==='Właściciel') && <span className='addContent' onClick={() => setTrigger(true)}>+Dodaj nowy plon</span>}
             </div>
             <div id='cropsLegend'>
                     <span>Nazwa</span>

@@ -13,7 +13,10 @@ const Welcome = (props) => {
         <div className='content'>
             <Navigation log={props.log} setLog={props.setLog} title={props.title}/>
             <main className="welcome">
-                {/*<div id="glowna">Jakis tekst</div>*/}
+                <div id="welcomeContent">
+                    <p>Jesteś rolnikiem i szukasz nowych rozwiązań?</p>
+                    <p>Dołącz do nas!</p>
+                </div>
                 <Link to="/rejestracja"><button id="wreg">Załóż konto</button></Link>
             </main>
             <Footer/>

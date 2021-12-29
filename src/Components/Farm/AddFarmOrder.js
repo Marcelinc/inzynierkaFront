@@ -22,8 +22,8 @@ export const AddFarmOrder = (props) => {
     const [field_id,setField] = useState(1);
     const [reserved_from,setReservedFrom] = useState('');
     const [reserved_to,setReservedTo] = useState('');
-    const [vehicle_id,setVehicles] = useState([1]);
-    const [machine_id,setMachines] = useState([1]);
+    const [vehicle_id,setVehicles] = useState([]);
+    const [machine_id,setMachines] = useState([]);
 
     const [farm_plant_protection_product_id,setProduct] = useState(1);
     const [product_quantity,setQuantity] = useState(0);
@@ -55,8 +55,12 @@ export const AddFarmOrder = (props) => {
             .then(response => response.json())
             .then(res => {
                 if(res.message && res.message==='Success'){
-                    //setFarmMachines(res.data.machines);
-                    //setFarmVehicles(res.data.vehicles);
+                    setFarmMachines(res.data.machines);
+                    setFarmVehicles(res.data.vehicles);
+                    if(res.data.vehicles.length > 0)
+                        setVehicles([res.data.vehicles[0].id])
+                    if(res.data.machines.length > 0)
+                        setMachines([res.data.machines[0].id])
                     console.log(res.data)
                 } else setError(true);
                 setLoadingGarage(false);
@@ -110,7 +114,7 @@ export const AddFarmOrder = (props) => {
     },[props.trigger])
 
 //Get vehicles and machines after insert order date's
-    useEffect(() => {
+   /* useEffect(() => {
         if(reserved_to !== '' && reserved_from !== ''){
             //Get available vehicles
             fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/get-available-vehicles`,{
@@ -129,7 +133,7 @@ export const AddFarmOrder = (props) => {
                 setLoadingVehicles(false);
             }).catch(err => console.log(err))
         }
-    },[reserved_from,reserved_to])
+    },[reserved_from,reserved_to])*/
 
 //Prepare and send request to add order
     const addHandler = (e) => {
@@ -174,7 +178,7 @@ export const AddFarmOrder = (props) => {
             setVehicles(vehicles);
         } 
         if(vehicles.length === 3) setVStyle({'display':'none'})
-    }*/
+    }
 
 //Set chosen vehicle
     const setVehicle = (id,index) => {
@@ -271,7 +275,7 @@ export const AddFarmOrder = (props) => {
                 <div className='ordersEquipment'>
                     <h4>Pojazd</h4>
                     {farmVehicles.length !== 0 ? vehicle_id.map((v,index) => (<label key={index}>Wybierz pojazd
-                        <select onChange={e => setVehicle(e.target.value,index)}>
+                        <select onChange={e => setVehicles(e.target.value,index)}>
                             {farmVehicles.map(v => <option key={v.id} value={v.id}>{v.name}</option>)}
                         </select>
                     </label>)) : loadingVehicles ? 'Wybierz datę realizacji zlecenia' : 'Brak dostepnych pojazdów'}
@@ -281,7 +285,7 @@ export const AddFarmOrder = (props) => {
                 <div className='ordersEquipment'>
                     <h4>Sprzęt</h4>
                     {machine_id.map((m,index) => <label key={index}>Wybierz sprzęt
-                    <select onChange={e => setMachine(e.target.value,index)}>
+                    <select onChange={e => setMachines(e.target.value,index)}>
                         {farmMachines.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
                     </select>
                     </label>)}

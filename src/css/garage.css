@@ -48,7 +48,7 @@
     grid-template-columns: 25% 15% 20%; 
 }
 #garageLegend::after{
-    content: 'Informacje';
+    content: 'Stan paliwa';
 }
 .unit{
     background-color: gainsboro;
@@ -84,6 +84,9 @@ button:hover{
     }
     #machines .unit, #garageLegend{
         grid-template-columns: 30% 15%;
+    }
+    .garageList_Fuel{
+        display: none;
     }
 }
 

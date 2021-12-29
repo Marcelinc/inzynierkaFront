@@ -30,21 +30,23 @@ const Notifications = (props) => {
         })
     }, [])
 
-    const readHandler = (id) => {
-        let note = document.getElementById('note'+id);
-        if(note)
-            note.classList.add('seenNotification');
-        fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/worker/${props.id}/notification/${id}/mark-as-shown`,{
-            method:'POST',
-            headers: {'Content-Type':'application/json',
-                'Accept': 'application/json'},
-            credentials: 'include'
-        })
-        .then(response => response.json())
-        .then(res => {
-            console.log(res)
-        })
-        .catch(err => console.log(err));
+    const readHandler = (id,shown) => {
+        if(!shown){
+            let note = document.getElementById('note'+id);
+            if(note)
+                note.classList.add('seenNotification');
+            fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/worker/${props.id}/notification/${id}/mark-as-shown`,{
+                method:'POST',
+                headers: {'Content-Type':'application/json',
+                    'Accept': 'application/json'},
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => console.log(err));
+        }
     }
 
     return(<section className='data'>
@@ -52,10 +54,10 @@ const Notifications = (props) => {
             <h3>Powiadomienia</h3>
 
             <div className='noticeboard'>
-                {!loading && notifications.map(n => <div key={n.id} className={n.wasShown ? 'notification seenNotification' : 
+                {!loading && notifications.map((n,index) => <div key={n.id} className={n.wasShown ? 'notification seenNotification' : 
                 'notification'} id={`note${n.id}`}>
                     <span className='notificationContent'>{n.notification}</span>
-                    <button className='readNotice' onClick={() => readHandler(n.id)}>Odczytaj</button>
+                    <button className='readNotice' onClick={() => readHandler(n.id,n.wasShown)} style={n.wasShown ? {'cursor':'default'} : {'cursor':'pointer'}}>Odczytaj</button>
                 </div>)}
                 <p className='getDataStatus'>{loading ? 'Ładowanie...' : !loading && !notifications.length ? 'Brak powiadomień' : 
                     !loading && error ? 'Błąd podczas wczytywania!' : ''}</p>
