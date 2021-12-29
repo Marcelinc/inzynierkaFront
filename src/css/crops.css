@@ -33,7 +33,7 @@
 }
 
 #cropsLegend,.unit{
-    grid-template-columns: 25% 15% 20%;
+    grid-template-columns: 35% 25% 30%;
 }
 #cropsLegend{
     padding: 10px;

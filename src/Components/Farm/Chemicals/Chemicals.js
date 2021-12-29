@@ -1,8 +1,11 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, useContext } from 'react';
+import { JobTitleContext } from '../../User';
 import AddChemicals from './AddChemicals';
 
 
 const Chemicals = (props) => {
+
+    const job_title = useContext(JobTitleContext)
 
     const [trigger,setTrigger] = useState(false);
     const [loading,setloading] = useState(true);
@@ -69,7 +72,7 @@ const Chemicals = (props) => {
                     <p>Wyszukaj</p>
                     <input type='text' className='searchButton' placeholder='Typ...' onChange={filterHandler}/>
                 </div>
-                <span className='addContent' onClick={() => setTrigger(true)}>+Dodaj środek chemiczny</span>
+                {(job_title === 'Pracownik biurowy' || job_title === 'Właściciel') && <span className='addContent' onClick={() => setTrigger(true)}>+Dodaj środek chemiczny</span>}
             </div>
             <div id='chemicalsLegend' className='legend'>
                     <span>Nazwa</span>
@@ -84,7 +87,7 @@ const Chemicals = (props) => {
                 {!loading && displayed.map(c => (
                     <div key={c.name} className='unit' onClick={() => infoHandler(c.id)}>
                         <span>{c.name}</span>
-                        <span>{c.number}</span>
+                        <span>{c.type.name}</span>
                         <span>{c.product_quantity_in_package}</span>
                         <span>{c.unit.name}</span>
                 </div>))}

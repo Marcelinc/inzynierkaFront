@@ -26,6 +26,8 @@ import UserEdit from "./UserEdit";
 import FarmOrders from "./FarmOrders";
 import FarmOrderInfo from "./Farm/FarmOrderInfo";
 
+export const JobTitleContext = React.createContext()
+
 const User = (props) => {
 
     const [id,setId] = useState(0);
@@ -50,6 +52,7 @@ const User = (props) => {
     const [editMode,setMode] = useState(false);
 
     const [counter,setCounter] = useState(5);
+
 
     useEffect(() => {
         setLoadUserData(true);
@@ -112,23 +115,25 @@ const User = (props) => {
                                 {editMode && <UserEdit setMode={setMode} user={user} setUser={setUser}/>}
                             </section>
                         }
-                        {content === 'stats' && <Stats/>}
-                        {content === 'note' && <Notifications id={user.id} farmId={user.farm_id}/>}
-                        {content === 'garage' && <Garage farmId={user.farm_id} type='list' setContent={setContent}/>}
-                        {content === 'vehicle' && <VehicleInfo setContent={setContent}/>}
-                        {content === 'machine' && <MachineInfo setContent={setContent}/>}
-                        {content === 'crops' && <Crops farmId={user.farm_id} setContent={setContent}/>}
-                        {content === 'crop' && <CropInfo setContent={setContent} farmId={user.farm_id}/>}
-                        {content === 'chemicals' && <Chemicals farmId={user.farm_id} setContent={setContent}/>}
-                        {content === 'chemical' && <ChemicalsInfo setContent={setContent}/>}
-                        {content === 'workers' && <Workers farmId={user.farm_id} setContent={setContent}/>}
-                        {content === 'worker' && <WorkerInfo setContent={setContent} farmId={user.farm_id} title={user.job_title}/>}
-                        {content === 'plots' && <Plots farmId={user.farm_id} setContent={setContent}/>}
-                        {content === 'plot' && <PlotsInfo setContent={setContent} farmId={user.farm_id} title={user.job_title}/>}
-                        {content === 'farmOrders' && <FarmOrders setContent={setContent} farmId={user.farm_id} title={user.job_title}/>}
-                        {content === 'farmOrder' && <FarmOrderInfo  setContent={setContent} farmId={user.farm_id} userId={user.id}/>}
-                        {content === 'manage' && <FarmManage setContent={setContent} farmId={user.farm_id}/>}
-                        {content === 'creator' && <FarmCreator user={id}/>}
+                        <JobTitleContext.Provider value={user.job_title}>
+                            {content === 'stats' && <Stats/>}
+                            {content === 'note' && <Notifications id={user.id} farmId={user.farm_id}/>}
+                            {content === 'garage' && <Garage farmId={user.farm_id} type='list' setContent={setContent}/>}
+                            {content === 'vehicle' && <VehicleInfo setContent={setContent}/>}
+                            {content === 'machine' && <MachineInfo setContent={setContent}/>}
+                            {content === 'crops' && <Crops farmId={user.farm_id} setContent={setContent}/>}
+                            {content === 'crop' && <CropInfo setContent={setContent} farmId={user.farm_id}/>}
+                            {content === 'chemicals' && <Chemicals farmId={user.farm_id} setContent={setContent}/>}
+                            {content === 'chemical' && <ChemicalsInfo setContent={setContent}/>}
+                            {content === 'workers' && <Workers farmId={user.farm_id} setContent={setContent}/>}
+                            {content === 'worker' && <WorkerInfo setContent={setContent} farmId={user.farm_id} title={user.job_title}/>}
+                            {content === 'plots' && <Plots farmId={user.farm_id} setContent={setContent}/>}
+                            {content === 'plot' && <PlotsInfo setContent={setContent} farmId={user.farm_id} title={user.job_title}/>}
+                            {content === 'farmOrders' && <FarmOrders setContent={setContent} farmId={user.farm_id} title={user.job_title}/>}
+                            {content === 'farmOrder' && <FarmOrderInfo  setContent={setContent} farmId={user.farm_id} userId={user.id}/>}
+                            {content === 'manage' && <FarmManage setContent={setContent} farmId={user.farm_id}/>}
+                            {content === 'creator' && <FarmCreator user={id}/>}
+                        </JobTitleContext.Provider>
                     </main>
                 : <main className='user'>
                     <section id='notLogged'>

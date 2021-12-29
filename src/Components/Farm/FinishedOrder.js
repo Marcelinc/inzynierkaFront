@@ -26,7 +26,7 @@ const FinishedOrder = (props) => {
             <p><span>Status pojazdu</span> Sprawny</p>
             <p><span>Stan paliwa</span> Połowa zbiornika</p>
             <p><span>Sprzęt</span>{props.order.machines.length ? props.order.machines[0].name+' nr. '+props.order.machines[0].number : 'Nie wybrano'}</p>
-            <p><span>Status maszyny</span> Sprawny</p>
+            <p><span>Status sprzętu</span> Sprawny</p>
 
             <p><span>Informacje zwrotne</span>{props.order.feedback ? props.order.feedback : 'Brak'}</p>
         </div>
