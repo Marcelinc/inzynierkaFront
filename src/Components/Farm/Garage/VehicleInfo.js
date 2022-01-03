@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { useHistory, useParams } from 'react-router';
+import { JobTitleContext } from '../../User';
 import DeleteVehicle from './DeleteVehicle';
 import UploadImage from './UploadImage';
 import VehicleEdit from './VehicleEdit';
 
 const VehicleInfo = (props) => {
+    const job_title = useContext(JobTitleContext)
+
     const [triggerDeleteV,setTriggerDeleteV] = useState(false);
     const [editMode,setMode] = useState(false);
     const [loading,setLoading] = useState(true);
@@ -35,6 +38,8 @@ const VehicleInfo = (props) => {
                 setLoading(false);
             }else document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
         }).catch(err => console.log(err))
+
+        console.log(job_title)
 
         return(() => {
             setVehicle({});
@@ -109,10 +114,10 @@ const VehicleInfo = (props) => {
                         <p><span>VIN</span> {vehicle.vin}</p>
                         <p><span>Stan paliwa </span> {vehicle.fuel_level.name}</p>
                         <p>Ostatnia aktualizacja <span>{vehicle.date_update_fuel_level}</span></p>
-                        <section className='vehicle-actions'>
+                        {(job_title === 'Pracownik biurowy' || job_title === 'Właściciel') && <section className='vehicle-actions'>
                             <button className='MachEdit' onClick={() => onEditClick()}>Edytuj</button>
                             <button className='MachDelete' onClick={() => onDeleteClick(vehicleId)}>Usuń</button>
-                        </section>
+                        </section>}
                     </section>
                 </div>}
             </div>

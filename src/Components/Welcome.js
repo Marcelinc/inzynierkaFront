@@ -16,8 +16,8 @@ const Welcome = (props) => {
                 <div id="welcomeContent">
                     <p>Jesteś rolnikiem i szukasz nowych rozwiązań?</p>
                     <p>Dołącz do nas!</p>
+                    <Link to="/rejestracja"><button id="wreg">Załóż konto</button></Link>
                 </div>
-                <Link to="/rejestracja"><button id="wreg">Załóż konto</button></Link>
             </main>
             <Footer/>
         </div>

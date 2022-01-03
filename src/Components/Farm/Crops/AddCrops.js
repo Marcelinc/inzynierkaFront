@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react/cjs/react.development';
+import React, { useState, useEffect } from 'react';
 
 const AddCrops = (props) => {
 
@@ -11,7 +10,10 @@ const AddCrops = (props) => {
     const [error,setError] = useState(false);
     const [crops,setCrops] = useState([]);
 
+    const [loading,setLoading] = useState(false);
+
     useEffect(() => {
+        setLoading(true);
         fetch(process.env.REACT_APP_SERVER+'/api/lookup-table/crops',{
             headers: {'Content-Type':'application/json',
                 'Accept': 'application/json'},
@@ -23,6 +25,7 @@ const AddCrops = (props) => {
                 console.log(res.data)
                 setCrops(res.data);
             } else setError(true);
+            setLoading(false);
         })
         .catch(err => console.log(err))
     },[])
@@ -80,7 +83,7 @@ const AddCrops = (props) => {
     return(props.trigger ? <div className='popup'>
         <section className='popup-main'>
             <p>Dodawanie plonu</p>
-            <section className='popupForm'>
+            {loading ? 'Wczytywanie...' : error ? 'Błąd podczas wczytywania. Spróbuj później.' : <section className='popupForm'>
                 <form onSubmit={addHandler} id='addForm'>
                 <label>Plon 
                         <select onChange={e => setCropName(e.target.value)}>
@@ -95,12 +98,12 @@ const AddCrops = (props) => {
                     <label>Ilość <input type='number' onChange={e => setQuantity(e.target.value)}/>
                         <span className='info' id='quantityInfo'></span></label>
                 </form>
-            </section>
-            <section className='popupButtons'>
+            </section>}
+            {loading || error ? '' : <section className='popupButtons'>
                 <button onClick={() => {props.setTrigger(false); clearFormData();}}>Anuluj</button>
                 <button form='addForm'>Potwierdź</button>
                 <h3 className='info' id='addCropInfo'></h3>
-            </section>
+            </section>}
         </section>
     </div> : "")
 }

@@ -1,10 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { useHistory, useParams } from 'react-router';
 import DeleteMachine from './DeleteMachine';
 import UploadImage from './UploadImage';
 import MachineEdit from './MachineEdit';
+import { JobTitleContext } from '../../User';
 
 const MachineInfo = (props) => {
+
+    const job_title = useContext(JobTitleContext);
+
     const [triggerDeleteM,setTriggerDeleteM] = useState(false);
     const [editMode,setMode] = useState(false);
     const [loading,setLoading] = useState(true);
@@ -99,10 +103,10 @@ const MachineInfo = (props) => {
                             <p><span>Rodzaj sprzętu</span> {machine.vehicle_type.name}</p>
                             <p><span>Szerokość </span> {machine.working_width}</p>
                             <p><span>Stan</span>{machine.status.status}</p>
-                            <section className='vehicle-actions'>
+                            {(job_title === 'Pracownik biurowy' || job_title === 'Właściciel') &&  <section className='vehicle-actions'>
                                 <button className='MachEdit' onClick={() => setMode(true)}>Edytuj</button>
                                 <button className='MachDelete' onClick={() => onDeleteClick(machine.id)}>Usuń</button>
-                            </section>
+                            </section>}
                     </section>
                 </div>}
             </div>

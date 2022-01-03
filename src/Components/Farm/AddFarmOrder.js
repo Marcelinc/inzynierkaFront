@@ -114,7 +114,7 @@ export const AddFarmOrder = (props) => {
     },[props.trigger])
 
 //Get vehicles and machines after insert order date's
-   /* useEffect(() => {
+    useEffect(() => {
         if(reserved_to !== '' && reserved_from !== ''){
             //Get available vehicles
             fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/get-available-vehicles`,{
@@ -129,11 +129,11 @@ export const AddFarmOrder = (props) => {
                 if(res.message && res.message==='Success'){
                     console.log('Dostepne pojazdy:')
                     console.log(res.data)
-                } else setError(true);
-                setLoadingVehicles(false);
+                } //else setError(true);
+                //setLoadingVehicles(false);
             }).catch(err => console.log(err))
         }
-    },[reserved_from,reserved_to])*/
+    },[reserved_from,reserved_to])
 
 //Prepare and send request to add order
     const addHandler = (e) => {

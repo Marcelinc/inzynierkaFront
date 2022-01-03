@@ -57,8 +57,10 @@ const Farm = (props) => {
     }
 
     const onCrops = (e) => {
-        props.content('crops');
-        window.history.pushState(null,'MyFarm','/gospodarstwo/plony');
+        if(props.job_title === 'Właściciel' || props.job_title === 'Pracownik biurowy'){
+            props.content('crops');
+            window.history.pushState(null,'MyFarm','/gospodarstwo/plony');
+        }
     }
 
     const onChemicals = (e) => {
@@ -108,7 +110,7 @@ const Farm = (props) => {
         <section className='data'>
             <div id='menu'>
                 <div onClick={onGarage} className='tile'>Garaż <i className="icon-truck"></i></div>
-                <div onClick={onCrops} className='tile'>Plony <i className="icon-garden"></i></div>
+                <div onClick={onCrops} className='tile'  style={workersTileStyle}>Plony <i className="icon-garden"></i></div>
                 <div onClick={onChemicals} className='tile'>Środki chemiczne <i className="icon-tint"></i></div>
                 <div onClick={onWorkers} className='tile' style={workersTileStyle}>Pracownicy <i className="icon-users"></i> </div>
                 <div onClick={onPlot} className='tile'>Działki <i className="icon-location"></i></div>

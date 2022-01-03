@@ -1,8 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { useHistory, useParams } from 'react-router';
 import ChemicalDelete from './ChemicalDelete';
+import {JobTitleContext} from './../../User'; 
 
 const ChemicalsInfo = (props) => {
+    const job_title = useContext(JobTitleContext)
+
     const [triggerDelete,setTriggerDelete] = useState(false);
     const [loading,setLoading] = useState(true);
 
@@ -60,9 +63,9 @@ const ChemicalsInfo = (props) => {
                             <p><span>Ilość w opakowaniu: </span>{chemical.product_quantity_in_package} </p>
                             <p><span>Jednostka: </span>{chemical.unit.name} </p>
                             <p><span>Oznaczenie opakowania: </span>{chemical.number} </p>
-                            <section className='vehicle-actions'>
+                            {(job_title === 'Pracownik biurowy' || job_title === 'Właściciel') &&  <section className='vehicle-actions'>
                                 <button className='MachDelete' onClick={() => setTriggerDelete(true)}>Usuń</button>
-                            </section>
+                            </section>}
                     </section>
                 </div>}
             </div>
