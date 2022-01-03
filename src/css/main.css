@@ -76,7 +76,7 @@ footer{
     background-color:rgba(12, 88, 50, 0.83);
     text-align: center;
     height: 10%;
-    min-height: 45px;
+    min-height: 70px;
     min-width: 320px;
 }
 .footerLinks{
@@ -96,8 +96,14 @@ main{
     display:flex;
     justify-content: center;
 }
-.welcome{
-    align-items: center;
+#welcomeContent{
+    font-size: 2em;
+    font-weight: 900;
+    margin-top: 10%;
+}
+#welcomeContent p{
+    -webkit-text-stroke: 1px #90a27e;
+    padding: 15px;
 }
 
 #container,.content{
@@ -125,6 +131,8 @@ main{
     border-radius: 5px;
     font-weight: bold;
     cursor:pointer;
+    min-width: 120px;
+    min-height: 50px;
 }
 #wreg:hover{
     background-color: rgb(76, 112, 21);

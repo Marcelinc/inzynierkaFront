@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const AddChemicals = (props) => {
 
@@ -10,6 +10,28 @@ const AddChemicals = (props) => {
     const [designation,setDesignation] = useState(3);//dopisane, oznaczenie
     const [unit_id,setUnit] = useState(1);
     const [ppp_type_id,setType] = useState(1);
+    const [chemicals,setChemicals] = useState([]);
+
+    const [loading,setLoading] = useState(false);
+    const [error,setError] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        fetch(process.env.REACT_APP_SERVER+'/api/lookup-table/ppp-type/getAll',{
+            headers: {'Content-Type':'application/json',
+                'Accept': 'application/json'},
+            credentials:'include'
+        })
+        .then(response => response.json())
+        .then(res => {console.log(res); 
+            if(res.message === 'Success') {
+                console.log(res.data)
+                setChemicals(res.data);
+            } else setError(true);
+            setLoading(false);
+        })
+        .catch(err => console.log(err))
+    },[])
 
     const addHandler = (e) => {
         e.preventDefault();
@@ -74,7 +96,7 @@ const AddChemicals = (props) => {
     return(props.trigger ? <div className='popup'>
         <section className='popup-main'>
             <p>Dodawanie środka chemicznego</p>
-            <section className='popupForm'>
+            {loading ? 'Wczytywanie...' : error ? 'Błąd podczas wczytywania. Spróbuj później.' : <section className='popupForm'>
                 <form onSubmit={addHandler} id='addForm'>
                     <label>Nazwa* <input type='text' onChange={e => setName(e.target.value)}/>
                         <span className='info' id='nameInfo'></span></label>
@@ -82,8 +104,7 @@ const AddChemicals = (props) => {
                         <span className='info' id='quantityInfo'></span></label>
                     <label>Typ*
                         <select onChange={e => setType(e.target.value)}>
-                            <option value={1}>Nawóz</option>
-                            <option value={2}>Oprysk</option>
+                            {chemicals.map(chemical => <option key={chemical.id} value={chemical.id}>{chemical.name}</option>)}
                         </select>
                     </label>
                     <label>Jednostka* 
@@ -99,12 +120,12 @@ const AddChemicals = (props) => {
                     <label>Oznaczenie opakowania <input type='text' onChange={e => setDesignation(e.target.value)}/>
 <span className='info' id='signInfo'></span></label>*/}
                 </form>
-            </section>
-            <section className='popupButtons'>
+            </section>}
+            {loading || error ? '' : <section className='popupButtons'>
                 <button onClick={() => {props.setTrigger(false); clearFormData();}}>Anuluj</button>
                 <button form='addForm'>Potwierdź</button>
                 <h3 className='info' id='addChemicalInfo'></h3>
-            </section>
+            </section>}
         </section>
     </div> : "")
 }
