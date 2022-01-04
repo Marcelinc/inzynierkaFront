@@ -22,6 +22,8 @@ const FinishedOrder = (props) => {
         <div className='feedbackOrderDTO'>
             <p><span>Czas rozpoczęcia</span>{props.order.started_at}</p>
             <p><span>Czas zakończenia</span>{props.order.finished_at}</p>
+            {props.order.work_type.name === 'Sadzenie' && <p><span>Plon</span>{props.order.dose.farm_crop.crop}</p>}
+            {props.order.work_type.name === 'Sadzenie' && <p><span>Ilość</span>{props.order.dose.seed_quantity+props.order.dose.farm_crop.short_unit}</p>}
             <p><span>Pojazd</span>{props.order.vehicles.length ? props.order.vehicles[0].name+' nr. '+props.order.vehicles[0].number : 'Nie wybrano'}</p>
             <p><span>Status pojazdu</span> Sprawny</p>
             <p><span>Stan paliwa</span> Połowa zbiornika</p>

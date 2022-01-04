@@ -89,7 +89,7 @@ const AddMachine = (props) => {
                         <span className='info' id='machineName'></span></label>
                     <label>Rok produkcji <input type='date' onChange={e => setDate(e.target.value)}/>
                         <span className='info' id='machineYear'></span></label>
-                    <label>Rodzaj pojazdu 
+                    <label>Rodzaj sprzętu 
                         <select onChange={e => setType(e.target.value)}>
                             <option value='1'>Ciągnik</option>
                             <option value='2'>Opryskiwacz</option>
