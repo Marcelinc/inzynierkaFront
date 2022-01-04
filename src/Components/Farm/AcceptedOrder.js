@@ -75,6 +75,8 @@ const AcceptedOrder = (props) => {
     return(<section className='order-info '>
         <div className='orderDTO'>
             <span>Zadanie: {props.order.work_type.name}</span>
+            {props.order.work_type.name === 'Sadzenie' && <span>Plon: {props.order.dose.farm_crop.crop}</span>}
+            {props.order.work_type.name === 'Sadzenie' && <span>Ilość: {props.order.dose.seed_quantity+props.order.dose.farm_crop.short_unit}</span>}
             <span>Wykonawca: {props.order.user && props.order.user.name+' '+props.order.user.surname}</span>
             <span>Miejsce: {props.order.field.localization}</span>
             <span>Czas rozpoczęcia: {props.order.started_at}</span>
