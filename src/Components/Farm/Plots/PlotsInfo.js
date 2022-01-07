@@ -72,6 +72,11 @@ const PlotsInfo = (props) => {
                             <div className='plotOverall'>
                                 <p className='plotInfo'>Aktualna uprawa: {plot.actual_plant.name} </p>
                                 <p className='plotInfo'>Data siewu: {plot.plant_seed_date.slice(0,10)} </p>
+                                <div className='plotLocalization'>
+                                    <p>Powierzchnia: {plot.area}ha</p>
+                                    <p>Lokalizacja: {plot.localization}</p>
+                                    <div className='plotsMap'></div>
+                                </div>
                                 <div>
                                     <p className='plotHistoryHeader'>Historia upraw</p>
                                     <div className='plotHistory'>
@@ -89,12 +94,7 @@ const PlotsInfo = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className='plotLocalization'>
-                                <p>Powierzchnia: {plot.area}ha</p>
-                                <p>Lokalizacja: {plot.localization}</p>
-                                <div className='plotsMap'>
-                                </div>
-                            </div>
+                           
                         </section>
                         <section className='vehicle-actions'>
                             <button className='MachEdit' onClick={() => setMode(true)}>Edytuj</button>

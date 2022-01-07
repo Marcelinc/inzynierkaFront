@@ -102,7 +102,7 @@ main{
     margin-top: 10%;
 }
 #welcomeContent p{
-    -webkit-text-stroke: 1px #90a27e;
+    -webkit-text-stroke: 0.3px #90a27e;
     padding: 15px;
 }
 
