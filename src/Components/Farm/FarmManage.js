@@ -1,7 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import { FarmCode } from './FarmCode';
 import FarmDelete from './FarmDelete';
 import FarmInfoEdit from './FarmInfoEdit';
+import {JobTitleContext} from './../User';
+import { Redirect } from 'react-router-dom';
 
 const FarmManage = (props) => {
 
@@ -9,6 +11,8 @@ const FarmManage = (props) => {
     const [deleteTrigger,setTrigger] = useState(false);
     const [getCodeTrigger,setCodeTrigger] = useState(false);
     const [farm_id,setFarmId] = useState(props.farmId);
+
+    const job_title = useContext(JobTitleContext);
 
     const [farmInfo,setFarm] = useState({});
 
@@ -26,7 +30,8 @@ const FarmManage = (props) => {
         props.setContent('');
     }
 
-
+    if(job_title !== 'Właściciel')
+        return <Redirect to='/gospodarstwo'/>
 
     return(<section className='data'>
         <div className='equipment-content'>

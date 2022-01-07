@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { JobTitleContext } from '../../User';
 import { FarmCode } from '../FarmCode';
-import WorkerInfo from './WorkerInfo';
+import { Redirect } from 'react-router-dom';
 
 const Workers = (props) => {
 
@@ -18,6 +18,7 @@ const Workers = (props) => {
 
     
     useEffect(() => {
+        if(job_title === 'Pracownik biurowy' || job_title === 'Właściciel')
         fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/get-workers`,{
             headers: {'Content-Type':'application/json',
                 'Accept': 'application/json'},
@@ -66,6 +67,9 @@ const Workers = (props) => {
         props.setContent('worker');
         window.history.pushState({'id':id},'MyFarm',`/gospodarstwo/pracownik/${id}`);
     }
+
+    if(job_title !== 'Właściciel' && job_title !== 'Pracownik biurowy')
+        return <Redirect to='/gospodarstwo'/>
 
     return(<section className='data'>
         <div className='equipment-content'>

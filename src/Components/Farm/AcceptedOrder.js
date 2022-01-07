@@ -5,6 +5,7 @@ const AcceptedOrder = (props) => {
     const [statuses,setStatuses] = useState(props.statusesMV);
     const [fuelStatuses,setFuelStatuses] = useState(props.fuelStatuses);
 
+    //sended data
     const [feedback,setFeedback] = useState('');
     const [farm_id,setFarm] = useState(props.farmId);
     const [order_id,setOrder] = useState(props.order.id)
@@ -12,6 +13,7 @@ const AcceptedOrder = (props) => {
     const [fuel_level_id,setFuel] = useState(1);
     const [vehicle_status_id,setVehicle] = useState(1);
     const [machine_status_id,setMachine] = useState(1);
+    const [crop_amount,setCropAmount] = useState(0);
 
     const [error,setError] = useState(false);
     const [loading,setLoading] = useState(false);
@@ -50,12 +52,11 @@ const AcceptedOrder = (props) => {
         setError(false);
         setLoading(true);
         let body = {'fuel_level_id':fuel_level_id,'vehicle_status_id':vehicle_status_id,'machine_status_id':machine_status_id};
-        console.log(feedback)
-        console.log(fuel_level_id)
-        console.log(vehicle_status_id)
-        console.log(machine_status_id)
         if(feedback)
             body['feedback']=feedback;
+        if(crop_amount > 0 && props.order.work_type.name === 'Zbiór'){
+            body['crop_amount'] = crop_amount;
+        }
         //send finish request
         fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/order/${order_id}/worker/${worker_id}/finish-order`,{
             method:'POST',
@@ -75,12 +76,15 @@ const AcceptedOrder = (props) => {
     return(<section className='order-info '>
         <div className='orderDTO'>
             <span>Zadanie: {props.order.work_type.name}</span>
-            {props.order.work_type.name === 'Sadzenie' && <span>Plon: {props.order.dose.farm_crop.crop}</span>}
-            {props.order.work_type.name === 'Sadzenie' && <span>Ilość: {props.order.dose.seed_quantity+props.order.dose.farm_crop.short_unit}</span>}
+            {(props.order.work_type.name === 'Sadzenie' || props.order.work_type.name === 'Zbiór' || props.order.work_type.name === 'Siew') && <span>Plon: {props.order.dose && props.order.dose.farm_crop.crop}</span>}
+            {(props.order.work_type.name === 'Sadzenie' || props.order.work_type.name === 'Siew') && <span>Ilość: {props.order.dose && props.order.dose.seed_quantity+props.order.dose.farm_crop.short_unit}</span>}
             <span>Wykonawca: {props.order.user && props.order.user.name+' '+props.order.user.surname}</span>
             <span>Miejsce: {props.order.field.localization}</span>
             <span>Czas rozpoczęcia: {props.order.started_at}</span>
             <form>
+                {props.order.work_type.name === 'Zbiór' && <label className='orderForm'>Ilość zbioru [{props.order.dose && props.order.dose.farm_crop.short_unit}]
+                    <input type='number' value={crop_amount} onChange={e => setCropAmount(e.target.value)}></input>
+                </label>}
                 <label className='orderForm'>Stan paliwa {props.order.vehicles.length ? props.order.vehicles[0].name : ''}
                     <select onChange={e => setFuel(e.target.value)}>
                         {fuelStatuses.map(status => <option key={status.id} value={status.id}>{status.name}</option> )}

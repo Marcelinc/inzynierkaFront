@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const AddPlot = (props) => {
 
@@ -9,6 +9,28 @@ const AddPlot = (props) => {
     const [plant_type_id,setActCrop] = useState(1);
     const [plant_seed_date,setDate] = useState('');
     const [area,setArea] = useState(0);
+
+    const [loading,setLoading] = useState(false);
+    const [error,setError] = useState(false);
+    const [plant_types,setPlant_types] = useState([]);
+
+    useEffect(() => {
+        setLoading(true);
+        fetch(process.env.REACT_APP_SERVER+'/api/lookup-table/plant-type/getAll',{
+            headers: {'Content-Type':'application/json',
+                'Accept': 'application/json'},
+            credentials:'include'
+        })
+        .then(response => response.json())
+        .then(res => {console.log(res); 
+            if(res.message === 'Success') {
+                console.log(res.data)
+                setPlant_types(res.data);
+            } else setError(true);
+            setLoading(false);
+        })
+        .catch(err => console.log(err))
+    },[])
 
     const addHandler = (e) => {
         e.preventDefault();
@@ -71,7 +93,7 @@ const AddPlot = (props) => {
     return(props.trigger ? <div className='popup'>
         <section className='popup-main'>
             <p>Dodawanie działki</p>
-            <section className='popupForm'>
+            {loading ? 'Wczytywanie...' : error ? 'Błąd podczas wczytywania. Spróbuj później.' : <section className='popupForm'>
                 <form onSubmit={addHandler} id='addForm'>
                     <label>Numer ewidencyjny* <input type='text' onChange={e => setNumber(e.target.value)}/>
                         <span className='info' id='numberInfo'></span></label>
@@ -79,21 +101,20 @@ const AddPlot = (props) => {
                         <span className='info' id='localizationInfo'></span></label>
                     <label>Powierzchnia <input type='text' onChange={e => setArea(e.target.value)}/>
                         <span className='info'></span></label>
-                    <label>Aktualna roślina
+                    <label>Aktualna uprawa
                         <select onChange={e => setActCrop(e.target.value)}>
-                            <option value={1}>Pszenica</option>
-                            <option value={2}>Owies</option>
+                            {plant_types.length > 0 && plant_types.map(type => <option key={type.id} value={type.id}>{type.name}</option>)}
                         </select>
                     </label>
                     <label>Data siewu <input type='date' onChange={e => setDate(e.target.value)}/>
                         <span className='info' id='dateInfo'></span></label>
                 </form>
-            </section>
-            <section className='popupButtons'>
+            </section>}
+            {loading || error ? '' : <section className='popupButtons'>
                 <button onClick={() => props.setTrigger(false)}>Anuluj</button>
                 <button form='addForm'>Potwierdź</button>
                 <h3 className='info' id='addPlotInfo'></h3>
-            </section>
+            </section>}
         </section>
     </div> : "")
 }

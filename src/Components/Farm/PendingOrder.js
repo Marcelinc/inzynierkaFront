@@ -38,8 +38,8 @@ const PendingOrder = (props) => {
     return(<section className='pendingOrder-info'>
         <h3>Informacje ogólne</h3>
         <p><span>Zadanie</span> {props.order.work_type.name}</p>
-        {props.order.work_type.name === 'Sadzenie' && <p><span>Plon </span>{props.order.dose.farm_crop.crop}</p>}
-        {props.order.work_type.name === 'Sadzenie' && <p><span>Ilość plonu</span> {props.order.dose.seed_quantity+props.order.dose.farm_crop.short_unit}</p>}
+        {(props.order.work_type.name === 'Sadzenie' || props.order.work_type.name === 'Siew' || props.order.work_type.name === 'Zbiór')  && <p><span>Plon </span>{props.order.dose && props.order.dose.farm_crop.crop}</p>}
+        {(props.order.work_type.name === 'Sadzenie' || props.order.work_type.name === 'Siew')  && <p><span>Ilość plonu</span> {props.order.dose && props.order.dose.seed_quantity+props.order.dose.farm_crop.short_unit}</p>}
         <p><span>Miejsce</span> {props.order.field.localization}</p>
         <p><span>Przewidywany czas rozpoczęcia</span>{props.order.reserved_from}</p>
         <p><span>Przewidywany czas zakończenia</span>{props.order.reserved_to}</p>
