@@ -15,19 +15,19 @@ const MachineEdit = (props) => {
         //Set body and validate
         let body= {'machine_id':props.machine.id};
         let validated = false;
-        if(act_production_date!=production_date){
+        if(act_production_date!==production_date){
             body['production_date']=production_date;
             validated=true;
         }
-        if(act_vehicle_type_id!=vehicle_type_id){
+        if(act_vehicle_type_id!==vehicle_type_id){
             body['vehicle_type_id']=vehicle_type_id;
             validated=true;
         } 
-        if(act_working_width!=working_width){
+        if(act_working_width!==working_width){
             body['working_width']=working_width;
             validated=true;
         }
-        if(act_status_id!=status_id){
+        if(act_status_id!==status_id){
             body['status_id']=status_id;
             validated=true;
         }
@@ -43,7 +43,7 @@ const MachineEdit = (props) => {
             .then(response => response.json())
             .then(res => {console.log(res.message);if(res.message === 'Success'){
                 const updatedMachine = props.machine;
-                Object.keys(body).forEach(key => {if(key!='machine_id') updatedMachine[key]=body[key]})
+                Object.keys(body).forEach(key => {if(key!=='machine_id') updatedMachine[key]=body[key]})
                 props.setMachine(updatedMachine);
                 props.setMode(false);
             }})

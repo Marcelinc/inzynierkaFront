@@ -1,4 +1,5 @@
 import React, { useState,useEffect, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import { JobTitleContext } from '../../User';
 import AddChemicals from './AddChemicals';
 
@@ -19,23 +20,24 @@ const Chemicals = (props) => {
     const [displayed,setDisplayed] = useState([]);
 
     useEffect(() => {
-        fetch(process.env.REACT_APP_SERVER+'/api/farm-ppp/get-all',{
-            method:"POST",
-            headers: {'Content-Type':'application/json'},
-            body:JSON.stringify({farm_id}),
-            credentials: 'include'
-        })
-        .then(response => response.json())
-        .then(res => {
-            if(res.message==='Success'){
-                setChemicals(res.data);
-                setDisplayed(res.data);
-                console.log(res.data)
-                setloading(false);
-            }else setError(true);
-        })
-        .catch(err => {console.log(err); document.querySelector('.getDataStatus').innerHTML=''});
-
+        if(job_title === 'Pracownik biurowy' || job_title === 'Właściciel' || job_title === 'Pracownik rolny'){
+            fetch(process.env.REACT_APP_SERVER+'/api/farm-ppp/get-all',{
+                method:"POST",
+                headers: {'Content-Type':'application/json'},
+                body:JSON.stringify({farm_id}),
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(res => {
+                if(res.message==='Success'){
+                    setChemicals(res.data);
+                    setDisplayed(res.data);
+                    console.log(res.data)
+                    setloading(false);
+                }else setError(true);
+            })
+            .catch(err => {console.log(err); document.querySelector('.getDataStatus').innerHTML=''});
+        }
         return(() => {
             setChemicals([])
             setDisplayed([])
@@ -63,6 +65,9 @@ const Chemicals = (props) => {
         window.history.pushState({'id':id},'MyFarm',`/gospodarstwo/srodekChemiczny/${id}`);
 
     }
+
+    if(job_title !== 'Właściciel' && job_title !== 'Pracownik biurowy' && job_title !== 'Pracownik rolny')
+        return <Redirect to='/gospodarstwo' />
 
     return(<section className='data'>
         {dataType === 'list' &&<div className='equipment-content'> 

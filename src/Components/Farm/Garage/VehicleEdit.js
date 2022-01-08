@@ -23,35 +23,35 @@ const VehicleEdit = (props) => {
         //Set body and validate
         let body= {'vehicle_id':props.vehicle.id};
         let validated = false;
-        if(actual_production_date!=production_date){
+        if(actual_production_date!==production_date){
             body['production_date']=production_date;
             validated=true;
         }
-        if(actual_type!=type){
+        if(actual_type!==type){
             body['type']=type;
             validated=true;
         } 
-        if(act_technical_examination_date!=technical_examination_date){
+        if(act_technical_examination_date!==technical_examination_date){
             body['technical_examination_date']=technical_examination_date;
             validated=true;
         }
-        if(act_status!=status){
+        if(act_status!==status){
             body['status']=status;
             validated=true;
         }
-        if(act_capacity!=capacity){
+        if(act_capacity!==capacity){
             body['capacity']=capacity;
             validated=true;
         }
-        if(act_power!=power){
+        if(act_power!==power){
             body['power']=power;
             validated=true;
         }
-        if(act_vin!=vin){
+        if(act_vin!==vin){
             body['vin']=vin;
             validated=true;
         }
-        if(act_date_update_fuel_level!=date_update_fuel_level){
+        if(act_date_update_fuel_level!==date_update_fuel_level){
             body['date_update_fuel_level']=date_update_fuel_level;
             validated=true;
         }
@@ -68,7 +68,7 @@ const VehicleEdit = (props) => {
             .then(response => response.json())
             .then(res => {console.log(res.message);if(res.message === 'Success') {
                 const updatedVehicle = props.vehicle;
-                Object.keys(body).forEach(key => {if(key!='vehicle_id') updatedVehicle[key]=body[key]})
+                Object.keys(body).forEach(key => {if(key!=='vehicle_id') updatedVehicle[key]=body[key]})
                 props.setVehicle(updatedVehicle);
                 props.setMode(false);
             }})

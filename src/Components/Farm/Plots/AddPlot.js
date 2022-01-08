@@ -15,21 +15,23 @@ const AddPlot = (props) => {
     const [plant_types,setPlant_types] = useState([]);
 
     useEffect(() => {
-        setLoading(true);
-        fetch(process.env.REACT_APP_SERVER+'/api/lookup-table/plant-type/getAll',{
-            headers: {'Content-Type':'application/json',
-                'Accept': 'application/json'},
-            credentials:'include'
-        })
-        .then(response => response.json())
-        .then(res => {console.log(res); 
-            if(res.message === 'Success') {
-                console.log(res.data)
-                setPlant_types(res.data);
-            } else setError(true);
-            setLoading(false);
-        })
-        .catch(err => console.log(err))
+        if(props.job_title === 'Pracownik biurowy' || props.job_title === 'Właściciel' || props.job_title === 'Pracownik rolny'){
+            setLoading(true);
+            fetch(process.env.REACT_APP_SERVER+'/api/lookup-table/plant-type/getAll',{
+                headers: {'Content-Type':'application/json',
+                    'Accept': 'application/json'},
+                credentials:'include'
+            })
+            .then(response => response.json())
+            .then(res => {console.log(res); 
+                if(res.message === 'Success') {
+                    console.log(res.data)
+                    setPlant_types(res.data);
+                } else setError(true);
+                setLoading(false);
+            })
+            .catch(err => console.log(err))
+        }
     },[])
 
     const addHandler = (e) => {

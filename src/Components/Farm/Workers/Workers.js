@@ -63,7 +63,7 @@ const Workers = (props) => {
     }
 
     const infoHandler = (id) => {
-        console.log('info clicked '+id);
+        //console.log('info clicked '+id);
         props.setContent('worker');
         window.history.pushState({'id':id},'MyFarm',`/gospodarstwo/pracownik/${id}`);
     }

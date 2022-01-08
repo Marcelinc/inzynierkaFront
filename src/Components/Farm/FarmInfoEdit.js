@@ -23,23 +23,23 @@ const FarmInfoEdit = (props) => {
         //Set body and validate
         let body= {'farm_id':props.farm.id};
         let validated = false;
-        if(act_name!=name){
+        if(act_name!==name){
             body['name']=name;
             validated=true;
         }
-        if(act_town!=town){
+        if(act_town!==town){
             body['town']=town;
             validated=true;
         } 
-        if(act_street!=street){
+        if(act_street!==street){
             body['street']=street;
             validated=true;
         }
-        if(act_house_number!=house_number){
+        if(act_house_number!==house_number){
             body['house_number']=house_number;
             validated=true;
         }
-        if(act_budget!=budget){
+        if(act_budget!==budget){
             body['budget']=budget;
             validated=true;
         }
@@ -57,7 +57,7 @@ const FarmInfoEdit = (props) => {
             .then(response => response.json())
             .then(res => {console.log(res.message);if(res.message === 'Success') {
                 const updatedFarm = props.farm;
-                Object.keys(body).forEach(key => {if(key!='field_id') updatedFarm[key]=body[key]})
+                Object.keys(body).forEach(key => {if(key!=='field_id') updatedFarm[key]=body[key]})
                 props.setFarm(updatedFarm);
                 props.setMode(false);
             } else {

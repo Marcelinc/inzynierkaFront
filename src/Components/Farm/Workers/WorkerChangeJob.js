@@ -37,7 +37,7 @@ const WorkerChangeJob = (props) => {
 
     const changeTitle = () => {
         let name = titles.filter(t => t.id === parseInt(job_title_id));
-        if(name[0].title != actualTitle){
+        if(name[0].title !== actualTitle){
             document.querySelector('#changeTitleInfo').innerHTML='Przetwarzanie...'
             fetch(process.env.REACT_APP_SERVER+'/api/farm/set-worker-job-title',{
                 method:'POST',
@@ -69,7 +69,7 @@ const WorkerChangeJob = (props) => {
                     <form className='changeForm'>
                         <select onChange={e => setTitle(e.target.value)}>
                             {props.title === 'Właściciel' && titles.map(t => <option key={t.id} value={t.id}>{t.title}</option>)}
-                            {props.title === 'Pracownik biurowy' && titles.map(t => t.title != 'Właściciel' && <option key={t.id} 
+                            {props.title === 'Pracownik biurowy' && titles.map(t => t.title !== 'Właściciel' && <option key={t.id} 
                                 value={t.id}>{t.title}</option>)}
                         </select>
                     </form>

@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
+import { Redirect } from 'react-router-dom';
 import { JobTitleContext } from '../../User';
 import AddPlot from './AddPlot';
 
@@ -18,6 +19,7 @@ const Plots = (props) => {
     const [displayedPlots,setDisplay] = useState([]);
 
     useEffect(() => {
+        if(job_title === 'Pracownik biurowy' || job_title === 'Właściciel')
         fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/get-fields`,{
             headers: {'Content-Type':'application/json',
                 'Accept': 'application/json'},
@@ -62,6 +64,9 @@ const Plots = (props) => {
 
     }
 
+    if(job_title !== 'Właściciel' && job_title !== 'Pracownik biurowy')
+        return <Redirect to='/gospodarstwo'/>
+
     return(<section className='data'>
         {dataType === 'list' && <div className='equipment-content'>
             <h3>Działki</h3>
@@ -89,7 +94,7 @@ const Plots = (props) => {
                 </div>))}
             </div>
             <AddPlot trigger={trigger} setTrigger={setTrigger} farmId={farm_id} plots={plots} setPlots={setPlots} 
-                display={displayedPlots} setDisplayed={setDisplay}/>
+                display={displayedPlots} setDisplayed={setDisplay} job_title={job_title}/>
         </div>}
     </section>)
 }

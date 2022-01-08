@@ -1,8 +1,8 @@
 import React, {useState, useEffect, useContext} from 'react';
+import { Redirect } from 'react-router-dom';
 import '../../../css/crops.css';
 import { JobTitleContext } from '../../User';
 import AddCrops from './AddCrops';
-import CropInfo from './CropInfo';
 
 const Crops = (props) => {
 
@@ -20,6 +20,7 @@ const Crops = (props) => {
 
 
     useEffect(() => {
+        if(job_title === 'Pracownik biurowy' || job_title === 'Właściciel')
         fetch(process.env.REACT_APP_SERVER+`/api/farm-crop/${farm_id}/get-all`,{
             headers: {'Content-Type':'application/json',
                 'Accept': 'application/json'},
@@ -63,6 +64,9 @@ const Crops = (props) => {
         window.history.pushState({'id':id},'MyFarm',`/gospodarstwo/plon/${id}`);
 
     }
+
+    if(job_title !== 'Pracownik biurowy' && job_title !== 'Właściciel')
+        return <Redirect to='/gospodarstwo'/>
 
     return(<section className='data'>
         {dataType === 'list' && <div className='equipment-content'>

@@ -17,6 +17,7 @@ const FarmManage = (props) => {
     const [farmInfo,setFarm] = useState({});
 
     useEffect(() => {
+        if(job_title === 'Właściciel')
         fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}`,{
             headers:{'Accept':'application/json'},
             credentials:'include'
@@ -24,6 +25,8 @@ const FarmManage = (props) => {
         .then(response => response.json())
         .then(res => {console.log(res); if(res.message === 'Success') setFarm(res.data)})
         .catch(err =>console.log(err))
+
+        return(() => setFarm({}))
     },[])
     
     const setToUserPage = () => {

@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { useHistory, useParams } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import { JobTitleContext } from '../../User';
 import DeleteVehicle from './DeleteVehicle';
 import UploadImage from './UploadImage';
@@ -21,26 +22,25 @@ const VehicleInfo = (props) => {
     const [uploadImageInfo,setUploadInfo] = useState(false);
 
     useEffect(() => {
-        let idState;
-        if(window.history.state)
-            idState = window.history.state.id;
-        else idState = id;
-        setId(idState);
-        //send request
-        fetch(process.env.REACT_APP_SERVER+`/api/vehicle/${idState}`,{
-            headers: {'Content-Type':'application/json',
-                'Accept':'application/json'},
-            credentials:'include'
-        }).then(response => response.json())
-        .then(res => {console.log(res);
-            if(res.message === 'Success') {
-                setVehicle(res.data);
-                setLoading(false);
-            }else document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
-        }).catch(err => console.log(err))
-
-        console.log(job_title)
-
+        if(job_title === 'Pracownik biurowy' || job_title === 'Właściciel' || job_title === 'Pracownik rolny'){
+            let idState;
+            if(window.history.state)
+                idState = window.history.state.id;
+            else idState = id;
+            setId(idState);
+            //send request
+            fetch(process.env.REACT_APP_SERVER+`/api/vehicle/${idState}`,{
+                headers: {'Content-Type':'application/json',
+                    'Accept':'application/json'},
+                credentials:'include'
+            }).then(response => response.json())
+            .then(res => {console.log(res);
+                if(res.message === 'Success') {
+                    setVehicle(res.data);
+                    setLoading(false);
+                }else document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
+            }).catch(err => console.log(err))
+        }
         return(() => {
             setVehicle({});
             setLoading(true);
@@ -86,7 +86,9 @@ const VehicleInfo = (props) => {
             .catch(err => console.log(err))   
         //}
     }
-       
+
+       if(job_title !== 'Pracownik biurowy' && job_title !== 'Właściciel' && job_title !== 'Pracownik rolny')
+        return <Redirect to='/gospodarstwo' />
 
     return(<section className='data'>
         <div>
