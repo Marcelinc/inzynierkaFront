@@ -19,7 +19,7 @@ const Plots = (props) => {
     const [displayedPlots,setDisplay] = useState([]);
 
     useEffect(() => {
-        if(job_title === 'Pracownik biurowy' || job_title === 'Właściciel')
+        if(job_title === 'Pracownik biurowy' || job_title === 'Właściciel' || job_title === 'Pracownik rolny')
         fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/get-fields`,{
             headers: {'Content-Type':'application/json',
                 'Accept': 'application/json'},
@@ -64,7 +64,7 @@ const Plots = (props) => {
 
     }
 
-    if(job_title !== 'Właściciel' && job_title !== 'Pracownik biurowy')
+    if(job_title !== 'Właściciel' && job_title !== 'Pracownik biurowy' && job_title !== 'Pracownik rolny')
         return <Redirect to='/gospodarstwo'/>
 
     return(<section className='data'>

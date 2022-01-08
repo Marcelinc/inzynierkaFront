@@ -79,6 +79,7 @@ export const AddFarmOrder = (props) => {
             .then(res => {
                 if(res.message === 'Success'){
                     setFarmChem(res.data);
+                    console.log(res.data)
                 } else setError(true);
                 setLoadingChem(false);
             }).catch(err => console.log(err));
@@ -300,7 +301,7 @@ export const AddFarmOrder = (props) => {
                     <select onChange={e => setMachines([e.target.value],index)}>
                         {farmMachines.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
                     </select>
-                    </label>) : loadingMachines ? 'Wybierz datę realizacji zlecenia' : 'Brak dostępnych pojazdów'}
+                    </label>) : loadingMachines ? 'Wybierz datę realizacji zlecenia' : 'Brak dostępnego sprzętu'}
                     {/*<h4 onClick={addMachine} style={machineAddButton} className='addEqButton'>+Dodaj kolejny</h4>*/}
                 </div>
                 <label>Planowana data rozpoczęcia <input type='datetime-local' onChange={e => setReservedFrom(e.target.value)}/>

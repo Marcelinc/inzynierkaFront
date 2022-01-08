@@ -22,8 +22,7 @@ const AcceptedOrder = (props) => {
 
     useEffect(() => {
         console.log('accepted')
-        console.log(statuses)
-        console.log(fuelStatuses)
+        console.log(farm_id)
     },[])
 
     const onCancelClick = () => {
@@ -58,7 +57,7 @@ const AcceptedOrder = (props) => {
             body['crop_amount'] = crop_amount;
         }
         //send finish request
-        fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/order/${order_id}/worker/${worker_id}/finish-order`,{
+        fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/order/${order_id}/worker/${parseInt(worker_id)}/finish-order`,{
             method:'POST',
             headers: {'Content-Type':'application/json','Accept':'application/json'},
             body:JSON.stringify(body),
