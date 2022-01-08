@@ -14,6 +14,7 @@ const FarmOrderInfo = (props) => {
 
     const {id} = useParams();
     const [farm_id,setFarm] = useState(props.farmId)
+    const [userId,setUserId] = useState(props.userId);
 
     const [order,setOrder] = useState({});
     const [statuses,setStatuses] = useState([]);
@@ -90,7 +91,7 @@ const FarmOrderInfo = (props) => {
             {loadingOrder || loadingVehicleStatus || loadingFuelStatus ? <p id='getInfoStatus'>Ładowanie...</p> :
             error ? <p id='getInfoStatus'>Błąd podczas pobierania danych!</p> :
                 (status==='finished' || status==='interrupted') ? <FinishedOrder order={order}/> : 
-                status === 'in_progress' ? <AcceptedOrder order={order} statusesMV={statuses} fuelStatuses={fuelStatuses}/> :
+                status === 'in_progress' ? <AcceptedOrder order={order} statusesMV={statuses} fuelStatuses={fuelStatuses} farmId={farm_id} userId={userId}/> :
                 status === 'pending' && <PendingOrder order={order} farmId={farm_id} userId={props.userId}/>}
         </div>
     </div></section>)

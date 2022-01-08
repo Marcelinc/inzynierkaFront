@@ -25,10 +25,10 @@ const FinishedOrder = (props) => {
             {(props.order.work_type.name === 'Sadzenie' || props.order.work_type.name === 'Siew') && <p><span>Plon</span>{props.order.dose.farm_crop.crop}</p>}
             {(props.order.work_type.name === 'Sadzenie' || props.order.work_type.name === 'Siew') && <p><span>Ilość</span>{props.order.dose.seed_quantity+props.order.dose.farm_crop.short_unit}</p>}
             <p><span>Pojazd</span>{props.order.vehicles.length ? props.order.vehicles[0].name+' nr. '+props.order.vehicles[0].number : 'Nie wybrano'}</p>
-            <p><span>Status pojazdu</span> Sprawny</p>
-            <p><span>Stan paliwa</span> Połowa zbiornika</p>
+            {/*<p><span>Status pojazdu</span> Sprawny</p>
+            <p><span>Stan paliwa</span> Połowa zbiornika</p>*/}
             <p><span>Sprzęt</span>{props.order.machines.length ? props.order.machines[0].name+' nr. '+props.order.machines[0].number : 'Nie wybrano'}</p>
-            <p><span>Status sprzętu</span> Sprawny</p>
+            {/*<p><span>Status sprzętu</span> Sprawny</p>*/}
 
             <p><span>Informacje zwrotne</span>{props.order.feedback ? props.order.feedback : 'Brak'}</p>
         </div>
