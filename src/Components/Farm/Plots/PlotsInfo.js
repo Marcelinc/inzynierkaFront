@@ -1,7 +1,9 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { useHistory, useParams } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import PlotsDelete from "./PlotsDelete";
 import PlotsEdit from "./PlotsEdit";
+import { JobTitleContext } from "../../User";
 
 const PlotsInfo = (props) => {
 
@@ -16,28 +18,31 @@ const PlotsInfo = (props) => {
     const [plot,setPlot] = useState({});
     const [farm_id,setFarmId] = useState(props.farmId);
 
-    useEffect(() => {
-        let idState;
-        if(window.history.state)
-            idState = window.history.state.id;
-        else idState = id;
-        setId(idState);
-        //send request
-        fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/field/${idState}`,{
-            headers: {'Content-Type':'application/json',
-                'Accept':'application/json'},
-            credentials:'include'
-        })
-        .then(response => response.json())
-        .then(res => {console.log(res);
-            if(res.message === 'Success') {
-                setPlot(res.data);
-                setLoading(false);
-            }else if(document.querySelector('#getInfoStatus'))
-                document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
-        }).catch(err => {console.log(err); if(document.querySelector('#getInfoStatus'))
-            document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!'})
+    const job_title = useContext(JobTitleContext)
 
+    useEffect(() => {
+        if(job_title === 'Pracownik biurowy' || job_title === 'Właściciel' || job_title === 'Pracownik rolny'){
+            let idState;
+            if(window.history.state)
+                idState = window.history.state.id;
+            else idState = id;
+            setId(idState);
+            //send request
+            fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/field/${idState}`,{
+                headers: {'Content-Type':'application/json',
+                    'Accept':'application/json'},
+                credentials:'include'
+            })
+            .then(response => response.json())
+            .then(res => {console.log(res);
+                if(res.message === 'Success') {
+                    setPlot(res.data);
+                    setLoading(false);
+                }else if(document.querySelector('#getInfoStatus'))
+                    document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
+            }).catch(err => {console.log(err); if(document.querySelector('#getInfoStatus'))
+                document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!'})
+        }
         return(() => {
             setPlot({})
             setLoading(true)
@@ -58,6 +63,9 @@ const PlotsInfo = (props) => {
         let info = document.querySelectorAll(`.historyWorkUnit${id}`);
         info.forEach(p => {p.style.display==='none' ? p.style.display='inherit': p.style.display='none'})
     }
+
+    if(job_title !== 'Pracownik biurowy' && job_title !== 'Właściciel' && job_title !== 'Pracownik rolny')
+        return <Redirect to='/gospodarstwo' />
 
     return(<section className='data'>
         <div><p className='backToList' onClick={onReturnHandler}>Powrót do listy</p>

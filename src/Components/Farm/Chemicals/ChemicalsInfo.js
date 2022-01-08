@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { useHistory, useParams } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import ChemicalDelete from './ChemicalDelete';
 import {JobTitleContext} from './../../User'; 
 
@@ -16,26 +17,27 @@ const ChemicalsInfo = (props) => {
     const [chemical,setChemical] = useState({});
 
     useEffect(() => {
-        let idState;
-        if(window.history.state)
-            idState = window.history.state.id;
-        else idState = id;
-        setId(idState);
-        //send request
-        fetch(process.env.REACT_APP_SERVER+`/api/farm-ppp/${idState}`,{
-            headers: {'Content-Type':'application/json',
-                'Accept':'application/json'},
-            credentials:'include'
-        })
-        .then(response => response.json())
-        .then(res => {console.log(res);
-            if(res.message === 'Success') {
-                setChemical(res.data);
-                setLoading(false);
-            }else if(document.querySelector('#getInfoStatus'))
-                document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
-        }).catch(err => console.log(err))
-
+        if(job_title === 'Pracownik biurowy' || job_title === 'Właściciel' || job_title === 'Pracownik rolny'){
+            let idState;
+            if(window.history.state)
+                idState = window.history.state.id;
+            else idState = id;
+            setId(idState);
+            //send request
+            fetch(process.env.REACT_APP_SERVER+`/api/farm-ppp/${idState}`,{
+                headers: {'Content-Type':'application/json',
+                    'Accept':'application/json'},
+                credentials:'include'
+            })
+            .then(response => response.json())
+            .then(res => {console.log(res);
+                if(res.message === 'Success') {
+                    setChemical(res.data);
+                    setLoading(false);
+                }else if(document.querySelector('#getInfoStatus'))
+                    document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
+            }).catch(err => console.log(err))
+        }
         return(() =>{
             setChemical({})
             setLoading(true)
@@ -46,6 +48,9 @@ const ChemicalsInfo = (props) => {
         props.setContent('chemicals');
         window.history.pushState(null,'MyFarm','/gospodarstwo/srodkiChemiczne');
     }
+
+    if(job_title !== 'Pracownik biurowy' && job_title !== 'Właściciel' && job_title !== 'Pracownik rolny')
+        return <Redirect to='/gospodarstwo' />
 
     return(<section className='data'>
         <div>

@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { useHistory, useParams } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import Photo from './../../../img/userDefault.png';
 import WorkerChangeJob from './WorkerChangeJob';
 import WorkerFire from './WorkerFire';
+import { JobTitleContext } from '../../User';
 
 const WorkerInfo = (props) => {
     const [triggerFireW,setTriggerFire] = useState(false);
@@ -19,32 +21,35 @@ const WorkerInfo = (props) => {
     const [buttonStyle,setStyle] = useState({});
     const [disabledButton,setDisabled] = useState(false);
 
-    useEffect(() => {
-        //Prepare request data
-        let idState;
-        if(window.history.state)
-            idState = window.history.state.id;
-        else idState = id;
-        setId(idState);
-        //send request
-        fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/worker/${idState}`,{
-            headers: {'Content-Type':'application/json',
-                'Accept':'application/json'},
-            credentials:'include'
-        })
-        .then(response => response.json())
-        .then(res => {console.log(res);
-            if(res.message === 'Success') {
-                setWorker(res.data);
-                res.data.job_title === 'Właściciel' && setStyle({'opacity':'0.5'});
-                res.data.job_title === 'Właściciel' && setDisabled(true);
-                setLoading(false);
-                console.log(buttonStyle)
-            }else if(document.querySelector('#getInfoStatus')) 
-                document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
-        }).catch(err => {console.log(err);  if(document.querySelector('#getInfoStatus'))
-            document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!'})
+    const job_title = useContext(JobTitleContext);
 
+    useEffect(() => {
+        if(job_title === 'Pracownik biurowy' || job_title === 'Właściciel'){
+            //Prepare request data
+            let idState;
+            if(window.history.state)
+                idState = window.history.state.id;
+            else idState = id;
+            setId(idState);
+            //send request
+            fetch(process.env.REACT_APP_SERVER+`/api/farm/${farm_id}/worker/${idState}`,{
+                headers: {'Content-Type':'application/json',
+                    'Accept':'application/json'},
+                credentials:'include'
+            })
+            .then(response => response.json())
+            .then(res => {console.log(res);
+                if(res.message === 'Success') {
+                    setWorker(res.data);
+                    res.data.job_title === 'Właściciel' && setStyle({'opacity':'0.5'});
+                    res.data.job_title === 'Właściciel' && setDisabled(true);
+                    setLoading(false);
+                    console.log(buttonStyle)
+                }else if(document.querySelector('#getInfoStatus')) 
+                    document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!';
+            }).catch(err => {console.log(err);  if(document.querySelector('#getInfoStatus'))
+                document.querySelector('#getInfoStatus').innerHTML='Błąd podczas pobierania danych!'})
+        }
         return(() => {
             setWorker({})
             setLoading(true)
@@ -55,6 +60,9 @@ const WorkerInfo = (props) => {
         props.setContent('workers');
         window.history.pushState(null,'MyFarm','/gospodarstwo/pracownicy');
     }
+
+    if(job_title !== 'Pracownik biurowy' && job_title !== 'Właściciel')
+        return <Redirect to='/gospodarstwo' />
 
     return(<section className='data'>
         <div>

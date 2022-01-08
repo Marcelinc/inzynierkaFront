@@ -18,23 +18,23 @@ const PlotsEdit = (props) => {
         //Set body and validate
         let body= {'field_id':props.plot.id};
         let validated = false;
-        if(act_registration_number!=registration_number){
+        if(act_registration_number!==registration_number){
             body['registration_number']=registration_number;
             validated=true;
         }
-        if(act_localization!=localization){
+        if(act_localization!==localization){
             body['localization']=localization;
             validated=true;
         } 
-        if(act_plant_type_id!=plant_type_id){
+        if(act_plant_type_id!==plant_type_id){
             body['plant_type_id']=plant_type_id;
             validated=true;
         }
-        if(act_plant_seed_date!=plant_seed_date){
+        if(act_plant_seed_date!==plant_seed_date){
             body['plant_seed_date']=plant_seed_date;
             validated=true;
         }
-        if(act_area!=area){
+        if(act_area!==area){
             body['area']=area;
             validated=true;
         }
@@ -50,7 +50,7 @@ const PlotsEdit = (props) => {
             .then(response => response.json())
             .then(res => {console.log(res.message);if(res.message === 'Success') {
                 const updatedPlot = props.plot;
-                Object.keys(body).forEach(key => {if(key!='field_id') updatedPlot[key]=body[key]})
+                Object.keys(body).forEach(key => {if(key!=='field_id') updatedPlot[key]=body[key]})
                 props.setPlot(updatedPlot);
                 props.setMode(false);
             }})
